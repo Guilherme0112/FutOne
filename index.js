@@ -1,46 +1,26 @@
 var http = require('http');
-var mo = require('./demo.js');
-var fs = require('fs');
-
+var con = require('./database/db_connection');
 
 http.createServer(function(req, res){
-    res.writeHead(200, {'Content-Type': 'text/html'});
-
-    // Criando arquivo
-
-    fs.readFile('demo.html', function(err, data){
-        res.write(data);
+    res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+        con.query('SELECT * FROM produtos', (err, results) => {
+            if(err) throw err;
+            if(Object.keys(results).length === 0){
+                res.write('Sem dados por agora');
+                return false;
+            }
+            results.forEach(result => {
+                valor = result.valor;
+                valorString = valor.toString().replace('.', ',');
+                valor = parseFloat(valorString);
+                
+                var html = `<p>Id: ${result.id}</p>
+                            <p>Produto: ${result.produto}</p>
+                            <p>Estoque: ${result.estoque}</p>
+                            <p>Preço: ${valor}</p>`;
+                        
+                res.write(html);
+            });
+            res.end()
     });
-
-    // Adicionando texto no arquivo
-
-    fs.appendFile('cursoNode.txt', 'Curso de Noje JS', function(err){
-        if(err) throw err;
-        console.log('Salvo!');    
-    });
-
-
-    // Atualizando o texto do arquivi 
-
-    fs.writeFile('cursoNode.txt', 'Este é um arquivo de texto adicionado com Node.JS', function(err){
-        if(err) throw err;
-        console.log('Atualizado com sucesso!')
-    });
-
-
-    // Deletado o arquivo
-
-    // fs.unlink('cursoNode.txt', function(err){
-    //     if(err) throw err;
-    //     console.log('Apagado!');
-    // })
-
-
-    // Renomeando o arquivo
-
-    fs.rename('cursoNode.txt', 'CursoNodeJS.txt', function(err){
-        if(err) throw err;
-        console.log('Renomeado!')
-    })
-    res.end('O horário atual é ' + mo.myDateTime());
 }).listen(8080);
