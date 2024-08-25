@@ -13,12 +13,13 @@
 <hr>
 <br>
 `npm install mysql`
+<br>
 `npm install formidable`
 
 <h3>Endpoints</h3>
 <hr>
 <br>
-<p><strong>Criar registros: </strong></p>
+<p><strong>Listar registros: </strong></p>
 <br>
 ´localhost:8080/lista´
 <br>
