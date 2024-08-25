@@ -12,14 +12,14 @@
 <h3>Dependências:</h3>
 <hr>
 <br>
-`npm install mysql`
+<code>npm install mysql</code>
 <br>
-`npm install formidable`
+<code>npm install formidable</code>
 
 <h3>Endpoints</h3>
 <hr>
 <br>
 <p><strong>Listar registros: </strong></p>
 <br>
-´localhost:8080/lista´
+<code>localhost:8080/lista</code>
 <br>
