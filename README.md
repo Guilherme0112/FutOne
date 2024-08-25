@@ -9,14 +9,16 @@
 <br>
 <p>Tenha o <a href='https://nodejs.org/pt/download/package-manager'>Node.JS</a> instalado</p>
 <br>
-<p><strong>Dependências:</strong></p>
+<h3>Dependências:</h3>
+<hr>
 <br>
 `npm install mysql`
 `npm install formidable`
 
 <h3>Endpoints</h3>
+<hr>
 <br>
 <p><strong>Criar registros: </strong></p>
 <br>
-`localhost:8080/lista`
+´localhost:8080/lista´
 <br>
