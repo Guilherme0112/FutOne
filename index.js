@@ -30,7 +30,7 @@ http.createServer(function(req, res){
                 if(err){
                     res.write(JSON.stringify({"Erro: ": err}))
                 }
-                if(dados.hasOwnProperty('produto', 'valor', 'preco')){
+                if(dados.hasOwnProperty('estoque') && dados.hasOwnProperty('preco') && dados.hasOwnProperty('produto')){
 
                     // Converção dos dados
 
@@ -41,15 +41,36 @@ http.createServer(function(req, res){
                     // Validação dos dados
 
                     if(isNaN(dados.preco)){
-                        res.write(JSON.stringify({"Erro": "O valor do preço é inválido"}))
+
+                        res.write(JSON.stringify({"Erro": "O valor do preço é inválido"}));
+                        res.end();
+                        return false;
                     }
                     if(isNaN(dados.estoque)){
-                        res.write(JSON.stringify({"Erro": "O valor do estoque é inválido."}))
+
+                        res.write(JSON.stringify({"Erro": "O valor do estoque é inválido."}));
+                        res.end();
+                        return false;
                     }
                     if(dados.produto.length > 50){
 
                         res.write(JSON.stringify({"Erro": "O nome do produto deve ter menos que 50 caracteres."}));
+                        res.end();
+                        return false;
                     }
+
+                    // Inserção de dados
+
+                   const sql = "INSERT INTO produtos (produto, estoque, valor) values (?, ?, ?)";
+                   const values = [dados.produto, dados.estoque, dados.preco];
+
+                   con.query(sql, values, (err, result) => {
+                        if(err) throw err;
+                        res.write(JSON.stringify({"Sucesso": "Dados inseridos com sucesso."}));
+                    });
+
+                } else {
+                    res.write(JSON.stringify({"Erro": "Os campos estão incompletos"}));
                 }
                 res.end();
             });
