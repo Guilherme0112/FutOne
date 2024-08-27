@@ -20,7 +20,7 @@ http.createServer(function(req, res){
             if(err){
                 res.write(JSON.stringify({"Erro": "Erro ao buscar os dados."}));
             }
-            // console.log(typeof results, results)
+            console.log(typeof results, results)
 
             if(Object.keys(results).length === 0){
                 res.write(JSON.stringify({"dados": "Sem dados"}));
@@ -90,19 +90,29 @@ http.createServer(function(req, res){
         // Editar dados no banco de dados
 
     } else if (regex.test(req.url) && req.method === 'PUT') {
-
-        const parseUrl = url.parse(req.url, true);
-        const parametros = parseUrl.query;
-        var id = parametros.id || parseUrl.pathname.match(regex)[1];
-        var idNum = Number(id);
-        if(idNum){
-            console.log(typeof idNum)
-            if(typeof idNum === 'number'){
-                res.write(JSON.stringify({"Sim": "É um número"}));
+        try{
+            const parseUrl = url.parse(req.url, true);
+            const parametros = parseUrl.query;
+            var id = parametros.id || parseUrl.pathname.match(regex)[1];
+            var idNum = Number(id);
+            if(idNum){
+                console.log(typeof idNum)
+                if(typeof idNum === 'number'){
+                    const form = new formidable.IncomingForm();
+                    form.parse(req, (err, dados, files) => {
+                        if(err){
+                            res.write(JSON.stringify({"Erro: ": err}))
+                        }
+                        console.log(dados, err);
+                    });
+                    res.end();
+                }
+            } else {
+                res.write(JSON.stringify({"Erro": "O valor tem que ser um número"}))
                 res.end();
             }
-        } else {
-            res.write(JSON.stringify({"Não": "Não é um número"}))
+        } catch (err) {
+            res.write(JSON.stringify({"Erro: ": err}));
             res.end();
         }
     } else {
