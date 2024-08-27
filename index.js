@@ -2,37 +2,44 @@ var http = require('http');
 var con = require('./database/db_connection');
 var formidable = require('formidable');
 const queryString = require('querystring');
-const { Console } = require('console');
 const url = require('url');
-const { exit } = require('process');
 
 http.createServer(function(req, res){
     res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
 
-    // Configurações para PUT
+    // Configurações para PUT e DELETE
 
-    const regex = /^\/editar\/([0-9]+)$/;
+    const edit = /^\/editar\/([0-9]+)$/;
+    const delet = /^\/delete\/([0-9]+)$/;
 
     // Selecionar os dados do banco de dados
 
-    if(req.url === '/lista'){
-        con.query("SELECT * FROM produtos", (err, results) => {
-            if(err){
-                res.write(JSON.stringify({"Erro": "Erro ao buscar os dados."}));
-            }
-            console.log(typeof results, results)
+    if(req.url === '/lista' && req.method === 'GET'){
+		try{
+			con.query("SELECT * FROM produtos", (err, results) => {
+				if(err){
+					res.write(JSON.stringify({"Erro": "Erro ao buscar os dados."}));
+				}
+			//   console.log(typeof results, Object.keys(results).length);
 
-            if(Object.keys(results).length === 0){
-                res.write(JSON.stringify({"dados": "Sem dados"}));
-                return false;
-            }
-            res.write(JSON.stringify(results));
-            res.end();
-        });
+				if(Object.keys(results).length === 0){
+					res.write(JSON.stringify({"dados": "Sem dados"}));
+					res.end();
+					return false;
+				}
+
+				res.write(JSON.stringify(results));
+
+				// console.log(JSON.stringify(results));
+				res.end();
+			});
+		} catch (err) {
+			res.end(err)
+		}
 
     // Adicionar dados ao banco de dados
 
-    } else if(req.url === '/add' && req.method === 'POST'){
+    } else if (req.url === '/add' && req.method === 'POST'){
         try{    
             const form = new formidable.IncomingForm();
             form.parse(req, (err, dados, files) => {
@@ -89,7 +96,7 @@ http.createServer(function(req, res){
 
         // Editar dados no banco de dados
 
-    } else if (regex.test(req.url) && req.method === 'PUT') {
+    } else if (edit.test(req.url) && req.method === 'PUT') {
         try{
             const parseUrl = url.parse(req.url, true);
             const parametros = parseUrl.query;
@@ -115,7 +122,9 @@ http.createServer(function(req, res){
             res.write(JSON.stringify({"Erro: ": err}));
             res.end();
         }
-    } else {
+    } else if (delet.test(req.url) && req.method === 'DELETE'){
+		res.write(JSON.stringify({"Chegou": "Chegou legal"}));
+	} else {
         res.write(JSON.stringify({"Erro": "Este método não existe"}));
         res.end();
     }
