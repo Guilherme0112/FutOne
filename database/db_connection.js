@@ -4,7 +4,7 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "curso-node",
+    database: "futone",
 });
 
 // con.connect(function(err){
