@@ -1,0 +1,25 @@
+form{
+    background-color: #212529;
+    width: 400px;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+input[type='text']{
+    width: 90%;
+    height: 30px;
+    background-color: #212529;
+    border-bottom: 2px solid #6f2cf5;
+    color: #6f2cf5;
+}
+label{
+    margin-bottom: -20px !important;
+}
+form a{
+    color: #6f2cf5;
+    font-size: 15px;
+    text-decoration: none;
+}

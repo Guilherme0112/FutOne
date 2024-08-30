@@ -28,6 +28,59 @@ header a{
     color: #6f2cf5;
     text-decoration: none;
 }
+main{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+/* Foto principal do index */
+
+.main-box-img {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 16/8;
+    background-color: black;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.main-box-img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    z-index: 1;
+}
+
+.main-img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+}
+.title-main{
+    position: absolute;
+    bottom: 20px;
+    color: white;
+    z-index: 1;
+    font-size: 35px;
+    padding: 0 50px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+}
+.title-main:hover{
+    text-decoration: underline;
+}
 
 /* Caixas das notícias */
 
@@ -63,4 +116,7 @@ header a{
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+.desc-not:hover{
+    text-decoration: underline;
 }

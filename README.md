@@ -1,6 +1,6 @@
 # FutOne  
 
-<p>Projeto de protal de notícias de futebol.</p>
+<p>Projeto de portal de notícias de futebol.</p>
 <br>
 <h3>Tecnologias</h3>
 <br>
