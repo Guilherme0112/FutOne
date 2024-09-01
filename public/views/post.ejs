@@ -7,7 +7,11 @@
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/post.css">
-    <title></title>
+    <title>
+        <% post.forEach(dado => { %>
+        <%=  dado.titulo  %>
+        <% }) %>
+    </title>
 </head>
 <body>
     <header>
@@ -16,9 +20,13 @@
         </a>
     </header>
     <main>
-        <% post.forEach(dado => { %>
-        <%=  dado.postagem  %>
-        <% }) %>
+        <div class="box-post">
+            <% post.forEach(dado => { %>
+            <img src="<%= dado.foto %>" class="img-post">
+            <h2 class="title-post"><%=  dado.titulo  %></h2>
+            <p class="post"><%=  dado.postagem  %></p>
+            <% }) %>
+        </div>
     </main>
 </body> 
 </html>

@@ -23,3 +23,4 @@
 <hr>
 <br>
 <code>npm install mysql</code>
+<code>npm install ejs</code>

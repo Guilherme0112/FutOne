@@ -39,7 +39,7 @@ app.get('/post/:id', function(req, res) {
         if(err){
             throw err;
         } else {
-            res.render('post', {post: dados});
+            res.render('post', {post: dados, title: dados.titulo});
         }
     });
 });
