@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <a href="/pages/">
+        <a href="/">
             <img width="50" src="/images/icon.png" alt="Logo">
         </a>
         <a href="">Em Alta</a>
@@ -23,10 +23,13 @@
 
         <!-- Imagem principal -->
 
-        <a href="" class="main-box-img">
-            <img src="https://motionbgs.com/media/4002/gta-vi.jpg" class="main-img">
-            <p class="title-main">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        <% mains.forEach(main =>{ %>
+        <a href="/post/<%= main.id %>" class="main-box-img">
+            <img src="<%= main.foto %>" class="main-img">
+            <p class="title-main"><%= main.titulo %></p>
         </a>
+        <% }) %>
+        
 
         <!-- Caixas das notícias -->
 

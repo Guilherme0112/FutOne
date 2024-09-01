@@ -16,12 +16,13 @@
         </a>
     </header>
     <main>
-        <form action="" method="post">
+        <form action="/login" method="post">
             <img src="../images/icon.png" alt="">
             <label for="">Email:</label>
             <input type="email" name="email" required>
             <label for="">Senha:</label>
             <input type="password" name="senha" required>
+            <p class="erro"><%= erro %></p>
             <input type="submit" value="Entrar">
             <a href="/register">Não tenho conta</a>
         </form>

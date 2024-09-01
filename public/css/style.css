@@ -60,7 +60,7 @@ main{
 
 .main-img {
     width: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
     object-position: center;
     z-index: 0;
 }
@@ -120,4 +120,10 @@ main{
 }
 .desc-not:hover{
     text-decoration: underline;
+}
+.erro{
+    width: 100%;
+    font-size: 15px;
+    color: rgb(222, 42, 42);
+    text-align: center;
 }

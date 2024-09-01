@@ -22,5 +22,4 @@
 <h3>Dependências:</h3>
 <hr>
 <br>
-<code>npm install mysql</code>
-<code>npm install ejs</code>
+<code>npm install mysql ejs bcryptjs jsonwebtoken cors</code>
