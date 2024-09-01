@@ -6,16 +6,24 @@ var ejs = require('ejs');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const validator = require('validator')
 const { runInNewContext } = require('vm');
+const { default: isEmail } = require('validator/lib/isEmail');
 var route = express.Router();
 app.use(express.static('public'));
 
 // Configurações
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'public/views'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
+
+// Rotas
+
+
+// Início
 
 app.get('/', function(req, res){
     con.query("SELECT * FROM postagens LIMIT 10", (err, dados) => {
@@ -35,7 +43,7 @@ app.get('/', function(req, res){
     })
 })
 
-// Login e Registro
+// Login
 
 app.get('/login', function(req, res){
     res.render('login', {erro: ''});
@@ -48,21 +56,23 @@ app.post('/login', function(req, res){
     var email = req.body.email;
     var senha = req.body.senha;
 
-    con.query("SELECT COUNT(*) FROM users WHERE email = ? AND senha = ? LIMIT 1", [email, senha], (err, rows) => {
+    con.query(`SELECT COUNT(*) FROM users WHERE email = ? AND senha = ?`, [email, senha], (err, rows) => {
         if(err) throw err;
-        if(rows > 0){
+        // console.log(rows);
+        if(rows[0]['COUNT(*)'] > 0){
             res.render('perfil');
         } else {
-            res.render('login', {erro: 'O usuário não está cadastrado'});
+            res.render('login', {erro: 'As credenciais estão incorretas'});
         }
     })
 });
+
+// Registro
 
 app.get('/register', function(req, res){
     res.render('register', {erro: ''});
 });
 app.post('/register', function(req, res){
-    console.log(req.body);
     if(req.body.nome && req.body.email && req.body.senha && req.body.rsenha){
         if(req.body.senha != req.body.rsenha){
             res.render('register', {erro: 'As senhas não coencidem'})
@@ -70,18 +80,44 @@ app.post('/register', function(req, res){
         var nome = req.body.nome;
         var email = req.body.email;
         var senha = req.body.senha;
-        console.log(`Nome: ${nome}, E-mail: ${email}, Senha: ${senha}`)
-
+        // console.log(req.body)
+        if(nome.length < 2 || nome.length > 50){
+            return res.render('register', {erro: 'O nome deve ter entre 3 e 50 caracteres'});
+        }
+        if (!isEmail(email)){
+            return res.render('register', {erro: 'O e-mail é inválido'})
+        }
+        if (senha.length < 5 || senha.length > 16){
+            return res.render('register', {erro: 'A senha deve ter entre 5 e 16 caracteres'})
+        }
+        con.query(`SELECT COUNT(*) FROM users WHERE email = '${email}'`, (err, resp) => {
+            if(err){
+                console.log('Erro: ' + err)
+            } else {
+                if(resp[0]['COUNT(*)'] > 0){
+                    res.render('register', {erro: 'Já existe uma conta com este e-mail'});
+                } else {
+                    con.query(`INSERT INTO users VALUES (DEFAULT, ?, ?, ?, DEFAULT)`, [nome, email, senha], (err, resp) => {
+                        if(err) {
+                            console.log('Erro: ' + err)
+                        } else {
+                            res.render('login', {erro:''});
+                        }
+                    })
+                }
+            }
+        })
+        
+    } else {
+        res.render('register', {erro: ''});
     }
-
-    res.render('register', {erro: ''});
 })
 
 // Aba de exibição de posts
 
 app.get('/post/:id', function(req, res) {
     var idPost = req.params.id;
-    con.query("SELECT * FROM postagens WHERE id = " + idPost + " LIMIT 1", (err, dados) => {
+    con.query("SELECT * FROM postagens WHERE id = ? LIMIT 1", [idPost], (err, dados) => {
         if(err){
             throw err;
         } else {
@@ -93,8 +129,11 @@ app.get('/post/:id', function(req, res) {
 // Páginas de perfil
 
 app.get('/perfil', function(req, res) {
-    res.render('/perfil');
+    res.render('perfil');
 })
+
+// Porta do servidor
+
 app.listen(8080, () => {
     console.log('Executando')
 })

@@ -6,6 +6,7 @@
     "express": "^4.19.2",
     "formidable": "^3.5.1",
     "jsonwebtoken": "^9.0.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "validator": "^13.12.0"
   }
 }
