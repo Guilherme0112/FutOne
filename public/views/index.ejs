@@ -16,8 +16,14 @@
             <img width="50" src="/images/icon.png" alt="Logo">
         </a>
         <a href="">Em Alta</a>
-        <a href="/login">Entrar</a>
-        <a href="/register">Registrar</a>
+        <% if(sessao) { %>
+            <a href="/perfil">Perfil</a>
+            <a href="/logout">Sair</a>
+        <% } else { %>
+            <a href="/login">Entrar</a>
+            <a href="/register">Registrar</a>
+        <% } %>
+            
     </header>
     <main id="main">
 

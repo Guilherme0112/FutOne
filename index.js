@@ -1,12 +1,16 @@
+// App
 var express = require('express');
 var app = express();
 var path = require('path')
 var con = require('./database/db_connection');
 var ejs = require('ejs');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const cors = require('cors');
-const validator = require('validator')
+
+// Sessões
+
+var bcryptjs = require('bcryptjs');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
 const { runInNewContext } = require('vm');
 const { default: isEmail } = require('validator/lib/isEmail');
 var route = express.Router();
@@ -16,12 +20,19 @@ app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'public/views'));
-app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: false}))
+
+// Sessões
+
+app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(session({
+    secret: '214365',
+    resave: false,
+    saveUninitialized: false
+}))
 
 // Rotas
-
 
 // Início
 
@@ -35,7 +46,7 @@ app.get('/', function(req, res){
                 if(err){
                     console.log('Erro: ' + err);
                 } else {
-                    res.render('index', {posts: dados, mains: post})
+                    res.render('index', {posts: dados, mains: post, sessao: req.session.user});
                 }
             })
             
@@ -46,7 +57,11 @@ app.get('/', function(req, res){
 // Login
 
 app.get('/login', function(req, res){
-    res.render('login', {erro: ''});
+    if(req.session.user){
+        res.redirect('/')
+    } else {
+        res.render('login', {erro: ''});
+    }
 });
 app.post('/login', function(req, res){
     if(!req.body.email && !req.body.senha){
@@ -56,11 +71,16 @@ app.post('/login', function(req, res){
     var email = req.body.email;
     var senha = req.body.senha;
 
-    con.query(`SELECT COUNT(*) FROM users WHERE email = ? AND senha = ?`, [email, senha], (err, rows) => {
+    con.query(`SELECT * FROM users WHERE email = ? AND senha = ?`, [email, senha], (err, user) => {
         if(err) throw err;
-        // console.log(rows);
-        if(rows[0]['COUNT(*)'] > 0){
-            res.render('perfil');
+        if(user.length > 0){
+            req.session.user = {
+                id: user[0].id,
+                nome: user[0].nome,
+                email: user[0].email
+            }
+            // console.log(req.session.user);
+            res.redirect('/perfil');
         } else {
             res.render('login', {erro: 'As credenciais estão incorretas'});
         }
@@ -70,7 +90,11 @@ app.post('/login', function(req, res){
 // Registro
 
 app.get('/register', function(req, res){
-    res.render('register', {erro: ''});
+    if(req.session.user){
+        res.redirect('/')
+    } else {
+        res.render('register', {erro: ''});
+    }
 });
 app.post('/register', function(req, res){
     if(req.body.nome && req.body.email && req.body.senha && req.body.rsenha){
@@ -126,10 +150,32 @@ app.get('/post/:id', function(req, res) {
     });
 });
 
+// Logout
+
+app.get('/logout', function(req, res) {
+    if(req.session.user){
+        req.session.destroy((err) => {
+            if(err){
+                console.log('Erro: ' + err);
+            } else{
+                res.clearCookie('connect.sid');
+                res.redirect('/login');
+            }
+        })
+    } else {
+        res.redirect('/');
+    }
+})
+
 // Páginas de perfil
 
 app.get('/perfil', function(req, res) {
-    res.render('perfil');
+    if(req.session.user){
+        var dados = req.session.user;
+        res.render('perfil', {user: dados});
+    } else {
+        res.redirect('/login');
+    }
 })
 
 // Porta do servidor
