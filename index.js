@@ -8,7 +8,6 @@ var ejs = require('ejs');
 // Sessões
 
 var bcryptjs = require('bcryptjs');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const { runInNewContext } = require('vm');

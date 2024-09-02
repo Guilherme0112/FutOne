@@ -14,12 +14,13 @@
 <br>
 <h3>Instalação</h3>
 <hr>
-<br>
 <p>Baixe o repositório <a href='https://github.com/Guilherme0112/FutOne/archive/refs/heads/main.zip'>clicando aqui</a></p>
 <br>
 <p>Tenha o <a href='https://nodejs.org/pt/download/package-manager'>Node.JS</a> instalado</p>
 <br>
 <h3>Dependências:</h3>
 <hr>
-<br>
-<code>npm install mysql ejs bcryptjs jsonwebtoken cors</code>
+<code>npm install mysql</code>
+<code>npm install ejs</code>
+<code>npm install express-session</code>
+<code>npm install bcryptjs</code>
