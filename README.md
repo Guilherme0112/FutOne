@@ -1,25 +1,19 @@
 # FutOne  
 <div align='center'>
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/cO1252a" data-context="false" ><a href="//imgur.com/a/cO1252a"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<img width='150' src="https://i.imgur.com/ikAzHFv.png" alt="icon" border="0">
 </div>
-<p>Projeto de portal de notícias de futebol.</p>
-<br>
-**Tecnologias**
-<br>
-<p><strong>Front-End:</strong>
-<br>
+<p>Este é um site de notícias com mais destaque para notícias no mundo dos jogos, o usuário pode criar uma conta e comentar em postagens (Que seriam as notícias), pode dar like e dar deslikes nos posts, o criador antes de começar criar postagens deverá preencher um formulário  para criar uma conta de criador onde ele terá acesso a páginas de criação de conteúdo.</p>
+<h3>Tecnologias</h3>
+<hr>
+<p><strong>Front-End:</strong></p>
 <p>HTML, CSS (Bootstrap), JavaScript</p>
-<br>
-<p><strong>Back-End:</strong>
-<br>
+<p><strong>Back-End:</strong></p>
 <p>Node.JS, Express.JS</p>
-<br>
-**Instalação**
+<h3>Instalação</h3>
 <hr>
 <p>Baixe o repositório <a href='https://github.com/Guilherme0112/FutOne/archive/refs/heads/main.zip'>clicando aqui</a></p>
 <p>Tenha o <a href='https://nodejs.org/pt/download/package-manager'>Node.JS</a> instalado</p>
-<br>
-**Dependências:**
+<h3>Dependências:</h3>
 <hr>
 <code>npm install mysql</code>
 <br>
