@@ -1,6 +1,6 @@
 # FutOne  
 <div align='center'>
-  <img width='200' src='https://imgur.com/a/cO1252a'>
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/cO1252a" data-context="false" ><a href="//imgur.com/a/cO1252a"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 </div>
 <p>Projeto de portal de notícias de futebol.</p>
 <br>
@@ -17,7 +17,6 @@
 **Instalação**
 <hr>
 <p>Baixe o repositório <a href='https://github.com/Guilherme0112/FutOne/archive/refs/heads/main.zip'>clicando aqui</a></p>
-<br>
 <p>Tenha o <a href='https://nodejs.org/pt/download/package-manager'>Node.JS</a> instalado</p>
 <br>
 **Dependências:**
