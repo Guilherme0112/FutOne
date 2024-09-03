@@ -209,6 +209,16 @@ app.get('/alta', function(req, res) {
     res.render('alta');
 })
 
+// Criar postagem
+
+app.get('/criar', function(req, res){
+    if(req.session.user){
+        res.render('criar')
+    } else {
+        res.redirect('/');
+    }
+});
+
 // Porta do servidor
 
 app.listen(8080, () => {

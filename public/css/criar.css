@@ -1,0 +1,57 @@
+form{
+    background-color: #212529;
+    max-width: 700px;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin: 10px;
+}
+input[type='text'], textarea{
+    width: 90%;
+    height: 30px;
+    background-color: #212529;
+    border-bottom: 2px solid #6f2cf5;
+    color: #6f2cf5;
+}
+label{
+    width: 100%;
+    color: #6f2cf5;
+    padding-left: 30px;
+    margin: 10px 0;
+}
+input[type='file']{
+    display: none;
+}
+.fotoLabel{
+    background-color: #6f2cf5;
+    cursor: pointer;
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+    color: #212529;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    font-size: 20px;
+
+    transition: .3s;
+}
+input[type='submit']{
+    width: 90%;
+    height: 40px;
+    background-color: #6f2cf5;
+    margin: 10px 0;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #212529;
+    transition: .3s;
+}
+input[type='submit']:hover, .fotoLabel:hover{
+    transform: scale(1.01);
+}
