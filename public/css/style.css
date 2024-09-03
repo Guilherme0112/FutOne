@@ -36,6 +36,7 @@ main{
     align-items: center;
     flex-wrap: wrap;
 }
+
 /* Foto principal do index */
 
 .main-box-img {
@@ -71,6 +72,7 @@ main{
     z-index: 1;
     font-size: 35px;
     padding: 0 50px;
+    font-size: 3.5vw;
 
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -90,8 +92,8 @@ main{
     align-items: center;
     flex-wrap: wrap;
 
-    width: 500px;
-    height: 400px;
+    aspect-ratio: 13/10;
+    max-width: 500px;
     border-radius: 10px;
     background-color: #212529;
     padding: 10px;

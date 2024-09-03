@@ -203,6 +203,12 @@ app.get('/perfil', function (req, res) {
     }
 })
 
+// Em alta
+
+app.get('/alta', function(req, res) {
+    res.render('alta');
+})
+
 // Porta do servidor
 
 app.listen(8080, () => {
