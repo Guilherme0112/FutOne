@@ -12,6 +12,7 @@ var bcryptjs = require('bcryptjs');
 const session = require('express-session');
 
 const { runInNewContext } = require('vm');
+const { promisify } = require('util');
 const { default: isEmail } = require('validator/lib/isEmail');
 var route = express.Router();
 app.use(express.static('public'));
@@ -20,6 +21,7 @@ app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'public/views'));
+const conQuery = promisify(con.query).bind(con);
 app.use(express.json());
 
 // Sessões
@@ -66,8 +68,7 @@ app.get('/login', function (req, res) {
 });
 
 // POST
-
-app.post('/login', function (req, res) {
+app.post('/login', async (req, res) => {
 
     // Recebe os dados do formulário
 
@@ -79,26 +80,29 @@ app.post('/login', function (req, res) {
     var senha = req.body.senha;
 
     // Fazz verificação do e-mail e se caso exista, ele verifica a senha que está criptografada
+    
+    var user = await conQuery(`SELECT * FROM users WHERE email = ?`, [email]);
+        if(user.length > 0){    
+            var verifySenha = await bcryptjs.compare(senha, user[0].senha);
+            // console.log(verifySenha);
+            // console.log(typeof senha, senha);
+            // console.log(typeof user[0].senha,  user[0].senha);
 
-    con.query(`SELECT * FROM users WHERE email = ?`, [email], (err, user) => {
-        if (err) throw err;
-        if(user.length > 0){
-            if (bcryptjs.compare(senha, user[0].senha)) {
-                if (user.length > 0) {
-                    req.session.user = {
-                        id: user[0].id,
-                        nome: user[0].nome,
-                        email: user[0].email
-                    }
-                    // console.log(req.session.user);
-                    res.redirect('/perfil');
+            if (verifySenha) {
+                req.session.user = {
+                    id: user[0].id,
+                    nome: user[0].nome,
+                    email: user[0].email
                 }
+                // console.log(req.session.user);
+                res.redirect('/perfil');
+            } else{
+                res.render('login', { erro: 'As credenciais estão incorretas' });
             }
         } else {
             res.render('login', { erro: 'As credenciais estão incorretas' });
         }
     })
-});
 
 // Registro
 // GET
