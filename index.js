@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 var path = require('path')
 var con = require('./database/db_connection');
-var ejs = require('ejs');
+var multer = require('multer');
 
 // Sessões
 
@@ -218,6 +218,23 @@ app.get('/criar', function(req, res){
         res.redirect('/');
     }
 });
+
+// Receber o arquivo de imagem e salvar na pasta
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const upload = multer({ storage });
+app.post('/criar', upload.single('foto'), function(req, res){
+    // console.log(req.body);
+    // console.log(req.file);
+    res.render('criar');
+})
 
 // Porta do servidor
 

@@ -1,3 +1,6 @@
+main{
+    align-items: start !important;
+}
 form{
     background-color: #212529;
     max-width: 700px;
@@ -16,6 +19,9 @@ input[type='text'], textarea{
     background-color: #212529;
     border-bottom: 2px solid #6f2cf5;
     color: #6f2cf5;
+}
+textarea{
+    height: 50px;
 }
 label{
     width: 100%;
@@ -41,6 +47,7 @@ input[type='file']{
     font-size: 20px;
 
     transition: .3s;
+    margin-top: 20px;
 }
 input[type='submit']{
     width: 90%;
