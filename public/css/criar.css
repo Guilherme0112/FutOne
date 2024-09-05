@@ -62,3 +62,14 @@ input[type='submit']{
 input[type='submit']:hover, .fotoLabel:hover{
     transform: scale(1.01);
 }
+h1{
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+}
+.preview{
+    width: 700px;
+    min-height: 200px;
+    background-color: #212529;
+    border-radius: 10px;
+}

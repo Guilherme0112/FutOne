@@ -217,7 +217,13 @@ app.get('/alta', function(req, res) {
 
 app.get('/criar', function(req, res){
     if(req.session.user){
-        res.render('criar')
+        con.query('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id], (err, resp) => {
+            if(resp.length > 0){
+                res.render('criar');
+            } else {
+                res.redirect('/perfil');
+            }
+        })
     } else {
         res.redirect('/');
     }
@@ -237,7 +243,6 @@ const upload = multer({ storage });
 app.post('/criar', upload.single('foto'), function(req, res){
     // console.log(req.body);
     // console.log(req.file);
-    res.render('criar');
 })
 
 // Porta do servidor
