@@ -5,6 +5,8 @@ var app = express();
 var path = require('path')
 var con = require('./database/db_connection');
 var multer = require('multer');
+var crypto = require('crypto');
+const { cpf } = require('cpf-cnpj-validator');
 
 // Sessões
 
@@ -14,6 +16,7 @@ const session = require('express-session');
 const { runInNewContext } = require('vm');
 const { promisify } = require('util');
 const { default: isEmail } = require('validator/lib/isEmail');
+const { name } = require('ejs');
 var route = express.Router();
 app.use(express.static('public'));
 
@@ -221,7 +224,7 @@ app.get('/criar', function(req, res){
             if(resp.length > 0){
                 res.render('criar');
             } else {
-                res.redirect('/perfil');
+                res.redirect('/');
             }
         })
     } else {
@@ -236,14 +239,75 @@ const storage = multer.diskStorage({
         cb(null, 'public/uploads/');
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname);
+        var nameArquivo = crypto.randomBytes(16).toString('hex');
+        var extencao = file.originalname.split('.').pop();
+
+        cb(null, nameArquivo + '.' + extencao);
     }
 });
 const upload = multer({ storage });
 app.post('/criar', upload.single('foto'), function(req, res){
     // console.log(req.body);
     // console.log(req.file);
+});
+
+// Formulário para ser noticiário
+// GET
+
+app.get('/criar/perfil', function(req, res) {
+    if(req.session.user){
+        con.query('SELECT * FROM users WHERE id = ?', [req.session.user.id], (err, resp) => {
+            res.render('criarPerfil', {nome: resp[0].nome});
+        })
+    } else {
+        res.redirect('/');
+    }
 })
+
+// POST
+
+app.post('/criar/perfil', function(req, res){
+
+    if(req.session.user){
+        if(req.body.cpf && req.body.nasc && req.body.sexo && req.body.bio){
+            var cpf = req.body.cpf;
+            var nasc = req.body.nasc;
+            var sexo = req.body.sexo;
+            var bio = req.body.bio;
+
+            if(!cpf.isValid(cpf)){
+
+            }
+            if(!new Date(nasc)){
+                if(isNaN(nasc)){
+                    return false;
+                }
+                const hoje = new Date();
+                if(nasc > hoje){
+                    return false;
+                }
+            }
+            if(sexo === '0'){
+                sexo = 'M';
+            } else if (sexo === '1'){
+                sexo = 'F';
+            } else if (sexo === '2'){
+                sexo = 'O';
+            } else if (sexo === '3'){
+                sexo = 'PND';
+            } else {
+                return false;
+            }
+
+            res.render('criarPerfil', {nome: req.session.nome});
+        } else {
+            
+            res.render('criarPerfil', {nome: req.session.nome});
+        }
+    } else {
+        res.redirect('/');
+    }
+});
 
 // Porta do servidor
 

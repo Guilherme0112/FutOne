@@ -1,0 +1,18 @@
+.inputs{
+    width: 90%;
+    height: 30px;
+    background-color: #212529;
+    border-bottom: 2px solid #6f2cf5;
+    color: #6f2cf5;
+}
+h2{
+    color: #6f2cf5;
+}
+.disabled{
+    
+    width: 90%;
+    height: 30px;
+    border-bottom: 2px solid #6f2cf5;
+    color: #605771;
+    background-color: transparent;
+}
