@@ -18,21 +18,20 @@
     </header>
     <main>
         <form action="/criar/perfil" method="post">
-            <label for="nome">Nome:</label>
-            <input type="text" value="<%= nome %>" class="input disabled" disabled>
             <label for="nome">CPF:</label>
-            <input type="text" name="cpf" class='inputs' required>
+            <input type="text" name="cpf" class='inputs' >
             <label for="nasc">Data de Nascimento:</label>
-            <input type="date" name="nasc" class='inputs' required>
+            <input type="date" name="nasc" class='inputs'>
             <label for="sexo">Sexo:</label>
-            <select name="sexo" class="inputs" required>
+            <select name="sexo" class="inputs">
                 <option value="0">Masculino</option>
                 <option value="1">Feminino</option>
                 <option value="2">Outro</option>
                 <option value="3">Prefiro não dizer</option>
             </select>
             <label for="bio">Bio:</label>
-            <textarea name="bio" class='inputs' required></textarea>
+            <textarea name="bio" class='inputs'></textarea>
+            <p class="erro"><%= erro %></p>
             <input type="submit" value="Registrar">
         </form>
     </main>

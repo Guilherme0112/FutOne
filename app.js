@@ -257,7 +257,7 @@ app.post('/criar', upload.single('foto'), function(req, res){
 app.get('/criar/perfil', function(req, res) {
     if(req.session.user){
         con.query('SELECT * FROM users WHERE id = ?', [req.session.user.id], (err, resp) => {
-            res.render('criarPerfil', {nome: resp[0].nome});
+            res.render('criarPerfil', {erro: ''});
         })
     } else {
         res.redirect('/');
@@ -267,25 +267,32 @@ app.get('/criar/perfil', function(req, res) {
 // POST
 
 app.post('/criar/perfil', function(req, res){
-
     if(req.session.user){
+        console.log('sesion')
         if(req.body.cpf && req.body.nasc && req.body.sexo && req.body.bio){
-            var cpf = req.body.cpf;
+            var cpfF = req.body.cpf;
             var nasc = req.body.nasc;
             var sexo = req.body.sexo;
             var bio = req.body.bio;
+            
+            // Remoção de caracteres da máscara
+            cpfF = cpfF.replace(/\D/g, '');
 
-            if(!cpf.isValid(cpf)){
-
+            console.log(req.body);
+            console.log('var')
+            if(!cpf.isValid(cpfF) || cpfF.length < 11){
+                return res.render('criarPerfil', {erro: 'CPF é inválido'});
             }
             if(!new Date(nasc)){
+                console.log('data');
                 if(isNaN(nasc)){
-                    return false;
+                    return res.render('criarPerfil', {erro: 'Esta data é inválida'});
                 }
                 const hoje = new Date();
                 if(nasc > hoje){
-                    return false;
+                    return res.render('criarPerfil', {erro: 'A data de nascimento deve ser menor que a data atual'});
                 }
+                return res.render('criarPerfil', {erro: 'Esta data é inválida'});
             }
             if(sexo === '0'){
                 sexo = 'M';
@@ -296,13 +303,12 @@ app.post('/criar/perfil', function(req, res){
             } else if (sexo === '3'){
                 sexo = 'PND';
             } else {
-                return false;
+                console.log('sexo');
+                return res.render('criarPerfil', {erro: 'Valor inválido'});
             }
-
-            res.render('criarPerfil', {nome: req.session.nome});
         } else {
             
-            res.render('criarPerfil', {nome: req.session.nome});
+            res.render('criarPerfil', {erro: 'Preencha os campos'});
         }
     } else {
         res.redirect('/');

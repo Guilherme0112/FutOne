@@ -22,3 +22,7 @@
 <code>npm install express-session</code>
 <br>
 <code>npm install bcryptjs</code>
+<br>
+<code>npm install multer</code>
+<br>
+<code>npm install cpf-cnpj-validator</code>
