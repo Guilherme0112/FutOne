@@ -12,6 +12,7 @@ const { cpf } = require('cpf-cnpj-validator');
 
 var bcryptjs = require('bcryptjs');
 const session = require('express-session');
+const moment = require('moment');
 
 const { runInNewContext } = require('vm');
 const { promisify } = require('util');
@@ -256,8 +257,13 @@ app.post('/criar', upload.single('foto'), function(req, res){
 
 app.get('/criar/perfil', function(req, res) {
     if(req.session.user){
-        con.query('SELECT * FROM users WHERE id = ?', [req.session.user.id], (err, resp) => {
-            res.render('criarPerfil', {erro: ''});
+        con.query('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id], (err, resp) => {
+            // console.log(resp)
+            if(resp.length > 0){
+                res.redirect('/');
+            } else {
+                res.render('criarPerfil', {erro: ''});
+            }
         })
     } else {
         res.redirect('/');
@@ -268,8 +274,7 @@ app.get('/criar/perfil', function(req, res) {
 
 app.post('/criar/perfil', function(req, res){
     if(req.session.user){
-        console.log('sesion')
-        if(req.body.cpf && req.body.nasc && req.body.sexo && req.body.bio){
+        if(req.body.cpf && req.body.nasc && req.body.sexo){
             var cpfF = req.body.cpf;
             var nasc = req.body.nasc;
             var sexo = req.body.sexo;
@@ -278,22 +283,18 @@ app.post('/criar/perfil', function(req, res){
             // Remoção de caracteres da máscara
             cpfF = cpfF.replace(/\D/g, '');
 
-            console.log(req.body);
-            console.log('var')
-            if(!cpf.isValid(cpfF) || cpfF.length < 11){
+            if(cpf.isValid(cpfF) || cpfF.length < 11){
                 return res.render('criarPerfil', {erro: 'CPF é inválido'});
             }
-            if(!new Date(nasc)){
-                console.log('data');
-                if(isNaN(nasc)){
-                    return res.render('criarPerfil', {erro: 'Esta data é inválida'});
-                }
-                const hoje = new Date();
-                if(nasc > hoje){
-                    return res.render('criarPerfil', {erro: 'A data de nascimento deve ser menor que a data atual'});
-                }
-                return res.render('criarPerfil', {erro: 'Esta data é inválida'});
+            const valData = moment(nasc, 'YYYY-MM-DD');
+
+            if(!valData.isValid()){
+                return res.render('criarPerfil', {erro: 'A data não é válida'})
             }
+            if(new Date() < valData){
+                return res.render('criarPerfil', {erro: 'A data deve ser menor que a atual'})
+            }
+
             if(sexo === '0'){
                 sexo = 'M';
             } else if (sexo === '1'){
@@ -303,9 +304,19 @@ app.post('/criar/perfil', function(req, res){
             } else if (sexo === '3'){
                 sexo = 'PND';
             } else {
-                console.log('sexo');
-                return res.render('criarPerfil', {erro: 'Valor inválido'});
+                return res.render('criarPerfil', {erro: 'Sexo inválido'});
             }
+            con.query('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id], (err, resp) => {
+                // console.log(resp.length)
+                if(resp.length === 0){
+                    con.query('INSERT INTO criador VALUES (DEFAULT, ?, ?, ?, ?, ?, DEFAULT)', [cpfF, nasc, sexo, bio, req.session.user.id], (err, resp) => {
+                        if(err) throw err;
+                        res.redirect('/perfil');
+                    });
+                } else {
+                    res.redirect('/');
+                }
+            });
         } else {
             
             res.render('criarPerfil', {erro: 'Preencha os campos'});
