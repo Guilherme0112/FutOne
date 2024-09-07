@@ -17,8 +17,6 @@
 <hr>
 <code>npm install mysql</code>
 <br>
-<code>npm install ejs</code>
-<br>
 <code>npm install express-session</code>
 <br>
 <code>npm install bcryptjs</code>
