@@ -13,6 +13,7 @@ const { cpf } = require('cpf-cnpj-validator');
 var bcryptjs = require('bcryptjs');
 const session = require('express-session');
 const moment = require('moment');
+require('dotenv').config;
 
 const { runInNewContext } = require('vm');
 const { promisify } = require('util');
@@ -205,7 +206,10 @@ app.get('/logout', function (req, res) {
 app.get('/perfil', function (req, res) {
     if (req.session.user) {
         var dados = req.session.user;
-        res.render('perfil', { user: dados });
+        con.query('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id], (err, resp) => {
+            if (err) throw err;
+            res.render('perfil', { user: dados, resp});
+        });
     } else {
         res.redirect('/login');
     }
@@ -281,6 +285,7 @@ app.post('/criar/perfil', function(req, res){
             var bio = req.body.bio;
             
             // Remoção de caracteres da máscara
+
             cpfF = cpfF.replace(/\D/g, '');
 
             if(cpf.isValid(cpfF) || cpfF.length < 11){
@@ -308,6 +313,7 @@ app.post('/criar/perfil', function(req, res){
             }
             con.query('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id], (err, resp) => {
                 // console.log(resp.length)
+
                 if(resp.length === 0){
                     con.query('INSERT INTO criador VALUES (DEFAULT, ?, ?, ?, ?, ?, DEFAULT)', [cpfF, nasc, sexo, bio, req.session.user.id], (err, resp) => {
                         if(err) throw err;

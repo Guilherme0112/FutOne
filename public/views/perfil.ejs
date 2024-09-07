@@ -16,6 +16,11 @@
         <a href="/">
             <img width="50" src="/images/icon.png" alt="Logo">
         </a>
+        <% if (resp.length === 0){ %>
+            <a href='/criar/perfil'>Ser Criador</a>
+        <% } else { %>
+            <a href='/criar'>Criar Postagem</a>
+        <% } %>
         <a href='/alta'>Em alta</a>
         <a href="/logout">Sair</a>
     </header>
