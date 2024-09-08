@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/perfil.css">
     <title>
         <%= user.nome %>
     </title>
@@ -17,15 +17,36 @@
             <img width="50" src="/images/icon.png" alt="Logo">
         </a>
         <% if (resp.length === 0){ %>
-            <a href='/criar/perfil'>Ser Criador</a>
+            <a href='/criar/perfil'>Seja Criador</a>
         <% } else { %>
             <a href='/criar'>Criar Postagem</a>
         <% } %>
         <a href='/alta'>Em alta</a>
+        <a href="">Personalizar</a>
         <a href="/logout">Sair</a>
     </header>
     <main>
-        
+        <div class="header-div">
+            <img src="<%= user.foto %>" class="img-user">
+            <div class="box-name-user">
+                <h2><%= user.nome %></h2>
+            </div>
+            <div class="box-follow-user">
+                <p>Seguidores: <%= seguidor %></p>
+            </div>
+        </div>
+        <div>
+            <% if (posts.length === 0) { %>
+                <p>Sem postagens </p>
+            <% } else { %> 
+            <% posts.forEach(post =>{ %>
+                <a href="/post/<%= post.id %>" class="box-not">
+                    <img src="<%= post.foto %>" class="img-not">
+                    <p class="desc-not"><%= post.titulo %></p>
+                </a>
+            <% }) %>
+            <% } %> 
+        </div>
     </main>
 </body>
 </html>

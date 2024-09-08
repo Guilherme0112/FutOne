@@ -1,0 +1,42 @@
+body{
+    width: 100%;
+    height: 100vh;
+}
+main{
+    height: 100%;
+    justify-content: start;
+    align-items: start;
+    padding: 10px;
+}
+.header-div{
+    width: 100%;
+    height: 250px;
+    background-color: #212529;
+    border-radius: 10px;
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.img-user{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid #6f2cf5;
+    background-color: #212529;
+    margin: 10px;
+
+    object-fit: cover;
+    object-position: center;
+}
+.box-name-user *{
+    color: #6f2cf5;
+    margin-top: 150px;
+}
+.box-follow-user *{
+    color: #6f2cf5;
+    margin-top: 165px;
+    margin-left: 10px;
+}

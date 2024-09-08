@@ -97,7 +97,8 @@ app.post('/login', async (req, res) => {
                 req.session.user = {
                     id: user[0].id,
                     nome: user[0].nome,
-                    email: user[0].email
+                    email: user[0].email,
+                    foto: user[0].foto
                 }
                 // console.log(req.session.user);
                 res.redirect('/perfil');
@@ -206,9 +207,21 @@ app.get('/logout', function (req, res) {
 app.get('/perfil', function (req, res) {
     if (req.session.user) {
         var dados = req.session.user;
+
         con.query('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id], (err, resp) => {
             if (err) throw err;
-            res.render('perfil', { user: dados, resp});
+            // console.log(req.session.user)
+
+            con.query("SELECT * FROM seguidores WHERE idSeguindo = ?", [req.session.user.id], (err, seguidores) => {
+                if (err) throw err;
+                // console.log(seguidores, seguidores.length)
+                con.query("SELECT * FROM postagens WHERE idUsuario = ?", [req.session.user.id], (err, postagens) => {
+                    if(err) throw err;
+
+                    res.render('perfil', { user: dados, resp, seguidor: seguidores.length, posts: postagens});
+                })
+            })
+            
         });
     } else {
         res.redirect('/login');
