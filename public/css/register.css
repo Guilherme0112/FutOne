@@ -7,7 +7,16 @@ form{
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    padding: 30px 10px;
 }
+.inputs{
+    width: 90%;
+    height: 30px;
+    background-color: #212529;
+    border-bottom: 2px solid #6f2cf5;
+    color: #6f2cf5;
+}
+
 input[type='text']{
     width: 90%;
     height: 30px;
@@ -15,8 +24,24 @@ input[type='text']{
     border-bottom: 2px solid #6f2cf5;
     color: #6f2cf5;
 }
+input[type='submit']{
+    width: 90%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #6f2cf5;
+    color: #212529;
+    font-size: 19px;
+    transition: .3s;
+    margin: 10px 0;
+}
+input[type='submit']:hover{
+    transform: scale(1.01);
+}
 label{
-    margin-bottom: -20px !important;
+    color: #6f2cf5;
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 10px;
 }
 form a{
     color: #6f2cf5;

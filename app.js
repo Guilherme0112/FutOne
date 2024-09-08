@@ -98,7 +98,8 @@ app.post('/login', async (req, res) => {
                     id: user[0].id,
                     nome: user[0].nome,
                     email: user[0].email,
-                    foto: user[0].foto
+                    foto: user[0].foto,
+                    bio: user[0].bio
                 }
                 // console.log(req.session.user);
                 res.redirect('/perfil');
@@ -133,6 +134,7 @@ app.post('/register', async (req, res) => {
         var nome = req.body.nome;
         var email = req.body.email;
         var senha = req.body.senha;
+        var bio = req.body.bio;
         // console.log(req.body)
         if (nome.length < 2 || nome.length > 50) {
             return res.render('register', { erro: 'O nome deve ter entre 3 e 50 caracteres' });
@@ -156,7 +158,7 @@ app.post('/register', async (req, res) => {
                 if (resp[0]['COUNT(*)'] > 0) {
                     res.render('register', { erro: 'Já existe uma conta com este e-mail' });
                 } else {
-                    con.query(`INSERT INTO users VALUES (DEFAULT, ?, ?, ?, DEFAULT)`, [nome, email, senhaHash], (err, resp) => {
+                    con.query(`INSERT INTO users VALUES (DEFAULT, ?, DEFAULT, ?, ?, ?, DEFAULT)`, [nome, email, senhaHash, bio], (err, resp) => {
                         if (err) {
                             console.log('Erro: ' + err)
                         } else {
@@ -295,7 +297,6 @@ app.post('/criar/perfil', function(req, res){
             var cpfF = req.body.cpf;
             var nasc = req.body.nasc;
             var sexo = req.body.sexo;
-            var bio = req.body.bio;
             
             // Remoção de caracteres da máscara
 

@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/register.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <!-- <link rel="stylesheet" href="../css/login.css"> -->
     <title>Criar Conta</title>
 </head>
 <body>
@@ -19,13 +19,15 @@
     <main>
         <form action="" method="post">
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" required>
+            <input type="text" name="nome" class='inputs'required>
             <label for="email">Email:</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" class='inputs'required>
+            <label for="bio">Bio:</label>
+            <textarea name="bio" class='inputs'></textarea>
             <label for="senha">Senha:</label>
-            <input type="password" name="senha" required>
+            <input type="password" name="senha" class='inputs'required>
             <label for="r-senha">Confirmar Senha:</label>
-            <input type="password" name="rsenha" required>
+            <input type="password" name="rsenha" class='inputs'required>
             <p class="erro"><%= erro %></p>
             <input type="submit" value="Registrar">
             <a href="/login">Já tem conta? Faça login</a>

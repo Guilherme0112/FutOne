@@ -22,7 +22,6 @@
             <a href='/criar'>Criar Postagem</a>
         <% } %>
         <a href='/alta'>Em alta</a>
-        <a href="">Personalizar</a>
         <a href="/logout">Sair</a>
     </header>
     <main>
@@ -34,16 +33,25 @@
             <div class="box-follow-user">
                 <p>Seguidores: <%= seguidor %></p>
             </div>
+            <div class="bio-box-user">
+                <p><%= user.bio %></p>
+            </div>
+            <a href="" class="btn-perfil">Editar Perfil</a>
         </div>
-        <div>
             <% if (posts.length === 0) { %>
-                <p>Sem postagens </p>
+                <section class="box-posts-root">
+                    <div class="box-not-posts">
+                        <p>Sem postagens </p>
+                    </div>
+                </section>
             <% } else { %> 
             <% posts.forEach(post =>{ %>
-                <a href="/post/<%= post.id %>" class="box-not">
-                    <img src="<%= post.foto %>" class="img-not">
-                    <p class="desc-not"><%= post.titulo %></p>
-                </a>
+                <section class="box-posts-root">
+                    <a href="/post/<%= post.id %>" class="box-not">
+                        <img src="<%= post.foto %>" class="img-not">
+                        <p class="desc-not"><%= post.titulo %></p>
+                    </a>
+                </section>
             <% }) %>
             <% } %> 
         </div>
