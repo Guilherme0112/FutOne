@@ -67,9 +67,34 @@ h1{
     text-align: center;
     margin: 20px 0;
 }
+
+/* Preview */
+
 .preview{
     width: 700px;
     min-height: 200px;
     background-color: #212529;
     border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+.imgPreview{
+    width: 90%;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+}
+.imgPreview[src=""]{
+    display: none;
+}
+.h1-preview{
+    color: #6f2cf5;
+    font-size: 28px;
+}
+.p-preview{
+    color: #6f2cf5;
 }

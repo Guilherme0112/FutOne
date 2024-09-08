@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/criar.css">
+    <script src="../js/criar.js"></script>
     <title>Criar Postagem</title>
 </head>
 <body>
@@ -24,12 +25,15 @@
             <label for="assunto">Assunto:</label>
             <textarea name="assunto" id="assunto"></textarea>
             <label for="foto" class="fotoLabel">Enviar Imagem</label>
-            <input type="file" name="foto" id="foto">
+            <input type="file" name="foto" id="foto" accept="image/png, image/jpg, image/jpeg" required>
+            <p class="erro" id="erro"><%= erro %></p>
             <input type="submit" value="Criar">
         </form>
         <h1>Preview</h1>
         <section class="preview">
-            
+            <img src="" id="imgPreview" class="imgPreview">
+            <h1 class="h1-preview" id="h1-preview"></h1>
+            <p class="p-preview" id="p-preview"></p>
         </section>
     </main>
 </body> 

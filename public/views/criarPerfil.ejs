@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/criarPerfil.css">
+    <script src="../js/criarPerfil.js"></script>
     <link rel="stylesheet" href="../css/login.css">
     <title>Criar Perfil</title>
 </head>
@@ -21,11 +22,11 @@
     <main>
         <form action="/criar/perfil" method="post">
             <label for="nome">CPF:</label>
-            <input type="text" name="cpf" class='inputs' >
+            <input type="text" name="cpf" class='inputs' id="cpf" maxlength="14" required>
             <label for="nasc">Data de Nascimento:</label>
-            <input type="date" name="nasc" class='inputs'>
+            <input type="date" name="nasc" class='inputs' required>
             <label for="sexo">Sexo:</label>
-            <select name="sexo" class="inputs">
+            <select name="sexo" class="inputs" required>
                 <option value="0">Masculino</option>
                 <option value="1">Feminino</option>
                 <option value="2">Outro</option>

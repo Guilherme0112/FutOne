@@ -242,7 +242,7 @@ app.get('/criar', function(req, res){
     if(req.session.user){
         con.query('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id], (err, resp) => {
             if(resp.length > 0){
-                res.render('criar');
+                res.render('criar', {erro: ''});
             } else {
                 res.redirect('/');
             }
@@ -302,7 +302,9 @@ app.post('/criar/perfil', function(req, res){
 
             cpfF = cpfF.replace(/\D/g, '');
 
-            if(cpf.isValid(cpfF) || cpfF.length < 11){
+            console.log(cpfF)
+
+            if(!cpf.isValid(cpfF) || cpfF.length < 11){
                 return res.render('criarPerfil', {erro: 'CPF é inválido'});
             }
             const valData = moment(nasc, 'YYYY-MM-DD');
@@ -329,7 +331,7 @@ app.post('/criar/perfil', function(req, res){
                 // console.log(resp.length)
 
                 if(resp.length === 0){
-                    con.query('INSERT INTO criador VALUES (DEFAULT, ?, ?, ?, ?, ?, DEFAULT)', [cpfF, nasc, sexo, bio, req.session.user.id], (err, resp) => {
+                    con.query('INSERT INTO criador VALUES (DEFAULT, ?, ?, ?, ?, DEFAULT)', [cpfF, nasc, sexo, req.session.user.id], (err, resp) => {
                         if(err) throw err;
                         res.redirect('/perfil');
                     });
