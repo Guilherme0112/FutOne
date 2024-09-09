@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/post.css">
     <title>
-        <% post.forEach(dado => { %>
-        <%=  dado.titulo  %>
-        <% }) %>
+        <%= post[0].titulo %>
     </title>
 </head>
 <body>
@@ -21,11 +19,10 @@
     </header>
     <main>
         <div class="box-post">
-            <% post.forEach(dado => { %>
-            <img src="<%= dado.foto %>" class="img-post">
-            <h2 class="title-post"><%=  dado.titulo  %></h2>
-            <p class="post"><%=  dado.postagem  %></p>
-            <% }) %>
+            
+            <img src="../<%= post[0].foto %>" class="img-post">
+            <h2 class="title-post"><%=  post[0].titulo  %></h2>
+            <p class="post"><%=  post[0].postagem  %></p>
         </div>
     </main>
 </body> 

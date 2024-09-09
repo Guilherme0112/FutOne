@@ -31,7 +31,7 @@
 
         <% mains.forEach(main =>{ %>
         <a href="/post/<%= main.id %>" class="main-box-img">
-            <img src="<%= main.foto %>" class="main-img">
+            <img src="../<%= main.foto %>" class="main-img">
             <p class="title-main"><%= main.titulo %></p>
         </a>
         <% }) %>
