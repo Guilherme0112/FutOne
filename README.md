@@ -2,7 +2,7 @@
 <div align='center'>
 <img width='150' src="https://i.imgur.com/ikAzHFv.png" alt="icon" border="0">
 </div>
-<p>Este é um site de notícias com mais destaque para notícias no mundo dos jogos, o usuário pode criar uma conta e comentar em postagens (Que seriam as notícias), pode dar like e dar deslikes nos posts, o criador antes de começar criar postagens deverá preencher um formulário  para criar uma conta de criador onde ele terá acesso a páginas de criação de conteúdo.</p>
+<p>Este é um site de notícias com mais destaque para notícias no mundo dos jogos, o usuário pode criar uma conta e criar as postagens (Que seriam as notícias), pode dar like e dar deslikes nos posts, o criador antes de começar criar postagens deverá preencher um formulário  para criar uma conta de criador onde ele terá acesso a páginas de criação de conteúdo.</p>
 <h3>Tecnologias</h3>
 <hr>
 <p><strong>Front-End:</strong></p>
@@ -28,3 +28,8 @@
 <code>npm install moment</code>
 <br>
 <code>npm install dotenv</code>
+<hr>
+<h3>Banco de dados</h3>
+<br>
+<p><strong>Banco de dados: </strong> Importe o arquivo que está no diretório "database/db_connection.js" para ter a estrutura do banco de dados</p>
+<p><strong>Credenciais: </strong> Crie o arquivo <code>.env</code> e crie as credenciais <code>HOST</code>, <code>USER</code>, <code>PASSWORD</code>, <code>DATABASE</code> e coloque as credenciais do banco de dados</p>
