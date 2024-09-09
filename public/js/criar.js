@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function(){
             const tipoImagem = imagemInput.type;
         
             if (!tiposDeImagem.includes(tipoImagem)){
-                document.querySelector('#erro').textContent = "Somente imagens do tipo: PNG, JPEG e JPG";
+                document.querySelector('#erro').textContent = "Somente imagens do tipo: PNG, JPEG e JPG são aceitas";
             } else {
                 
                 const reader = new FileReader();

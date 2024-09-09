@@ -6,8 +6,7 @@ var path = require('path')
 var con = require('./database/db_connection');
 var multer = require('multer');
 var crypto = require('crypto');
-const { cpf } = require('cpf-cnpj-validator');
-const fs = require('fs');
+
 
 // Sessões
 
@@ -15,17 +14,12 @@ const session = require('express-session');
 
 // Controllers
 
-
-const { runInNewContext } = require('vm');
-const { promisify } = require('util');
-const { name } = require('ejs');
 app.use(express.static('public'));
 
 // Configurações
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'public/views'));
-const conQuery = promisify(con.query).bind(con);
 app.use(express.json());
 
 // Sessões

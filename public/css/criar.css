@@ -97,4 +97,6 @@ h1{
 }
 .p-preview{
     color: #6f2cf5;
+    overflow-wrap: break-word;
+    word-break: break-all;
 }

@@ -21,9 +21,9 @@
     <main>
         <form action="/criar" method="post" enctype="multipart/form-data">
             <label for="titulo">Título:</label>
-            <input type="text" name="titulo" id="titulo">
+            <input type="text" name="titulo" id="titulo" required>
             <label for="assunto">Assunto:</label>
-            <textarea name="assunto" id="assunto"></textarea>
+            <textarea name="assunto" id="assunto" wrap="hard" required></textarea>
             <label for="tags">Tags:</label>
             <textarea name="tags" id="tags"></textarea>
             <label for="foto" class="fotoLabel">Enviar Imagem</label>
