@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="../css/media-querys.css">
-    <script defer src="/js/script.js"></script>
+    <script defer src="../js/script.js"></script>
     <title>Início</title>
 </head>
 <body class="body">
@@ -36,16 +36,7 @@
         </a>
         <% }) %>
         
-
-        <!-- Caixas das notícias -->
-
-        </a>
-        <% posts.forEach(post => { %>
-            <a href="/post/<%= post.id %>" class="box-not">
-                <img src="<%= post.foto %>" class="img-not">
-                <p class="desc-not"><%= post.titulo %></p>
-            </a>
-        <% }); %>
     </main>
+    <img src="../images/load.gif" id="load">
 </body>
 </html>

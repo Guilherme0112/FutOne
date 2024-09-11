@@ -3,10 +3,8 @@
 var express = require('express');
 var app = express();
 var path = require('path')
-var con = require('./database/db_connection');
 var multer = require('multer');
 var crypto = require('crypto');
-
 
 // Sessões
 
@@ -38,6 +36,7 @@ const indexController = require('./controllers/indexController');
 const AuthController = require('./controllers/AuthController');
 const PostsController = require('./controllers/PostsController');
 const PerfilController = require('./controllers/PerfilController');
+const PostsGenerationController = require('./controllers/PostsGenerationController');
 
 // Rotas
 // Início
@@ -100,18 +99,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-
-// POST 
-
 app.post('/criar', upload.single('foto'), PostsController.criarPostagemPOST);
 
 // Formulário para ser noticiário
-// GET
 
 app.get('/criar/perfil', PerfilController.criadorGET);
 app.post('/criar/perfil', PerfilController.criadorPOST);
 
 // Porta do servidor
+
+app.get('/load-data/page/:id', PostsGenerationController.generateIndex);
 
 app.listen(8080, () => {
     console.log('Executando')
