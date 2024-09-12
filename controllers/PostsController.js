@@ -111,19 +111,19 @@ const criarPostagemPOST = async (req, res) => {
 
 const commentPage = async (req, res) => {
     if(req.session.user){
-        const comentario = req.body.comentario;
+        const comentario = req.body.comment;
         const idUser = req.session.user.id;
+        const idPost = req.body.idPost
+        // console.log(comentario, idUser, idPost);
 
-        console.log(req.body);
+        if(comentario.length > 0){
+            var sql = await conQuery("INSERT INTO comentarios VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [comentario, idUser, idPost]);
+            if(!sql) throw err;
+            var idUserRegistrado = sql.insertId;
 
-        // if(comentario.length > 0){
-        //     var sql = await conQuery("INSERT INTO comentarios VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [comentario, idUser, idPost]);
-        //     if(!sql) throw err;
+            res.json({status: "OK"});
+        }
 
-
-        // }
-
-        res.json({status: "OK"});
     }
 }
 

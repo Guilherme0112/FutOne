@@ -10,13 +10,9 @@ document.addEventListener("DOMContentLoaded", function(){
         const match = url.match(regex);
         const postId = match[0];
 
-        console.log(postId)
-
         // Envia os dados para o back-end
 
         var comentario = document.querySelector("#input-text").value;
-
-        console.log(comentario)
         fetch(`/comentarioAdd`, {
             method: 'POST',
             headers: {
