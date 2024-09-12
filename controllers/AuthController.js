@@ -52,10 +52,6 @@ const loginPOST = async (req, res) => {
 
             req.session.user = {
                 id: user[0].id,
-                nome: user[0].nome,
-                email: user[0].email,
-                foto: user[0].foto,
-                bio: user[0].bio
             }
 
             // console.log(req.session.user);

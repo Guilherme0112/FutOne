@@ -32,7 +32,7 @@ app.use(session({
 // Controllers
 
 const router = express.Router();
-const indexController = require('./controllers/indexController');
+const IndexController = require('./controllers/IndexController');
 const AuthController = require('./controllers/AuthController');
 const PostsController = require('./controllers/PostsController');
 const PerfilController = require('./controllers/PerfilController');
@@ -41,7 +41,7 @@ const PostsGenerationController = require('./controllers/PostsGenerationControll
 // Rotas
 // Início
 
-router.get('/', indexController.index);
+router.get('/', IndexController.index);
 app.use('/', router);
 
 // Login
@@ -61,7 +61,7 @@ app.get('/logout', AuthController.logout);
 // Aba de exibição de posts
 
 app.get('/post/:id', PostsController.postagemPage);
-app.post('/post/:id', PostsController.commentPage);
+app.post('/comentarioAdd', PostsController.commentPage);
 
 // Páginas de perfil
 

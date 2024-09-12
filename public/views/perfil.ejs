@@ -26,15 +26,15 @@
     </header>
     <main>
         <div class="header-div">
-            <img src="<%= user.foto %>" class="img-user">
+            <img src="<%= perfil[0].foto %>" class="img-user">
             <div class="box-name-user">
-                <h2><%= user.nome %></h2>
+                <h2><%= perfil[0].nome %></h2>
             </div>
             <div class="box-follow-user">
                 <p>Seguidores: <%= seguidores %></p>
             </div>
             <div class="bio-box-user">
-                <p><%= user.bio %></p>
+                <p><%= perfil[0].bio %></p>
             </div>
             <a href="" class="btn-perfil">Editar Perfil</a>
         </div>
@@ -45,14 +45,14 @@
                     </div>
                 </section>
             <% } else { %> 
-            <% posts.forEach(post =>{ %>
-                <section class="box-posts-root">
-                    <a href="/post/<%= post.id %>" class="box-not">
-                        <img src="<%= post.foto %>" class="img-not">
-                        <p class="desc-not"><%= post.titulo %></p>
-                    </a>
-                </section>
-            <% }) %>
+                <% posts.forEach(post =>{ %>
+                    <section class="box-posts-root">
+                        <a href="/post/<%= post.id %>" class="box-not">
+                            <img src="<%= post.foto %>" class="img-not">
+                            <p class="desc-not"><%= post.titulo %></p>
+                        </a>
+                    </section>
+                <% }) %>
             <% } %> 
         </div>
     </main>

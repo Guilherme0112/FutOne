@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/post.css">
+    <script src="../js/post.js"></script>
     <title>
         <%= post[0].titulo %>
     </title>
@@ -16,6 +17,15 @@
         <a href="/">
             <img width="50" src="/images/icon.png" alt="Logo">
         </a>
+        <a href="/alta">Em Alta</a>
+        <% if(sessao) { %>
+            <a href="/perfil">Perfil</a>
+            <a href="/logout">Sair</a>
+        <% } else { %>
+            <a href="/login">Entrar</a>
+            <a href="/register">Registrar</a>
+        <% } %>
+            
     </header>
     <main>
         <div class="box-post">
@@ -24,10 +34,15 @@
             <p class="post"><%=  post[0].postagem  %></p>
         </div>
         <div id="comentarios">
-            <form action="/post/<%= post[0].id %>" method="post" class="input-comment">
-                <input type="text" name="comentario" class="input-text" placeholder="Digite um comentário...">
-                <button class="input-btn">Comentar</button>
+            <% if(perfil) { %>
+            <form action="/comentarioAdd" method="post" id="form" class="input-comment">
+                <div class="w-100">
+                    <img src="<%= perfil[0].foto %>" alt="Foto de Perfil" class="img-perfil">
+                    <textarea name="comentario" class="input-text" id='input-text' rows="1" placeholder="Digite um comentário..."></textarea>
+                </div>
+                <button class="input-btn" id="btn">Comentar</button>
             </form>
+            <% } %>
             <h2 class="title-comentario">Comentários</h2>
         </div>
     </main>

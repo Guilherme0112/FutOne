@@ -13,13 +13,21 @@ const postagemPage = async (req, res) => {
     // Pega o id passado na url
 
     var idPost = req.params.id;
+    var perfil = sessao = "";
     const post = await conQuery("SELECT * FROM postagens WHERE id = ? LIMIT 1", [idPost]);
-        if (post) {
-            // console.log(post[0].id)
-            res.render('post', { post });
-        } else {
-            res.redirect('/');
-        }
+
+    // Dados do usuário da sessão
+    if(req.session.user){
+        perfil = await conQuery("SELECT * FROM users WHERE id = ?", [req.session.user.id]);
+        sessao = req.session.user;
+    }
+
+    if (post) {
+        // console.log(perfil)
+        res.render('post', { post, perfil, sessao});
+    } else {
+        res.redirect('/');
+    }
 };
 
     // Criar postagem
@@ -27,7 +35,7 @@ const postagemPage = async (req, res) => {
 
 const criarPostagemGET = async (req, res) => {
     if(req.session.user){
-
+    
     // Verifica se o usuario é criador
 
         const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id]);
@@ -102,9 +110,21 @@ const criarPostagemPOST = async (req, res) => {
 // Comentários
 
 const commentPage = async (req, res) => {
-    var idPost = req.params.id;
-    console.log(req.body, idPost);
-    res.redirect(`/post/${idPost}`);
+    if(req.session.user){
+        const comentario = req.body.comentario;
+        const idUser = req.session.user.id;
+
+        console.log(req.body);
+
+        // if(comentario.length > 0){
+        //     var sql = await conQuery("INSERT INTO comentarios VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [comentario, idUser, idPost]);
+        //     if(!sql) throw err;
+
+
+        // }
+
+        res.json({status: "OK"});
+    }
 }
 
 module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST, commentPage };

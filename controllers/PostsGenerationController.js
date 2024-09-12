@@ -17,4 +17,8 @@ const generateIndex = async (req, res) => {
     }
 }
 
+const generateComments = async(req, res) => {
+
+}
+
 module.exports = { generateIndex };

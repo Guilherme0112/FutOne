@@ -13,16 +13,18 @@ const perfil = async(req, res) => {
     if (req.session.user) {
         var user = req.session.user;
 
+        const perfil = await conQuery("SELECT * FROM users WHERE id = ?", [user.id]);
+
         // Verifica se é criador de conteúdo para exibir a opção de criar conteúdo
-        const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id])
+        const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [user.id])
         
         // Retorna q quantidade de seguidores
-        const seguidores = await conQuery("SELECT * FROM seguidores WHERE idSeguindo = ?", [req.session.user.id]);
+        const seguidores = await conQuery("SELECT * FROM seguidores WHERE idSeguindo = ?", [user.id]);
         
         // Retorna a quantidade de postagens
-        const posts = await conQuery("SELECT * FROM postagens WHERE idUsuario = ?", [req.session.user.id]);
+        const posts = await conQuery("SELECT * FROM postagens WHERE idUsuario = ?", [user.id]);
         
-        res.render('perfil', { user, criador, seguidores: seguidores.length, posts});
+        res.render('perfil', { user, criador, seguidores: seguidores.length, posts, perfil});
                         
     } else {
         res.redirect('/login');
