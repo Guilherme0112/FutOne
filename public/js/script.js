@@ -43,7 +43,6 @@ function buscarDados() {
             }
             carregando = false;
         });
-        
 }
 
 buscarDados();

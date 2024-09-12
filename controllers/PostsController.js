@@ -99,4 +99,12 @@ const criarPostagemPOST = async (req, res) => {
     }
 }
 
-module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST };
+// Comentários
+
+const commentPage = async (req, res) => {
+    var idPost = req.params.id;
+    console.log(req.body, idPost);
+    res.redirect(`/post/${idPost}`);
+}
+
+module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST, commentPage };

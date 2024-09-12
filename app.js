@@ -61,6 +61,7 @@ app.get('/logout', AuthController.logout);
 // Aba de exibição de posts
 
 app.get('/post/:id', PostsController.postagemPage);
+app.post('/post/:id', PostsController.commentPage);
 
 // Páginas de perfil
 

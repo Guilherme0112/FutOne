@@ -19,10 +19,16 @@
     </header>
     <main>
         <div class="box-post">
-            
             <img src="../<%= post[0].foto %>" class="img-post">
             <h2 class="title-post"><%=  post[0].titulo  %></h2>
             <p class="post"><%=  post[0].postagem  %></p>
+        </div>
+        <div id="comentarios">
+            <form action="/post/<%= post[0].id %>" method="post" class="input-comment">
+                <input type="text" name="comentario" class="input-text" placeholder="Digite um comentário...">
+                <button class="input-btn">Comentar</button>
+            </form>
+            <h2 class="title-comentario">Comentários</h2>
         </div>
     </main>
 </body> 
