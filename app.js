@@ -44,17 +44,13 @@ const PostsGenerationController = require('./controllers/PostsGenerationControll
 router.get('/', IndexController.index);
 app.use('/', router);
 
-// Login
+// Autenticação
 
 app.get('/login', AuthController.loginGET);
-app.post('/login', AuthController.loginPOST)
-
-// Registro
+app.post('/login', AuthController.loginPOST);
 
 app.get('/register', AuthController.registerGET);
 app.post('/register', AuthController.registerPOST);
-
-// Logout
 
 app.get('/logout', AuthController.logout);
 
@@ -62,6 +58,7 @@ app.get('/logout', AuthController.logout);
 
 app.get('/post/:id', PostsController.postagemPage);
 app.post('/comentarioAdd', PostsController.commentPage);
+app.post('/comentarioDel', PostsController.deleteComment);
 
 // Páginas de perfil
 

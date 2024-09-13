@@ -64,11 +64,8 @@ main{
     background-color: #212529;
     border-radius: 10px;
     max-width: 700px;
+    min-height: 100px;
     margin: 20px;
-}
-.title-comentario{
-    color: #6f2cf5;
-    margin: 0px 0 20px 10px;
 }
 .img-perfil{
     width: 45px;
@@ -85,8 +82,8 @@ main{
     flex-wrap: wrap;
 }
 .box-comment-2{
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
 }
 .img-comment{
     background-color: #6f2cf5;
@@ -105,8 +102,22 @@ main{
     width: 100%;
     margin: 5px 10px;
     font-size: 16px;
+    word-break: break-all;
 }
 .time-comment{
     font-size: 14px;
     color: #484849;
+}
+#delBtn{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(146, 29, 29);
+    border-radius: 4px;
+    margin: 0 20px;
+}
+#msg-comment{
+    text-align: center;
+    color: #6f2cf5;
+    font-size: 20px;
+    margin: 20px 0;
 }

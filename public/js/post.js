@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function(){
   
             const boxComment = document.createElement('div');
             boxComment.classList.add('box-comment');
-            divPaiComentarios.children[1].insertAdjacentElement('afterbegin', boxComment);
+            divPaiComentarios.children[1].insertAdjacentElement('beforebegin', boxComment);
 
             const boxComment2 = document.createElement('div');
             boxComment2.classList.add('box-comment-2');
@@ -52,20 +52,26 @@ document.addEventListener("DOMContentLoaded", function(){
             nameUser.textContent = dado.comentarioSQL[0].nome;
             nameUser.classList.add('name-user-comment');
             boxComment2.appendChild(nameUser);
-            
-            const comment = document.createElement('p');
-            comment.textContent = dado.comentarioSQL[0].comentario;
-            comment.classList.add('text-comment');
-            boxComment2.appendChild(comment);
-            
+
             const timeComment = document.createElement('p');
             const dataFormatada = new Date(dado.comentarioSQL[0].criado).toLocaleDateString('pt-BR');
             timeComment.textContent = dataFormatada;
             timeComment.classList.add('time-comment');
-            boxComment.appendChild(timeComment);
+            boxComment2.appendChild(timeComment);
+
+            const delComment = document.createElement('button');
+            delComment.id = "delBtn";
+            delComment.value = "Excluir";
+            boxComment2.appendChild(delComment);
+
+            const comment = document.createElement('p');
+            comment.textContent = dado.comentarioSQL[0].comentario;
+            comment.classList.add('text-comment');
+            boxComment.appendChild(comment);
             
             document.getElementById('load').style.display = "none"; 
             document.querySelector('#input-text').value = "";
+            document.getElementById('msg-comment').style.display = "none";
         })
         .catch(error => {
             console.log("Erro ", error)

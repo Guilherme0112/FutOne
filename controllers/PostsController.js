@@ -22,9 +22,11 @@ const postagemPage = async (req, res) => {
         sessao = req.session.user;
     }
 
+    var comentarios = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.* FROM comentarios JOIN users ON comentarios.idUser = users.id WHERE idPost = ?", [idPost]);
+
     if (post) {
         // console.log(perfil)
-        res.render('post', { post, perfil, sessao});
+        res.render('post', { post, perfil, sessao, comentarios});
     } else {
         res.redirect('/');
     }
@@ -128,5 +130,10 @@ const commentPage = async (req, res) => {
 
     }
 }
+const deleteComment = async (req, res) => {
+    console.log(req.body);
 
-module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST, commentPage };
+    res.json({status: "OK"});
+}
+
+module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST, commentPage, deleteComment };

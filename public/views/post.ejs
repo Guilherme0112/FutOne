@@ -35,16 +35,32 @@
         </div>
         <div id="comentarios">
             <% if(perfil) { %>
-            <form action="/comentarioAdd" method="post" id="form" class="input-comment">
-                <div class="w-100">
+                <form action="/comentarioAdd" method="post" id="form" class="input-comment">
+                    <div class="w-100">
                     <img src="<%= perfil[0].foto %>" alt="Foto de Perfil" class="img-perfil">
                     <textarea name="comentario" class="input-text" id='input-text' rows="1" placeholder="Digite um comentário..."></textarea>
                 </div>
                 <button class="input-btn" id="btn">Comentar</button>
             </form>
             <% } %>
-            <h2 class="title-comentario">Comentários</h2>   
+
             <img src="../images/load.gif" id="load">
+            <% if(comentarios.length > 0){%>
+                <% comentarios.forEach(comentario => { %>
+                <% comentario.criado = new Date(comentario.criado).toLocaleDateString('pt-BR') %>
+                    <div class="box-comment">
+                        <div class="box-comment-2">
+                            <img src="../<%= comentario.foto %>" class="img-comment">
+                            <p class="name-user-comment"><%= comentario.nome %></p>
+                            <p class="time-comment"><%= comentario.criado %></p>
+                            <button id="delBtn" value="Excluir"></button>
+                        </div>
+                        <p class="text-comment"><%= comentario.comentario %></p>
+                    </div>
+                <% }) %>
+                <% } else { %>
+                    <p id="msg-comment">Seja o primeiro a comentar</p>
+                <% } %>
         </div>
     </main>
 </body> 
