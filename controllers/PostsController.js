@@ -5,6 +5,7 @@ var con = require('../database/db_connection');
 const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
 const fs = require('fs');
+const { verify } = require('crypto');
 
     // Página das postagens
 
@@ -116,16 +117,21 @@ const commentPage = async (req, res) => {
         const comentario = req.body.comment;
         const idUser = req.session.user.id;
         const idPost = req.body.idPost
+
+        var verifyPost = await conQuery("SELECT * FROM postagens WHERE id = ?", [idPost]);
         // console.log(comentario, idUser, idPost);
 
-        if(comentario.length > 0){
-            var sql = await conQuery("INSERT INTO comentarios VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [comentario, idUser, idPost]);
-            if(!sql) throw err;
-            var idComentarioRegistrado = sql.insertId;
-            var comentarioSQL = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.*, date_format(comentarios.criado, '%d/%m/%Y') FROM comentarios JOIN users ON users.id = comentarios.idUser WHERE comentarios.id = ?", [idComentarioRegistrado]);
+        if(verifyPost){
+            if(comentario.length > 0){
+                var sql = await conQuery("INSERT INTO comentarios VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [comentario, idUser, idPost]);
+                if(!sql) throw err;
+                var idComentarioRegistrado = sql.insertId;
+                var comentarioSQL = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.*, date_format(comentarios.criado, '%d/%m/%Y') FROM comentarios JOIN users ON users.id = comentarios.idUser WHERE comentarios.id = ?", [idComentarioRegistrado]);
 
-
-            res.json({comentarioSQL});
+                res.json({comentarioSQL});
+            }
+        } else {
+            res.json({erro: "Erro ao enviar comentário"});
         }
 
     }
