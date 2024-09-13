@@ -119,9 +119,11 @@ const commentPage = async (req, res) => {
         if(comentario.length > 0){
             var sql = await conQuery("INSERT INTO comentarios VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [comentario, idUser, idPost]);
             if(!sql) throw err;
-            var idUserRegistrado = sql.insertId;
+            var idComentarioRegistrado = sql.insertId;
+            var comentarioSQL = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.*, date_format(comentarios.criado, '%d/%m/%Y') FROM comentarios JOIN users ON users.id = comentarios.idUser WHERE comentarios.id = ?", [idComentarioRegistrado]);
 
-            res.json({status: "OK"});
+
+            res.json({comentarioSQL});
         }
 
     }

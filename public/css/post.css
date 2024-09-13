@@ -76,3 +76,37 @@ main{
     background-color: #6f2cf5;
     border-radius: 50%;
 }
+.box-comment{
+    width: 100%;
+    padding: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.box-comment-2{
+    display: flex;
+    flex-wrap: wrap;
+}
+.img-comment{
+    background-color: #6f2cf5;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.name-user-comment{
+    color: #6f2cf5;
+    margin: 0 5px;
+    font-size: 14px;
+
+}
+.text-comment{
+    color: #6f2cf5;
+    width: 100%;
+    margin: 5px 10px;
+    font-size: 16px;
+}
+.time-comment{
+    font-size: 14px;
+    color: #484849;
+}
