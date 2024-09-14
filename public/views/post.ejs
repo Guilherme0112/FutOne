@@ -49,11 +49,11 @@
                 <% comentarios.forEach(comentario => { %>
                 <% comentario.criado = new Date(comentario.criado).toLocaleDateString('pt-BR') %>
                     <div class="box-comment">
-                        <div class="box-comment-2">
+                        <div class="box-comment-2" data-id="<%= comentario.id %>">
                             <img src="../<%= comentario.foto %>" class="img-comment">
                             <p class="name-user-comment"><%= comentario.nome %></p>
                             <p class="time-comment"><%= comentario.criado %></p>
-                            <button id="delBtn" value="Excluir"></button>
+                            <button id="delBtn" class="bi bi-trash" value="Excluir"></button>
                         </div>
                         <p class="text-comment"><%= comentario.comentario %></p>
                     </div>

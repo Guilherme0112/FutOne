@@ -114,6 +114,8 @@ main{
     background-color: rgb(146, 29, 29);
     border-radius: 4px;
     margin: 0 20px;
+    background: url('../images/trash.PNG');
+    background-size: cover;
 }
 #msg-comment{
     text-align: center;

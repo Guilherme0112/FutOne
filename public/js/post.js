@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function(){
             const boxComment2 = document.createElement('div');
             boxComment2.classList.add('box-comment-2');
             boxComment.appendChild(boxComment2);
+            boxComment2.dataset.id = dado.comentarioSQL[0].id;
 
             const imgComment = document.createElement('img');
             imgComment.src = dado.comentarioSQL[0].foto;
@@ -74,7 +75,43 @@ document.addEventListener("DOMContentLoaded", function(){
             document.getElementById('msg-comment').style.display = "none";
         })
         .catch(error => {
-            console.log("Erro ", error)
+            console.log("Erro ao adicionar comentário: ", error)
         });
+    });
+
+    // Deletar comentário
+
+    document.querySelector('#comentarios').addEventListener('click', function(event){
+        if(event.target && event.target.id === 'delBtn'){
+            var confirmacao = confirm("Você realmente deseja apagar este comentário?");
+            if(confirmacao){
+                document.getElementById('load').style.display = "block"; 
+                var comentario = event.target.closest('.box-comment');
+                var idComentario = event.target.closest('.box-comment-2').dataset.id;
+
+                fetch('/comentarioDel', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        idComment: idComentario
+                    })
+                })
+                .then(response => response.json())
+                .then(resposta => {
+                    // console.log(resposta.status)
+                    if(resposta.status == 200){
+                        comentario.remove()
+                        document.getElementById('load').style.display = "none"; 
+                        return false;
+                    }
+                    alert("Você não tem autorização");
+                })
+                .catch(error =>{
+                    console.log("Erro ao apagar comentário: ", error)
+                })
+            }
+        }
     });
 });

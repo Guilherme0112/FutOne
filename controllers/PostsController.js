@@ -137,9 +137,21 @@ const commentPage = async (req, res) => {
     }
 }
 const deleteComment = async (req, res) => {
-    console.log(req.body);
+    if(req.session.user){
+        var idComentario = req.body.idComment;
+        var verifyComentario = await conQuery("SELECT * FROM comentarios WHERE id = ? AND idUser = ?", [idComentario, req.session.user.id]);
 
-    res.json({status: "OK"});
+        if(verifyComentario.length > 0){
+            var delComentario = await conQuery("DELETE FROM comentarios WHERE id = ? AND idUser = ? LIMIT 1", [idComentario, req.session.user.id]);
+            if(delComentario){
+
+                return res.json({status: 200});
+            }
+        }
+
+        return res.json({status: 403});
+
+    }
 }
 
 module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST, commentPage, deleteComment };
