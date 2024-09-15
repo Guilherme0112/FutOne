@@ -33,14 +33,18 @@ function buscarDados() {
     fetch(`/load-data/page/${page}`)
         .then(response => response.json())
         .then(dados => {
-            if (dados.length > 0) {
-                var container = document.querySelector('#main');
-                dados.forEach(dado => {
-                    criarEstruturaPost(dado.id, dado.foto, dado.titulo, container);
-                });
-                page++;
+            if (dados.length === 0) {
+
                 document.getElementById('load').style.display = "none";
+                return false;
             }
+            
+            var container = document.querySelector('#main');
+            dados.forEach(dado => {
+                criarEstruturaPost(dado.id, dado.foto, dado.titulo, container);
+            });
+            page++;
+            document.getElementById('load').style.display = "none";
             carregando = false;
         });
 }

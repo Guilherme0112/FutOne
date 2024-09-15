@@ -58,8 +58,12 @@ app.get('/logout', AuthController.logout);
 // Aba de exibição de posts
 
 app.get('/post/:id', PostsController.postagemPage);
+
 app.post('/comentarioAdd', ComentariosController.commentPage);
 app.post('/comentarioDel', ComentariosController.deleteComment);
+
+app.post('/like', ComentariosController.like);
+app.post('/dislike', ComentariosController.deslike);
 
 // Páginas de perfil
 

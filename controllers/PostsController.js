@@ -11,22 +11,26 @@ const fs = require('fs');
 const postagemPage = async (req, res) => {
 
     // Pega o id passado na url
-
+    var user = req.session.user;
     var idPost = req.params.id;
-    var perfil = sessao = "";
+    var perfil = sessao = like = dislike = "";
     const post = await conQuery("SELECT * FROM postagens WHERE id = ? LIMIT 1", [idPost]);
 
     // Dados do usuário da sessão
-    if(req.session.user){
-        perfil = await conQuery("SELECT * FROM users WHERE id = ?", [req.session.user.id]);
-        sessao = req.session.user;
+    if(user){
+        perfil = await conQuery("SELECT * FROM users WHERE id = ?", [user.id]);
     }
 
     var comentarios = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.* FROM comentarios JOIN users ON comentarios.idUser = users.id WHERE idPost = ? LIMIT 10", [idPost]);
+    if(user){
+        var like = await conQuery("SELECT * FROM likes WHERE idPost = ? AND idUser = ?", [idPost, user.id]);
 
+        var dislike = await conQuery("SELECT * FROM dislikes WHERE idPost = ? AND idUser = ?", [idPost, user.id]);
+    }
+    
     if (post) {
         // console.log(perfil)
-        res.render('post', { post, perfil, sessao, comentarios});
+        res.render('post', { post, perfil, comentarios, user, like, dislike});
     } else {
         res.redirect('/');
     }
