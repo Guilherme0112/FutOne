@@ -5,7 +5,6 @@ var con = require('../database/db_connection');
 const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
 const fs = require('fs');
-const { verify } = require('crypto');
 
     // Página das postagens
 
@@ -23,7 +22,7 @@ const postagemPage = async (req, res) => {
         sessao = req.session.user;
     }
 
-    var comentarios = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.* FROM comentarios JOIN users ON comentarios.idUser = users.id WHERE idPost = ?", [idPost]);
+    var comentarios = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.* FROM comentarios JOIN users ON comentarios.idUser = users.id WHERE idPost = ? LIMIT 10", [idPost]);
 
     if (post) {
         // console.log(perfil)
@@ -110,48 +109,5 @@ const criarPostagemPOST = async (req, res) => {
     }
 }
 
-// Comentários
 
-const commentPage = async (req, res) => {
-    if(req.session.user){
-        const comentario = req.body.comment;
-        const idUser = req.session.user.id;
-        const idPost = req.body.idPost
-
-        var verifyPost = await conQuery("SELECT * FROM postagens WHERE id = ?", [idPost]);
-        // console.log(comentario, idUser, idPost);
-
-        if(verifyPost){
-            if(comentario.length > 0){
-                var sql = await conQuery("INSERT INTO comentarios VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [comentario, idUser, idPost]);
-                if(!sql) throw err;
-                var idComentarioRegistrado = sql.insertId;
-                var comentarioSQL = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.*, date_format(comentarios.criado, '%d/%m/%Y') FROM comentarios JOIN users ON users.id = comentarios.idUser WHERE comentarios.id = ?", [idComentarioRegistrado]);
-
-                res.json({comentarioSQL});
-            }
-        } else {
-            res.json({erro: "Erro ao enviar comentário"});
-        }
-
-    }
-}
-const deleteComment = async (req, res) => {
-    if(req.session.user){
-        var idComentario = req.body.idComment;
-        var verifyComentario = await conQuery("SELECT * FROM comentarios WHERE id = ? AND idUser = ?", [idComentario, req.session.user.id]);
-
-        if(verifyComentario.length > 0){
-            var delComentario = await conQuery("DELETE FROM comentarios WHERE id = ? AND idUser = ? LIMIT 1", [idComentario, req.session.user.id]);
-            if(delComentario){
-
-                return res.json({status: 200});
-            }
-        }
-
-        return res.json({status: 403});
-
-    }
-}
-
-module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST, commentPage, deleteComment };
+module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST};

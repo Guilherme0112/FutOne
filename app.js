@@ -37,6 +37,7 @@ const AuthController = require('./controllers/AuthController');
 const PostsController = require('./controllers/PostsController');
 const PerfilController = require('./controllers/PerfilController');
 const PostsGenerationController = require('./controllers/PostsGenerationController');
+const ComentariosController = require('./controllers/ComentariosController');
 
 // Rotas
 // Início
@@ -57,8 +58,8 @@ app.get('/logout', AuthController.logout);
 // Aba de exibição de posts
 
 app.get('/post/:id', PostsController.postagemPage);
-app.post('/comentarioAdd', PostsController.commentPage);
-app.post('/comentarioDel', PostsController.deleteComment);
+app.post('/comentarioAdd', ComentariosController.commentPage);
+app.post('/comentarioDel', ComentariosController.deleteComment);
 
 // Páginas de perfil
 
