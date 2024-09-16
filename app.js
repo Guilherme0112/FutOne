@@ -38,6 +38,7 @@ const PostsController = require('./controllers/PostsController');
 const PerfilController = require('./controllers/PerfilController');
 const PostsGenerationController = require('./controllers/PostsGenerationController');
 const ComentariosController = require('./controllers/ComentariosController');
+const EmailController = require('./controllers/EmailController');
 
 // Rotas
 // Início
@@ -52,6 +53,9 @@ app.post('/login', AuthController.loginPOST);
 
 app.get('/register', AuthController.registerGET);
 app.post('/register', AuthController.registerPOST);
+
+app.get('/verifyEmail/:token', EmailController.verifyEmailGET);
+app.post('/verifyEmail', EmailController.verifyEmailPOST);
 
 app.get('/logout', AuthController.logout);
 

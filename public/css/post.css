@@ -123,6 +123,12 @@ main{
     font-size: 20px;
     margin: 20px 0;
 }
+.msg-comment-login{
+    text-align: center;
+    color: #6f2cf5;
+    font-size: 15px;
+    margin: 20px 0;
+}
 .box-like{
     width: 100%;
     display: flex;

@@ -94,6 +94,9 @@
                 <% }) %>
             <% } else { %>
                 <p id="msg-comment">Seja o primeiro a comentar</p>
+                <% if(!sessao) { %>
+                <p class="msg-comment-login">Faça login para comentar e dar likes</p>
+                <% } %>
             <% } %>
         </div>
     </main>

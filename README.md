@@ -28,6 +28,10 @@
 <code>npm install moment</code>
 <br>
 <code>npm install dotenv</code>
+<br>
+<code>npm install nodemailer</code>
+<br>
+<code>npm install jsonwebtoken</code>
 <hr>
 <h3>Banco de dados</h3>
 <br>

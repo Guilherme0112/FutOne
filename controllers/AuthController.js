@@ -6,6 +6,10 @@ var bcryptjs = require('bcryptjs');
 const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
 const { default: isEmail } = require('validator/lib/isEmail');
+const verifyEmail = require('./EmailController');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const crypto = require('crypto');
 
 app.use(session({
     secret: '214365',
@@ -107,23 +111,39 @@ const registerPOST = async (req, res) => {
         const salt = await bcryptjs.genSalt(10);
         senhaHash = await bcryptjs.hash(senha, salt);
 
-        con.query(`SELECT COUNT(*) FROM users WHERE email = '${email}'`, (err, resp) => {
-            if (err) {
-                console.log('Erro: ' + err)
-            } else {
-                if (resp[0]['COUNT(*)'] > 0) {
-                    res.render('register', { erro: 'Já existe uma conta com este e-mail' });
-                } else {
-                    con.query(`INSERT INTO users VALUES (DEFAULT, ?, DEFAULT, ?, ?, ?, DEFAULT)`, [nome, email, senhaHash, bio], (err, resp) => {
-                        if (err) {
-                            console.log('Erro: ' + err)
-                        } else {
-                            res.render('login', { erro: '' });
-                        }
-                    })
-                }
-            }
-        })
+        const countEmail = await conQuery('SELECT COUNT(*) FROM users WHERE email = ?', [email]);
+        if (!countEmail) {
+            return res.render('register', {erro: "Erro ao conferir e-mail"});
+        } 
+
+        if (countEmail[0]['COUNT(*)'] > 0) {
+            return res.render('register', { erro: 'Já existe uma conta com este e-mail' });
+        }
+        
+        const userAutenticacao = {
+            nomeToken: nome,
+            emailToken: email,
+            senhaToken: senhaHash,
+            bioToken: bio
+        }
+
+        const token = jwt.sign(userAutenticacao, process.env.JWT_KEY, {expiresIn: '300s'});
+        const code = crypto.randomBytes(3).toString('hex');
+
+        // console.log(token);
+
+        const sqlToken = await conQuery("INSERT INTO autenticacao VALUE (DEFAULT, ?, ?, DEFAULT)", [token, code]);
+        if(!sqlToken){
+            return res.render('register', {erro: "Erro ao gerar token de validação"})
+        }
+
+
+        var verificaçãoDoEmail = verifyEmail.emailVerify(email, code);
+        if(!verificaçãoDoEmail){
+            return res.render('register', {erro: "Erro ao mandar o código para seu e-mail"})
+        }
+
+        res.redirect(`/verifyEmail/${token}`);
 
     } else {
         res.render('register', { erro: '' });
