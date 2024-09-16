@@ -35,5 +35,7 @@
 <hr>
 <h3>Banco de dados</h3>
 <br>
-<p><strong>Banco de dados: </strong> Importe o arquivo que está no diretório "database/db_connection.js" para ter a estrutura do banco de dados</p>
+<p><strong>Banco de dados: </strong> Importe o arquivo que está no diretório "database/db.sql" para ter a estrutura do banco de dados</p>
 <p><strong>Credenciais: </strong> Crie o arquivo <code>.env</code> e crie as credenciais <code>HOST</code>, <code>USER</code>, <code>PASSWORD</code>, <code>DATABASE</code> e coloque as credenciais do banco de dados</p>
+<p><strong>Envio de E-mails: </strong> No arquivo <code>.env</code> e crie as credenciais <code>MAIL_MAILER</code>, <code>MAIL_HOST</code>, <code>MAIL_PORT</code>, <code>EMAIL</code>, <code>MAIL_PASS</code> e coloque as credenciais da API de envio de e-mails a partir do gmail.</p>
+<p><strong>JWT: </strong> No arquivo <code>.env</code>, crie a credencial <code>JWT_KEY</code> e coloque sua chave que será usada para criptografar os tokens.</p>
