@@ -9,9 +9,6 @@ var crypto = require('crypto');
 // Sessões
 
 const session = require('express-session');
-
-// Controllers
-
 app.use(express.static('public'));
 
 // Configurações
@@ -39,8 +36,8 @@ const PerfilController = require('./controllers/PerfilController');
 const PostsGenerationController = require('./controllers/PostsGenerationController');
 const ComentariosController = require('./controllers/ComentariosController');
 const EmailController = require('./controllers/EmailController');
+const EditarPerfilController = require('./controllers/EditarPerfilController');
 
-// Rotas
 // Início
 
 router.get('/', IndexController.index);
@@ -72,6 +69,9 @@ app.post('/dislike', ComentariosController.deslike);
 // Páginas de perfil
 
 app.get('/perfil', PerfilController.perfil);
+
+app.get('/editar', EditarPerfilController.editarPerfilGET);
+app.post('/editar', EditarPerfilController.editarPerfilPOST);
 
 // Em alta
 

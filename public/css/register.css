@@ -24,7 +24,7 @@ input[type='text']{
     border-bottom: 2px solid #6f2cf5;
     color: #6f2cf5;
 }
-input[type='submit']{
+input[type='submit'], .submit{
     width: 90%;
     height: 40px;
     border-radius: 5px;

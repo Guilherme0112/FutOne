@@ -1,0 +1,67 @@
+#img-preview{
+    width: 200px;
+    height: 200px;
+    outline: 2px solid #6f2cf5;
+    border-radius: 50%;
+    background-color: #6f2cf5;
+}
+#label-img{
+    margin: 5px 0 !important;
+    cursor: pointer;
+}
+#label-img:hover{
+    text-decoration: underline;
+}
+label{
+    margin-left: 15px;
+}
+form div{
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+input[type="file"]{
+    display: none;
+}
+input[type="email"]{
+    width: 90%;
+    height: 30px;
+    background-color: #212529;
+    border-bottom: 2px solid #62557b;
+    color: #62557b;
+}
+textarea{
+    width: 90%;
+    height: 30px;
+    background-color: #212529;
+    border-bottom: 2px solid #6f2cf5;
+    color: #6f2cf5;
+    margin-bottom: 20px;
+}
+button{
+    width: 300px !important;
+    margin: 10px;
+}
+.box-del-conta, form{
+    background-color: #212529;
+    width: 700px !important;
+    border-radius: 10px;
+    
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+
+    padding: 30px;
+}
+.box-del-conta{
+    display: grid;
+}
+.box-del-conta button{
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(175, 24, 24);
+    color: #212529;
+}

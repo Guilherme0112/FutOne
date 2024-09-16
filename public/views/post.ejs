@@ -23,12 +23,12 @@
             <img width="50" src="/images/icon.png" alt="Logo">
         </a>
         <a href="/alta">Em Alta</a>
-        <% if(sessao) { %>
+        <% if(user) { %>
             <a href="/perfil">Perfil</a>
             <a href="/logout">Sair</a>
         <% } else { %>
-                <a href="/login">Entrar</a>
-                <a href="/register">Registrar</a>
+            <a href="/login">Entrar</a>
+            <a href="/register">Registrar</a>
         <% } %>
 
     </header>
@@ -61,7 +61,7 @@
             </div>
         </div>
         <div id="comentarios">
-            <% if(perfil) { %>
+            <% if(perfil && user) { %>
                 <form action="/comentarioAdd" method="post" id="form" class="input-comment">
                     <div class="w-100">
                         <img src="<%= perfil[0].foto %>" alt="Foto de Perfil" class="img-perfil">
@@ -94,7 +94,7 @@
                 <% }) %>
             <% } else { %>
                 <p id="msg-comment">Seja o primeiro a comentar</p>
-                <% if(!sessao) { %>
+                <% if(!user) { %>
                 <p class="msg-comment-login">Faça login para comentar e dar likes</p>
                 <% } %>
             <% } %>

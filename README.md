@@ -6,7 +6,7 @@
 <h3>Tecnologias</h3>
 <hr>
 <p><strong>Front-End:</strong></p>
-<p>HTML, CSS (Bootstrap), JavaScript</p>
+<p>HTML, CSS, JavaScript, AJAX</p>
 <p><strong>Back-End:</strong></p>
 <p>Node.JS, Express.JS</p>
 <h3>Instalação</h3>
