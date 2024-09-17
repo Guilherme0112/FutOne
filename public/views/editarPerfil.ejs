@@ -20,14 +20,14 @@
         <a href="/logout">Sair</a>
     </header>
     <main>
-        <form action="/editar" method="post" enctype="multipart/form-data">
+        <form action="/perfil/editar" method="post" enctype="multipart/form-data">
             <div>
                 <img src="<%= user[0].foto %>" id="img-preview">
                 <label for="img" id="label-img">Mudar Foto</label>
                 <input type="file" name="img" id="img">
             </div>
             <label for="nome">Nome:</label>
-            <input type="text" value="<%= user[0].nome %>">
+            <input type="text" name="nome" value="<%= user[0].nome %>">
             <label for="email">Email:</label>
             <input type="email" value="<%= user[0].email %>" disabled>
             <label for="bio">Bio:</label>

@@ -70,8 +70,8 @@ app.post('/dislike', ComentariosController.deslike);
 
 app.get('/perfil', PerfilController.perfil);
 
-app.get('/editar', EditarPerfilController.editarPerfilGET);
-app.post('/editar', EditarPerfilController.editarPerfilPOST);
+app.get('/perfil/editar', EditarPerfilController.editarPerfilGET);
+app.post('/perfil/editar', EditarPerfilController.editarPerfilPOST);
 
 // Em alta
 
@@ -113,9 +113,9 @@ app.post('/criar', upload.single('foto'), PostsController.criarPostagemPOST);
 app.get('/criar/perfil', PerfilController.criadorGET);
 app.post('/criar/perfil', PerfilController.criadorPOST);
 
-// Porta do servidor
-
 app.get('/load-data/page/:id', PostsGenerationController.generateIndex);
+
+// Porta do servidor
 
 app.listen(8080, () => {
     console.log('Executando')

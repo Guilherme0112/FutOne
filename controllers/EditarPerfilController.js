@@ -18,7 +18,10 @@ const editarPerfilGET = async (req, res) => {
 }
 
 const editarPerfilPOST = async (req, res) => {
-
+    if(req.session.user){
+    console.log(req.body);
+    return res.redirect('/perfil/editar');
+    }
 }
 
 module.exports = { editarPerfilGET, editarPerfilPOST };
