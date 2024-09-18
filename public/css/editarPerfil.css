@@ -1,0 +1,28 @@
+dialog{
+    background-color: #212529;
+    border-radius: 10px;
+    padding: 5px !important;
+    width: 400px;
+
+}
+dialog *{
+    color: #6f2cf5;
+    text-align: center;
+}
+.inputs{
+    max-width: 300px !important;
+}
+#sim{
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(180, 31, 31);
+    color: #212529;
+}
+#nao{
+    display: flex;
+    justify-content: end;
+    background-color: #212529;
+    font-size: 25px;
+    margin-right: -10px;
+}

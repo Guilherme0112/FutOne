@@ -1,9 +1,7 @@
-const { table } = require('console');
 var con = require('../database/db_connection');
 const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
-const logout = require('./AuthController');
-
+var bcryptjs = require('bcryptjs');
 
 const editarPerfilGET = async (req, res) => {
     if(req.session.user){
@@ -22,37 +20,49 @@ const editarPerfilGET = async (req, res) => {
 const editarPerfilPOST = async (req, res) => {
     if(req.session.user){
         const delConta = req.body.conta;
-        // console.log(delConta);
+        const senha = req.body.senha;
+        console.log(req.body);
 
     // Verifica se é realmente para apagar a conta
 
         if(delConta === true){
             try{
-                const idUser = req.session.user.id;
+                const verifyUser = await conQuery("SELECT * FROM users WHERE id = ?", [req.session.user.id]);
+                // console.log(verifyUser);
+                if(verifyUser){
+                    const verifySenha = bcryptjs.compare(senha, verifyUser[0].senha);
+                    if(verifySenha){
+                
+                        const idUser = req.session.user.id;
 
-                const tabelas = ['likes', 'dislikes', 'comentarios', 'criador'];
+                        // Apaga os comentários, likes, deslikes do usuario
 
-                for(var tabela of tabelas){
+                        const tabelas = ['likes', 'dislikes', 'comentarios', 'criador'];
 
-                    var sqlDel = await conQuery("DELETE FROM " + tabela + " WHERE idUser = ?",  [idUser]);
+                        for(var tabela of tabelas){
+
+                            var sqlDel = await conQuery("DELETE FROM " + tabela + " WHERE idUser = ?",  [idUser]);
+                        }
+
+                        const conta = await conQuery("DELETE FROM users WHERE id = ?", [idUser]);
+                        const posts = await conQuery("DELETE FROM postagens WHERE idUsuario = ?", [idUser]);
+
+                        // Destrói a sessão
+
+                        req.session.destroy(async (err) => {
+                            if (err) {
+                                return res.json({erro: err})
+                            } 
+
+                            return res.json({
+                                status: 200,
+                                redirect: '/login'
+                            })
+
+                        })
+                    }
+                    return res.json({status: 250});
                 }
-
-                const conta = await conQuery("DELETE FROM users WHERE id = ?", [idUser]);
-                const posts = await conQuery("DELETE FROM postagens WHERE idUsuario = ?", [idUser]);
-
-                // Destrói a sessão
-
-                req.session.destroy(async (err) => {
-                    if (err) {
-                        return res.json({erro: err})
-                    } 
-
-                    return res.json({
-                        status: 200,
-                        redirect: '/login'
-                    })
-
-                })
             } catch (error){
                 return res.json({status: "Erro ao apagar a conta: " + error});
             }

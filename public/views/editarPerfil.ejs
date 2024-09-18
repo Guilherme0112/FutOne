@@ -8,10 +8,14 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/editar.css">
     <link rel="stylesheet" href="../css/register.css">
+    <link rel="stylesheet" href="../css/editarPerfil.css">
     <script src="../js/editarPerfil.js"></script>
     <title>Editar Perfil</title>
 </head>
 <body>
+
+    <!-- Cabeçalho da página -->
+
     <header>
         <a href="/">
             <img width="50" src="/images/icon.png" alt="Logo">
@@ -21,6 +25,9 @@
         <a href="/logout">Sair</a>
     </header>
     <main>
+
+        <!-- Formulário para editar perfil -->
+
         <form action="/perfil/editar" method="post" enctype="multipart/form-data">
             <div>
                 <img src="<%= user[0].foto %>" id="img-preview">
@@ -35,6 +42,20 @@
             <textarea name="bio"><%= user[0].bio %></textarea>
             <button class="submit">Enviar</button>
         </form>
+
+        <!-- Caixa de confirmação caso o usuário queira apagar a conta -->
+
+        <dialog align="center">
+            <button id="nao">x</button>
+            <p>A ação de apagar sua conta é irreversível, antes de qualquer ação veja se realmente é isso que voce deseja fazer, todos os seus dados serão perdidos como postagens, likes, deslikes e comentários.</p>
+            <input type="password" name="confirm_senha" class="inputs" id="senha">
+            <br>
+            <p class="erro" id="erro"></p>
+            <br>
+            <button id="sim">Excluir Conta</button>
+        </dialog>
+
+        <!-- Div de opções para apagar a conta -->
 
         <div class="box-del-conta">
             <button id="delContaCriador">Excluir Conta de Criador</button>

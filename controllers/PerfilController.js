@@ -3,6 +3,8 @@ var con = require('../database/db_connection');
 const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
 const moment = require('moment');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // Página de perfil
 
