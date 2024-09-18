@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     delConta.addEventListener('click', function(){
             dialog.showModal();
+            document.getElementById('html').style.filter = "brightness(60%)";
 
             // Se o usuário confirmar que desejar apagar a conta
 
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
             dialogNao.addEventListener('click', function(){
                 dialog.close();
+                document.getElementById('html').style.filter = "none";
             })
  
     })

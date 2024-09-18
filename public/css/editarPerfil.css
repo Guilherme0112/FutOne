@@ -1,8 +1,11 @@
 dialog{
+    position: fixed;
     background-color: #212529;
     border-radius: 10px;
     padding: 5px !important;
-    width: 400px;
+    width: 600px;
+    border: 2px solid #6f2cf5;
+    z-index: 998;
 
 }
 dialog *{
@@ -21,8 +24,15 @@ dialog *{
 }
 #nao{
     display: flex;
+    width: 20px !important;
     justify-content: end;
     background-color: #212529;
     font-size: 25px;
-    margin-right: -10px;
+    margin-left: 90% !important;
+}
+
+@media (max-width: 650px){
+    dialog{
+        width: 90%;
+    }
 }

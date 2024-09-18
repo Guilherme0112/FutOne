@@ -21,7 +21,7 @@ const editarPerfilPOST = async (req, res) => {
     if(req.session.user){
         const delConta = req.body.conta;
         const senha = req.body.senha;
-        console.log(req.body);
+        // console.log(req.body);
 
     // Verifica se é realmente para apagar a conta
 
@@ -30,7 +30,7 @@ const editarPerfilPOST = async (req, res) => {
                 const verifyUser = await conQuery("SELECT * FROM users WHERE id = ?", [req.session.user.id]);
                 // console.log(verifyUser);
                 if(verifyUser){
-                    const verifySenha = bcryptjs.compare(senha, verifyUser[0].senha);
+                    var verifySenha = await bcryptjs.compare(senha, verifyUser[0].senha);
                     if(verifySenha){
                 
                         const idUser = req.session.user.id;
