@@ -71,7 +71,7 @@ async function emailVerify(email, code) {
             from: process.env.EMAIL,
             to: email,
             subject: 'Verificação de Conta',
-            html: `<h1>Código de verificação</h1><br><b>${code}</b>`
+            html: `<h1>Código de verificação</h1><br><h3>${code}</h3>`
         };
 
         // Envio assíncrono do email

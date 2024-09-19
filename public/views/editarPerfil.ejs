@@ -35,12 +35,12 @@
                 <input type="file" name="img" id="img">
             </div>
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" value="<%= user[0].nome %>">
+            <input type="text" name="nome" id="nome" value="<%= user[0].nome %>" required>
             <label for="email">Email:</label>
             <input type="email" value="<%= user[0].email %>" disabled>
             <label for="bio">Bio:</label>
-            <textarea name="bio"><%= user[0].bio %></textarea>
-            <button class="submit">Enviar</button>
+            <textarea name="bio" id="bio"><%= user[0].bio %></textarea>
+            <input type="submit" class="submit" value="Enviar">
         </form>
 
         <!-- Caixa de confirmação caso o usuário queira apagar a conta -->

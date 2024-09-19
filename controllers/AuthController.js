@@ -130,8 +130,6 @@ const registerPOST = async (req, res) => {
         const token = jwt.sign(userAutenticacao, process.env.JWT_KEY, {expiresIn: '300s'});
         const code = crypto.randomBytes(3).toString('hex');
 
-        console.log(code);
-
         const sqlToken = await conQuery("INSERT INTO autenticacao VALUE (DEFAULT, ?, ?, DEFAULT)", [token, code]);
         if(!sqlToken){
             return res.render('register', {erro: "Erro ao gerar token de validação"})

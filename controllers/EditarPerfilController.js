@@ -1,7 +1,7 @@
-var con = require('../database/db_connection');
+const con = require('../database/db_connection');
 const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
-var bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcryptjs');
 
 const editarPerfilGET = async (req, res) => {
     if(req.session.user){
@@ -17,7 +17,34 @@ const editarPerfilGET = async (req, res) => {
     return res.redirect('/');
 }
 
-const editarPerfilPOST = async (req, res) => {
+
+const editarPerfilPOST = async(req, res) => {
+    if(req.session.user){
+        var nome = req.body.nomeJSON;
+        var bio = req.body.bioJSON;
+        var img = req.body.imgJSON;
+
+        // console.log(nome, bio, img);
+        console.log(req.body);
+
+        if(nome){
+            const sql = await conQuery("UPDATE users SET nome = ? WHERE id = ? ", [nome, req.session.user.id]);
+        }
+        if(bio){
+            const sql = await conQuery("UPDATE users SET bio = ? WHERE id = ? ", [bio, req.session.user.id]);
+        }
+        // if(img){
+        //     const sql = await conQuery("UPDATE users SET foto = ? WHERE id = ? ", [img, req.session.user.id]);
+        // }
+
+        return res.json({
+            status: 200,
+            redirect: '/perfil'
+        })
+    }
+}
+
+const delConta = async (req, res) => {
     if(req.session.user){
         const delConta = req.body.conta;
         const senha = req.body.senha;
@@ -51,7 +78,7 @@ const editarPerfilPOST = async (req, res) => {
 
                         req.session.destroy(async (err) => {
                             if (err) {
-                                return res.json({erro: err})
+                                console.log(err)
                             } 
 
                             return res.json({
@@ -60,8 +87,10 @@ const editarPerfilPOST = async (req, res) => {
                             })
 
                         })
+                    } else {
+                        
+                        return res.json({status: 250});
                     }
-                    return res.json({status: 250});
                 }
             } catch (error){
                 return res.json({status: "Erro ao apagar a conta: " + error});
@@ -70,4 +99,4 @@ const editarPerfilPOST = async (req, res) => {
     }
 }
 
-module.exports = { editarPerfilGET, editarPerfilPOST };
+module.exports = { editarPerfilGET, delConta, editarPerfilPOST };

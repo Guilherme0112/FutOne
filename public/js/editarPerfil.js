@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
             dialogSim.addEventListener('click', function(){
                 var confirmPass = document.getElementById('senha').value;
 
-                fetch('/perfil/editar',{
+                fetch('/perfil/deletarConta',{
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json"
@@ -43,5 +43,6 @@ document.addEventListener('DOMContentLoaded', function(){
                 document.getElementById('html').style.filter = "none";
             })
  
-    })
+    });
+
 })

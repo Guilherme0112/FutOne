@@ -72,6 +72,7 @@ app.get('/perfil', PerfilController.perfil);
 
 app.get('/perfil/editar', EditarPerfilController.editarPerfilGET);
 app.post('/perfil/editar', EditarPerfilController.editarPerfilPOST);
+app.post('/perfil/deletarConta', EditarPerfilController.delConta);
 
 // Em alta
 
