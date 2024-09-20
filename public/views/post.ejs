@@ -64,7 +64,7 @@
             <% if(perfil && user) { %>
                 <form action="/comentarioAdd" method="post" id="form" class="input-comment">
                     <div class="w-100">
-                        <img src="<%= perfil[0].foto %>" alt="Foto de Perfil" class="img-perfil">
+                        <img src="../<%= perfil[0].foto %>" alt="Foto de Perfil" class="img-perfil">
                         <textarea name="comentario" class="input-text" id='input-text' rows="1"
                             placeholder="Digite um comentário..."></textarea>
                     </div>

@@ -30,7 +30,7 @@
 
         <form action="/perfil/editar" method="post" id="form" enctype="multipart/form-data">
             <div>
-                <img src="" id="img-preview">
+                <img src="../<%= user[0].foto %>" id="img-preview">
                 <label for="img" id="label-img">Mudar Foto</label>
                 <input type="file" name="img" id="img" accept="image/png, image/jpg, image/jpeg">
             </div>

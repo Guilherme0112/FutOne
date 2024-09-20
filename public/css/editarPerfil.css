@@ -33,7 +33,6 @@ dialog *{
 #img-preview{
     object-fit: cover;
     object-position: center;
-    display: none;
 }
 @media (max-width: 650px){
     dialog{

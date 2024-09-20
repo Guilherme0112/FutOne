@@ -72,7 +72,7 @@ app.get('/perfil', PerfilController.perfil);
 
 // Receber o arquivo de imagem e salvar na pasta
 
-var storage = multer.diskStorage({
+const storagePerfil = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/uploads/perfil/');
     },
@@ -91,10 +91,10 @@ var storage = multer.diskStorage({
         }
     }
 });
-var upload = multer({ storage });
+const uploadPerfil = multer({ storage: storagePerfil });
 
 app.get('/perfil/editar', EditarPerfilController.editarPerfilGET);
-app.post('/perfil/editar', upload.single('img'), EditarPerfilController.editarPerfilPOST);
+app.post('/perfil/editar', uploadPerfil.single('img'), EditarPerfilController.editarPerfilPOST);
 app.post('/perfil/deletarConta', EditarPerfilController.delConta);
 
 // Em alta
@@ -105,7 +105,7 @@ app.get('/alta', function(req, res) {
 
 // Criar postagem
 
-storage = multer.diskStorage({
+const storagePost = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/uploads/posts/');
     },
@@ -124,10 +124,10 @@ storage = multer.diskStorage({
         }
     }
 });
-upload = multer({ storage });
+const uploadPost = multer({ storage: storagePost });
 
 app.get('/criar', PostsController.criarPostagemGET);
-app.post('/criar', upload.single('foto'), PostsController.criarPostagemPOST);
+app.post('/criar', uploadPost.single('foto'), PostsController.criarPostagemPOST);
 
 // Formulário para ser noticiário
 

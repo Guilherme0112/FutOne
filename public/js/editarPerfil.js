@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function(){
                 };
                 document.querySelector('#erro').textContent = "";
                 reader.readAsDataURL(img);
-                document.getElementById('img-preview').style.display = "block";
                 }
         }
     })
