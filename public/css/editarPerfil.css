@@ -30,7 +30,11 @@ dialog *{
     font-size: 25px;
     margin-left: 90% !important;
 }
-
+#img-preview{
+    object-fit: cover;
+    object-position: center;
+    display: none;
+}
 @media (max-width: 650px){
     dialog{
         width: 90%;

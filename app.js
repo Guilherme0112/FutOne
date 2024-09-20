@@ -70,25 +70,11 @@ app.post('/dislike', ComentariosController.deslike);
 
 app.get('/perfil', PerfilController.perfil);
 
-app.get('/perfil/editar', EditarPerfilController.editarPerfilGET);
-app.post('/perfil/editar', EditarPerfilController.editarPerfilPOST);
-app.post('/perfil/deletarConta', EditarPerfilController.delConta);
-
-// Em alta
-
-app.get('/alta', function(req, res) {
-    res.render('alta');
-})
-
-// Criar postagem
-
-app.get('/criar', PostsController.criarPostagemGET);
-
 // Receber o arquivo de imagem e salvar na pasta
 
-const storage = multer.diskStorage({
+var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/uploads/');
+        cb(null, 'public/uploads/perfil/');
     },
     filename: (req, file, cb) => {
         var nameArquivo = crypto.randomBytes(16).toString('hex');
@@ -105,8 +91,42 @@ const storage = multer.diskStorage({
         }
     }
 });
-const upload = multer({ storage });
+var upload = multer({ storage });
 
+app.get('/perfil/editar', EditarPerfilController.editarPerfilGET);
+app.post('/perfil/editar', upload.single('img'), EditarPerfilController.editarPerfilPOST);
+app.post('/perfil/deletarConta', EditarPerfilController.delConta);
+
+// Em alta
+
+app.get('/alta', function(req, res) {
+    res.render('alta');
+})
+
+// Criar postagem
+
+storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads/posts/');
+    },
+    filename: (req, file, cb) => {
+        var nameArquivo = crypto.randomBytes(16).toString('hex');
+        var extencao = file.originalname.split('.').pop();
+
+        cb(null, nameArquivo + '.' + extencao);
+    },
+    fileFilter: (req, file, cb) =>{
+        const tiposDeImagem = ['image/jpg', 'image/png', 'image/jpeg'];
+        if(tiposDeImagem.includes(file.mimetype)){
+            cb(null, true);
+        } else {
+            cb(new Error('Somente JPEG, JPG e PNG são aceitos'))
+        }
+    }
+});
+upload = multer({ storage });
+
+app.get('/criar', PostsController.criarPostagemGET);
 app.post('/criar', upload.single('foto'), PostsController.criarPostagemPOST);
 
 // Formulário para ser noticiário
