@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/09/2024 às 17:26
+-- Tempo de geração: 21/09/2024 às 17:38
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -33,13 +33,6 @@ CREATE TABLE `autenticacao` (
   `codigo` varchar(6) NOT NULL,
   `criado` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `autenticacao`
---
-
-INSERT INTO `autenticacao` (`id`, `token`, `codigo`, `criado`) VALUES
-(24, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lVG9rZW4iOiJGdWxhbm8iLCJlbWFpbFRva2VuIjoiY2FuYWxndWltZW5kc0BnbWFpbC5jb20iLCJzZW5oYVRva2VuIjoiJDJhJDEwJGhRU0VhRldVZ2NWclpEeWg3WTRIY2VwR3BkcDd0V3FZOFY2akpoZVpoYXlKdzZ4ZlQ1V0RXIiwiYmlvVG9rZW4iOiIiLCJpYXQiOjE3MjY1MDE0NTcsImV4cCI6MTcyNjUwMTc1N30.MOMSFEj8O1orrDiMUgyWShMfPB3aHzGjsBI0j6taNuI', 'c9835a', '2024-09-16 15:44:17');
 
 -- --------------------------------------------------------
 
@@ -134,12 +127,19 @@ CREATE TABLE `seguidores` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `foto` text NOT NULL DEFAULT '../images/user.jpg',
+  `foto` text NOT NULL DEFAULT 'images/user.jpg',
   `email` varchar(150) NOT NULL,
   `senha` text NOT NULL,
-  `bio` text NOT NULL DEFAULT '',
+  `bio` text NOT NULL DEFAULT '\'\'',
   `criado` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `users`
+--
+
+INSERT INTO `users` (`id`, `nome`, `foto`, `email`, `senha`, `bio`, `criado`) VALUES
+(54, 'Guilherme', 'uploads/perfil/61b839d2ae39397e4e7be5797eccff28.jpg', 'guimendesmen124@gmail.com', '$2a$10$FvVzK3SnOYZg4EK78pJua.XKMo6tqiJkMaQWYrSnV6M8N.ayRu/Fa', '.', '2024-09-20 01:28:04');
 
 --
 -- Índices para tabelas despejadas
@@ -201,37 +201,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `autenticacao`
 --
 ALTER TABLE `autenticacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de tabela `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT de tabela `criador`
 --
 ALTER TABLE `criador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `dislikes`
 --
 ALTER TABLE `dislikes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de tabela `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de tabela `postagens`
 --
 ALTER TABLE `postagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `seguidores`
@@ -243,7 +243,7 @@ ALTER TABLE `seguidores`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

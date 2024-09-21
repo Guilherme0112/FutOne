@@ -4,6 +4,7 @@ const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 require('dotenv').config();
 
 // Página de perfil
@@ -91,6 +92,9 @@ const criadorPOST = async (req, res) => {
             // Inserção dos dados após a validação
 
             const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id]);
+
+            // Criptografia do CPF
+            
 
             if(criador.length === 0){
                 const sql = await conQuery('INSERT INTO criador VALUES (DEFAULT, ?, ?, ?, ?, DEFAULT)', [cpfF, nasc, sexo, req.session.user.id]);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt_BR" id="html">
+<html lang="pt_BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,7 +59,9 @@
         <!-- Div de opções para apagar a conta -->
 
         <div class="box-del-conta">
-            <button id="delContaCriador">Excluir Conta de Criador</button>
+            <% if(criador.length > 0){ %>
+                <button id="delContaCriador">Excluir Conta de Criador</button>
+            <% } %>
             <button id="delConta">Excluir Conta</button>
         </div>
     </main>

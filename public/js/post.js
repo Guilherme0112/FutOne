@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     boxComment2.dataset.id = dado.comentarioSQL[0].id;
 
                     const imgComment = document.createElement('img');
-                    imgComment.src = dado.comentarioSQL[0].foto;
+                    imgComment.src = "../" + dado.comentarioSQL[0].foto;
                     imgComment.classList.add('img-comment');
                     boxComment2.appendChild(imgComment);
 

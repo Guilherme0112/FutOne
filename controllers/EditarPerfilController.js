@@ -9,10 +9,12 @@ const editarPerfilGET = async (req, res) => {
         var erro = "";
         const idUser = req.session.user.id;
 
-        const user = await conQuery("SELECT nome, email, foto, bio, criado FROM users WHERE id = ? LIMIT 1", [idUser]);
+        const user = await conQuery("SELECT * FROM users WHERE id = ? LIMIT 1", [idUser]);
+
+        const criador = await conQuery("SELECT * FROM criador WHERE idUser = ?", [idUser]);
 
         if (user) {
-            return res.render('editarPerfil', { user, erro });
+            return res.render('editarPerfil', { user, criador, erro });
         }
         return res.redirect('/perfil');
     }
@@ -92,59 +94,108 @@ const editarPerfilPOST = async (req, res) => {
     }
 }
 
+// Apagar conta principal
+
 const delConta = async (req, res) => {
     if (req.session.user) {
         const delConta = req.body.conta;
         const senha = req.body.senha;
         // console.log(req.body);
 
-        // Verifica se é realmente para apagar a conta
+        try {
+            const verifyUser = await conQuery("SELECT * FROM users WHERE id = ?", [req.session.user.id]);
+            // console.log(verifyUser);
+            if (verifyUser) {
+                var verifySenha = await bcryptjs.compare(senha, verifyUser[0].senha);
+                if (verifySenha) {
 
-        if (delConta === true) {
-            try {
-                const verifyUser = await conQuery("SELECT * FROM users WHERE id = ?", [req.session.user.id]);
-                // console.log(verifyUser);
-                if (verifyUser) {
-                    var verifySenha = await bcryptjs.compare(senha, verifyUser[0].senha);
-                    if (verifySenha) {
+                    const idUser = req.session.user.id;
 
-                        const idUser = req.session.user.id;
+                    // Apaga os comentários, likes, deslikes do usuario
 
-                        // Apaga os comentários, likes, deslikes do usuario
+                    const tabelas = ['likes', 'dislikes', 'comentarios', 'criador'];
 
-                        const tabelas = ['likes', 'dislikes', 'comentarios', 'criador'];
+                    for (var tabela of tabelas) {
 
-                        for (var tabela of tabelas) {
+                        var sqlDel = await conQuery("DELETE FROM " + tabela + " WHERE idUser = ?", [idUser]);
+                    }
 
-                            var sqlDel = await conQuery("DELETE FROM " + tabela + " WHERE idUser = ?", [idUser]);
+                    const conta = await conQuery("DELETE FROM users WHERE id = ? LIMIT 1", [idUser]);
+                    const posts = await conQuery("DELETE FROM postagens WHERE idUsuario = ?", [idUser]);
+
+                    // Destrói a sessão
+
+                    req.session.destroy(async (err) => {
+                        if (err) {
+                            console.log(err)
                         }
 
-                        const conta = await conQuery("DELETE FROM users WHERE id = ?", [idUser]);
-                        const posts = await conQuery("DELETE FROM postagens WHERE idUsuario = ?", [idUser]);
-
-                        // Destrói a sessão
-
-                        req.session.destroy(async (err) => {
-                            if (err) {
-                                console.log(err)
-                            }
-
-                            return res.json({
-                                status: 200,
-                                redirect: '/login'
-                            })
-
+                        return res.json({
+                            status: 200,
+                            redirect: '/login'
                         })
-                    } else {
 
-                        return res.json({ status: 250 });
-                    }
+                    })
+                } else {
+
+                    return res.json({ status: 250 });
                 }
-            } catch (error) {
-                return res.json({ status: "Erro ao apagar a conta: " + error });
             }
+        } catch (error) {
+            return res.json({ status: "Erro ao apagar a conta: " + error });
         }
     }
 }
 
-module.exports = { editarPerfilGET, delConta, editarPerfilPOST };
+const delContaCriador = async (req, res) => {
+    if(!req.session.user){
+        return res.redirect('/');
+    }
+    if(!req.body.senha){
+        return res.redirect('/perfil/editar');
+    }
+
+    const senha = req.body.senha;
+
+    const verifyUser = await conQuery("SELECT * FROM users WHERE id = ?", [req.session.user.id]);
+            // console.log(verifyUser);
+    if (verifyUser) {
+        var verifySenha = await bcryptjs.compare(senha, verifyUser[0].senha);
+        if (!verifySenha) {
+            return res.json({status: "A senha está incorreta"})
+        }
+    }
+
+    const idUser = req.session.user.id;
+    const verifyConta = await conQuery("SELECT * FROM criador WHERE idUser = ?", [idUser]);
+
+    if(!verifyConta){
+        return res.redirect('/');
+    }
+
+    // Pega id's dos posts que o usuário criou
+    const idPosts = await conQuery("SELECT id, foto FROM postagens WHERE idUsuario = ?", [idUser]);
+
+
+    // Apaga os likes os dislikes e por final, a postagem
+    for(var idPost of idPosts){
+        var delLikes = await conQuery("DELETE FROM likes WHERE idPost = ?", [idPost.id]);
+        var delDislikes = await conQuery("DELETE FROM dislikes WHERE idPost = ?", [idPost.id]);
+        var delSeguidores = await conQuery("DELETE FROM seguidores WHERE idSeguidor = ?", [idUser]);
+        var delPost = await conQuery("DELETE FROM postagens WHERE id = ? LIMIT 1", [idPost.id]);
+        fs.unlinkSync('public/' + idPost.foto)
+    }
+
+    const delContaCriadorSQL = await conQuery("DELETE FROM criador WHERE idUser = ? LIMIT 1", [idUser]);
+
+    if(!delContaCriadorSQL){
+        return res.json({erro: "Não foi possível apagar sua conta criador. Tente novamente mais tarde."});
+    }
+
+    return res.json({
+        status: 200,
+        redirect: '/perfil'
+    });
+
+}
+module.exports = { editarPerfilGET, delConta, delContaCriador, editarPerfilPOST };

@@ -96,6 +96,7 @@ const uploadPerfil = multer({ storage: storagePerfil });
 app.get('/perfil/editar', EditarPerfilController.editarPerfilGET);
 app.post('/perfil/editar', uploadPerfil.single('img'), EditarPerfilController.editarPerfilPOST);
 app.post('/perfil/deletarConta', EditarPerfilController.delConta);
+app.post('/perfil/deletarContaCriador', EditarPerfilController.delContaCriador);
 
 // Em alta
 

@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
     const delConta = document.querySelector('#delConta');
-    const delContaCriador = document.querySelector('#delContaCriador');
     const dialog = document.querySelector('dialog');
     const dialogSim = document.querySelector('#sim');
     const dialogNao = document.querySelector('#nao');
@@ -9,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     delConta.addEventListener('click', function(){
             dialog.showModal();
-            document.getElementById('html').style.filter = "brightness(60%)";
 
             // Se o usuário confirmar que desejar apagar a conta
 
@@ -22,7 +20,39 @@ document.addEventListener('DOMContentLoaded', function(){
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        conta: true,
+                        senha: confirmPass
+                    })
+                })
+                .then(response => response.json())
+                .then(resposta => {
+
+                    if(resposta.status === 200){
+
+                        window.location = resposta.redirect;
+                    } else {
+                        document.querySelector('#erro').textContent = resposta.status;
+                    }
+                })
+            })
+        });
+
+                // Deletar conta com permissões de criador
+    const delContaCriador = document.querySelector('#delContaCriador');
+    if(delContaCriador){
+        delContaCriador.addEventListener('click', function(event){
+            dialog.showModal();
+
+            // Se o usuário confirmar que desejar apagar a conta
+
+            dialogSim.addEventListener('click', function(){
+                var confirmPass = document.getElementById('senha').value;
+
+                fetch('/perfil/deletarContaCriador',{
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
                         senha: confirmPass
                     })
                 })
@@ -39,13 +69,13 @@ document.addEventListener('DOMContentLoaded', function(){
             })
 
             // Se ele cancelar
-
+        
             dialogNao.addEventListener('click', function(){
                 dialog.close();
-                document.getElementById('html').style.filter = "none";
+                // document.getElementById('html').style.filter = "none";
             })
- 
-    });
+        })
+    }
 
     // Preview da imagem
 
@@ -69,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 };
                 document.querySelector('#erro').textContent = "";
                 reader.readAsDataURL(img);
-                }
+            }
         }
     })
 })
