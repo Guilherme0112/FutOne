@@ -7,19 +7,20 @@
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/perfil.css">
+    <script src="../js/perfil.js"></script>
     <title>
         <%= perfil[0].nome %>
     </title>
 </head>
 <body>
     <header>
-        <a href="/">
+        <a href="/" class="img-logo">
             <img width="50" src="/images/icon.png" alt="Logo">
         </a>
         <% if (criador.length === 0){ %>
-            <a href='/criar/perfil'>Seja Criador</a>
+            <a href='/perfil/criar'>Seja Criador</a>
         <% } else { %>
-            <a href='/criar'>Criar Postagem</a>
+            <a href='/post/criar'>Criar Postagem</a>
         <% } %>
         <a href='/alta'>Em alta</a>
         <a href="/logout">Sair</a>
@@ -46,10 +47,11 @@
                 </section>
             <% } else { %> 
                 <% posts.forEach(post =>{ %>
-                    <section class="box-posts-root">
-                        <a href="/post/<%= post.id %>" class="box-not">
-                            <img src="<%= post.foto %>" class="img-not">
-                            <p class="desc-not"><%= post.titulo %></p>
+                    <section class="box-posts-perfil" data-id="<%= post.id %>">
+                        <button id="delBtn" class="bi bi-trash" value="Excluir"></button>
+                        <img src="<%= post.foto %>" class="img-not-perfil">
+                        <a href="/post/<%= post.id %>" class="box-desc-perfil">
+                            <%= post.titulo %>
                         </a>
                     </section>
                 <% }) %>

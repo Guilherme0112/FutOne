@@ -6,20 +6,25 @@ main{
     width: 100%;
     height: 100%;
     justify-content: center;
-    align-items: center;
-    padding: 10px;
+    align-items: start;
+    padding-left: 250px;
+    padding-top: 10px;
+}
+.img-logo{
+    display: flex !important;
+    z-index: 999;
 }
 
+/* Estilo da parte de editar perfil */
 
 .header-div{
-    position: absolute;
-    left: 10px;
-    top: 100px;
+    position: fixed;
+    left: 0;
+    top: 0;
     width: 250px;
-    height: 600px;
+    height: 100vh;
     background-color: #212529;
-    border-radius: 10px;
-    padding: 10px;
+    padding: 100px 0;
 
     display: flex;
     align-items: start;
@@ -53,31 +58,6 @@ main{
     text-align: center;
     color: #6f2cf5;
 }
-.box-not-posts{
-    width: 300px;
-    aspect-ratio: 16/9;
-    background-color: #212529;
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-
-}
-.box-not-posts * {
-    font-size: 18px;
-    color: #6f2cf5;
-}
-.box-posts-root{
-    width: 100%;
-
-    padding-left: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
 .btn-perfil{
     width: 90%;
     height: 40px;
@@ -95,7 +75,45 @@ main{
     transform: scale(1.01);
 }
 
+/* Estilo da box dos posts */
 
+.box-posts-perfil{
+    width: 90%;
+    background-color: #212529;
+    border-radius: 10px;
+    aspect-ratio: 10/1.5;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+.img-not-perfil{
+    height: 100%;
+    border-radius: 10px;
+    aspect-ratio: 16/9;
+}
+.box-desc-perfil{
+    width: 100%;
+    text-decoration: none;
+    color: #6f2cf5;
+    margin: 0 10px;
+}
+.box-desc-perfil:hover{
+    text-decoration: underline;
+}
+.checkbox-perfil{
+    margin: 0 10px;
+    cursor: pointer;
+}
+#delBtn{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(146, 29, 29);
+    border-radius: 4px;
+    margin: 0 20px;
+    background: url('../images/trash.PNG');
+    background-size: cover;
+    background-position: center;
+}
 @media (max-width: 600px){
     main{
         padding: 10px;
@@ -107,9 +125,5 @@ main{
         justify-content: center;
         align-items: normal;
 
-    }
-    .box-posts-root{
-        margin-top: 430px;
-        padding: 0;
     }
 }

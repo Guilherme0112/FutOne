@@ -41,12 +41,12 @@ const criadorGET = async (req, res) => {
     if(req.session.user){
         const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id]);
         if(criador.length > 0){
-            res.redirect('/');
+            return res.render('criar', {erro: ''});
         } else {
-            res.render('criarPerfil', {erro: ''});
+            return res.redirect('/');
         }
     } else {
-        res.redirect('/');
+        return res.redirect('/');
     }
 }
 

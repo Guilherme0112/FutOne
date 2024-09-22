@@ -2,13 +2,17 @@
 
 var express = require('express');
 var app = express();
-var path = require('path')
-var multer = require('multer');
-var crypto = require('crypto');
+const path = require('path');
 
 // Sessões
 
 const session = require('express-session');
+app.use(session({
+    secret: '214365',
+    resave: false,
+    saveUninitialized: false
+}))
+
 app.use(express.static('public'));
 
 // Configurações
@@ -20,84 +24,32 @@ app.use(express.json());
 // Sessões
 
 app.use(express.urlencoded({ extended: false }));
-app.use(session({
-    secret: '214365',
-    resave: false,
-    saveUninitialized: false
-}))
 
-// Controllers
-
+// Rotas
 const router = express.Router();
-const IndexController = require('./controllers/IndexController');
-const AuthController = require('./controllers/AuthController');
-const PostsController = require('./controllers/PostsController');
-const PerfilController = require('./controllers/PerfilController');
-const PostsGenerationController = require('./controllers/PostsGenerationController');
-const ComentariosController = require('./controllers/ComentariosController');
-const EmailController = require('./controllers/EmailController');
-const EditarPerfilController = require('./controllers/EditarPerfilController');
+
+const indexRota = require('./routes/main');
+const authRota = require('./routes/auth');
+const postRota = require('./routes/post');
+const usersRota = require('./routes/users');
+
+const EditarPostagemController = require('./controllers/EditarPostagemController');
 
 // Início
 
-router.get('/', IndexController.index);
-app.use('/', router);
+app.use('/', indexRota);
 
 // Autenticação
 
-app.get('/login', AuthController.loginGET);
-app.post('/login', AuthController.loginPOST);
+app.use('/', authRota);
 
-app.get('/register', AuthController.registerGET);
-app.post('/register', AuthController.registerPOST);
+// Postagens
 
-app.get('/verifyEmail/:token', EmailController.verifyEmailGET);
-app.post('/verifyEmail', EmailController.verifyEmailPOST);
+app.use('/post', postRota);
 
-app.get('/logout', AuthController.logout);
+// Perfil
 
-// Aba de exibição de posts
-
-app.get('/post/:id', PostsController.postagemPage);
-
-app.post('/comentarioAdd', ComentariosController.commentPage);
-app.post('/comentarioDel', ComentariosController.deleteComment);
-
-app.post('/like', ComentariosController.like);
-app.post('/dislike', ComentariosController.deslike);
-
-// Páginas de perfil
-
-app.get('/perfil', PerfilController.perfil);
-
-// Receber o arquivo de imagem e salvar na pasta
-
-const storagePerfil = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/uploads/perfil/');
-    },
-    filename: (req, file, cb) => {
-        var nameArquivo = crypto.randomBytes(16).toString('hex');
-        var extencao = file.originalname.split('.').pop();
-
-        cb(null, nameArquivo + '.' + extencao);
-    },
-    fileFilter: (req, file, cb) =>{
-        const tiposDeImagem = ['image/jpg', 'image/png', 'image/jpeg'];
-        if(tiposDeImagem.includes(file.mimetype)){
-            cb(null, true);
-        } else {
-            cb(new Error('Somente JPEG, JPG e PNG são aceitos'))
-        }
-    }
-});
-const uploadPerfil = multer({ storage: storagePerfil });
-
-app.get('/perfil/editar', EditarPerfilController.editarPerfilGET);
-app.get('/perfil/editar/you', EditarPerfilController.editarPerfilPOST);
-app.post('/perfil/editar/you', uploadPerfil.single('img'), EditarPerfilController.editarPerfilPOST);
-app.post('/perfil/deletarConta', EditarPerfilController.delConta);
-app.post('/perfil/deletarContaCriador', EditarPerfilController.delContaCriador);
+app.use('/perfil', usersRota);
 
 // Em alta
 
@@ -105,38 +57,11 @@ app.get('/alta', function(req, res) {
     res.render('alta');
 })
 
-// Criar postagem
+// Fallback
 
-const storagePost = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/uploads/posts/');
-    },
-    filename: (req, file, cb) => {
-        var nameArquivo = crypto.randomBytes(16).toString('hex');
-        var extencao = file.originalname.split('.').pop();
-
-        cb(null, nameArquivo + '.' + extencao);
-    },
-    fileFilter: (req, file, cb) =>{
-        const tiposDeImagem = ['image/jpg', 'image/png', 'image/jpeg'];
-        if(tiposDeImagem.includes(file.mimetype)){
-            cb(null, true);
-        } else {
-            cb(new Error('Somente JPEG, JPG e PNG são aceitos'))
-        }
-    }
-});
-const uploadPost = multer({ storage: storagePost });
-
-app.get('/criar', PostsController.criarPostagemGET);
-app.post('/criar', uploadPost.single('foto'), PostsController.criarPostagemPOST);
-
-// Formulário para ser noticiário
-
-app.get('/criar/perfil', PerfilController.criadorGET);
-app.post('/criar/perfil', PerfilController.criadorPOST);
-
-app.get('/load-data/page/:id', PostsGenerationController.generateIndex);
+app.get('*', (req, res) => {
+    return res.render('404')
+})
 
 // Porta do servidor
 

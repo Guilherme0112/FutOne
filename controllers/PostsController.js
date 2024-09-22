@@ -40,19 +40,19 @@ const postagemPage = async (req, res) => {
     // GET
 
 const criarPostagemGET = async (req, res) => {
-    if(req.session.user){
-    
+    if(!req.session.user){
+        return res.redirect('/');
+    }
     // Verifica se o usuario é criador
 
-        const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id]);
-        if(criador.length > 0){
-            res.render('criar', {erro: ''});
-        } else {
-            res.redirect('/');
-        }
+    const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id]);
+    if(criador.length > 0){
+        return res.render('criar', {erro: ''});
     } else {
-        res.redirect('/');
+        return res.redirect('/');
     }
+        
+
 }
 
     // POST
