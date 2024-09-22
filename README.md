@@ -33,7 +33,7 @@
 <br>
 <code>npm install jsonwebtoken</code>
 <hr>
-<h3>Banco de dados</h3>
+<h3>Instalação</h3>
 <br>
 <p><strong>Banco de dados: </strong> Importe o arquivo que está no diretório "database/db.sql" para ter a estrutura do banco de dados</p>
 <p><strong>Credenciais: </strong> Crie o arquivo <code>.env</code> e crie as credenciais <code>HOST</code>, <code>USER</code>, <code>PASSWORD</code>, <code>DATABASE</code> e coloque as credenciais do banco de dados</p>

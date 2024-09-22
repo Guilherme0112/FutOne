@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     }
                 })
             })
+            dialogNao.addEventListener('click', function(){
+                dialog.close();
+            })
         });
 
                 // Deletar conta com permissões de criador
@@ -72,10 +75,22 @@ document.addEventListener('DOMContentLoaded', function(){
         
             dialogNao.addEventListener('click', function(){
                 dialog.close();
-                // document.getElementById('html').style.filter = "none";
             })
         })
     }
+
+    document.querySelector('#form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        fetch('/perfil/editar/you')
+        .then(response => response.json())
+        .then(resposta => {
+            if(resposta.status != 200){
+                document.querySelector('#erro').textContent = resposta.status;
+                return false;
+            }
+            window.location = "/perfil"
+        })
+    });
 
     // Preview da imagem
 

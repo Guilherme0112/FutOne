@@ -27,8 +27,9 @@ const editarPerfilPOST = async (req, res) => {
             return res.redirect('/');
         }
 
-        const user = await conQuery("SELECT nome, email, bio, criado FROM users WHERE id = ? LIMIT 1", [req.session.user.id]);
-
+        // console.log(req.body)
+        // console.log(req.file)
+        
         const userSession = req.session.user;
         const nome = req.body.nome;
         const bio = req.body.bio;
@@ -36,19 +37,19 @@ const editarPerfilPOST = async (req, res) => {
         // Validação dos campos nome e bio
 
         if (nome.length < 3 || nome.length > 50) {
-            return res.render('editarPerfil', { user, erro: "O nome deve ter entre 3 e 50 caracteres" });
+            return res.json({status: "O nome deve ter entre 3 e 50 caracteres"});
         }
         const sqlNome = await conQuery("UPDATE users SET nome = ? WHERE id = ?", [nome, userSession.id]);
 
         if (bio.length > 500) {
-            return res.render('editarPerfil', { user, erro: "A bio deve ter no máximo 500 caracteres" });
+            return res.json({status: "A bio deve ter no máximo 500 caracteres"});
         }
         const sqlBio = await conQuery("UPDATE users SET bio = ? WHERE id = ?", [bio, userSession.id]);
 
         // Validação da imagem
 
         if (req.file) {
-
+        
             // console.log(req.file)
             const img = 'uploads/perfil/' + req.file.filename;
 
@@ -58,7 +59,7 @@ const editarPerfilPOST = async (req, res) => {
                 fs.unlink('public/' + img, (err) => {
                     if (err) throw err;
                 });
-                return res.render("editarPerfil", { user, erro: "Somente são aceitas PNG, JPG e JPEG" });
+                return res.json({erro: "Somente são aceitos arquivos dos tipos PNG, JPEG e JPG"});
             }
 
             // Pega a antiga foto
@@ -73,7 +74,7 @@ const editarPerfilPOST = async (req, res) => {
                 });
 
                 
-                return res.render("editarPerfil", { user, erro: "Erro ao trocar imagem. Tente novamente mais tarde" });
+                return res.json({erro: "Erro ao trocar imagem. Tente novamente mais tarde"})
             }
             
             // Verifica se é a foto padrão para so deletar caso for uma foto já adicionado pelo usuário
@@ -88,9 +89,9 @@ const editarPerfilPOST = async (req, res) => {
         
         }
 
-        return res.redirect('/perfil');
+        return res.json({status: 200})
     } catch (error) {
-        return res.render("editarPerfil", { user, erro: "Erro ao atualizar perfil. Tente novamente mais tarde" });
+        return res.json({status: "Erro ao carregar imagem. Tente novamente mais tarde"})
     }
 }
 
@@ -138,7 +139,7 @@ const delConta = async (req, res) => {
                     })
                 } else {
 
-                    return res.json({ status: 250 });
+                    return res.json({ status: "A senha está incorreta" });
                 }
             }
         } catch (error) {
@@ -182,6 +183,7 @@ const delContaCriador = async (req, res) => {
         var delLikes = await conQuery("DELETE FROM likes WHERE idPost = ?", [idPost.id]);
         var delDislikes = await conQuery("DELETE FROM dislikes WHERE idPost = ?", [idPost.id]);
         var delSeguidores = await conQuery("DELETE FROM seguidores WHERE idSeguidor = ?", [idUser]);
+        var delComentarios = await conQuery("DELETE FROM comentarios WHERE idPost = ?", [idPost]);
         var delPost = await conQuery("DELETE FROM postagens WHERE id = ? LIMIT 1", [idPost.id]);
         fs.unlinkSync('public/' + idPost.foto)
     }

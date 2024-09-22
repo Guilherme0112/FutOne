@@ -94,7 +94,8 @@ const storagePerfil = multer.diskStorage({
 const uploadPerfil = multer({ storage: storagePerfil });
 
 app.get('/perfil/editar', EditarPerfilController.editarPerfilGET);
-app.post('/perfil/editar', uploadPerfil.single('img'), EditarPerfilController.editarPerfilPOST);
+app.get('/perfil/editar/you', EditarPerfilController.editarPerfilPOST);
+app.post('/perfil/editar/you', uploadPerfil.single('img'), EditarPerfilController.editarPerfilPOST);
 app.post('/perfil/deletarConta', EditarPerfilController.delConta);
 app.post('/perfil/deletarContaCriador', EditarPerfilController.delContaCriador);
 
