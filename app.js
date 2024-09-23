@@ -33,8 +33,6 @@ const authRota = require('./routes/auth');
 const postRota = require('./routes/post');
 const usersRota = require('./routes/users');
 
-const EditarPostagemController = require('./controllers/EditarPostagemController');
-
 // Início
 
 app.use('/', indexRota);

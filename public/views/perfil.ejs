@@ -47,8 +47,9 @@
                 </section>
             <% } else { %> 
                 <% posts.forEach(post =>{ %>
-                    <section class="box-posts-perfil" data-id="<%= post.id %>">
-                        <button id="delBtn" class="bi bi-trash" value="Excluir"></button>
+                    <section class="box-posts-perfil" id="box" data-id="<%= post.id %>">
+                        <button id="delBtn"></button>
+                        <button id="editBtn"></button>
                         <img src="<%= post.foto %>" class="img-not-perfil">
                         <a href="/post/<%= post.id %>" class="box-desc-perfil">
                             <%= post.titulo %>
@@ -58,5 +59,10 @@
             <% } %> 
         </div>
     </main>
+    <dialog id="dialog" align="center">
+        <button id="nao">x</button>
+        <p>Você realmente deseja apagar esta postagem? Esta ação é irreversível, então se você confirmar você perderá todos os dados a respeito desta postagem.</p>
+        <button id="yes">Confirmar</button>
+    </dialog>
 </body>
 </html>

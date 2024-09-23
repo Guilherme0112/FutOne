@@ -4,7 +4,10 @@ const multer = require('multer');
 const crypto = require('crypto');
 
 const router = express.Router();
+
+// Controllers
 const PostsController = require('../controllers/PostsController');
+const EditarPostagemController = require('../controllers/EditarPostagemController');
 
 // Tratamento de imagem
 const storagePost = multer.diskStorage({
@@ -31,6 +34,9 @@ const uploadPost = multer({ storage: storagePost });
 // Criar postagem
 router.get('/criar', PostsController.criarPostagemGET);
 router.post('/criar', uploadPost.single('foto'), PostsController.criarPostagemPOST);
+
+// Deletar postagem
+router.post('/deletar', EditarPostagemController.deletarPostagem)
 
 // Página de Postagem
 router.get('/:id', PostsController.postagemPage);
