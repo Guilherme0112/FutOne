@@ -114,12 +114,22 @@ main{
     cursor: pointer;
 }
 #delBtn{
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 25px;
     background-color: rgb(146, 29, 29);
     border-radius: 4px;
-    margin: 0 20px;
-    background: url('../images/trash.PNG');
+    margin: 0 10px;
+    background: url('../images/trash.png');
+    background-size: cover;
+    background-position: center;
+}
+#editBtn{
+    width: 28px;
+    height: 25px;
+    background-color: rgb(51, 127, 242);
+    border-radius: 4px;
+    margin: 0 10px;
+    background: url('../images/edit.png');
     background-size: cover;
     background-position: center;
 }

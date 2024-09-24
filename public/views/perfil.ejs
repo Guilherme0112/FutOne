@@ -48,8 +48,8 @@
             <% } else { %> 
                 <% posts.forEach(post =>{ %>
                     <section class="box-posts-perfil" id="box" data-id="<%= post.id %>">
-                        <button id="delBtn"></button>
-                        <button id="editBtn"></button>
+                        <button id="delBtn" title="Apagar"></button>
+                        <button id="editBtn" title="Editar"></button>
                         <img src="<%= post.foto %>" class="img-not-perfil">
                         <a href="/post/<%= post.id %>" class="box-desc-perfil">
                             <%= post.titulo %>

@@ -69,7 +69,7 @@ const criarPostagemPOST = async (req, res) => {
     // Valida os campos e apaga a imagem caso a validação não passe
 
         if(req.file.mimetype != 'image/png' && req.file.mimetype != 'image/jpg' && req.file.mimetype != 'image/jpeg' ){
-            fs.unlink('public/posts' + imagem, (err) => {
+            fs.unlink('public/' + imagem, (err) => {
                 if(err) throw err;
             })
             console.log('Apagado com sucesso');
@@ -77,7 +77,7 @@ const criarPostagemPOST = async (req, res) => {
         }
 
         if(titulo.length < 3 || titulo.length > 100){
-            fs.unlink('public/posts/' + imagem, (err) => {
+            fs.unlink('public/' + imagem, (err) => {
                 if(err) throw err;
             });      
             console.log('Apagado com sucesso');
@@ -85,7 +85,7 @@ const criarPostagemPOST = async (req, res) => {
         }
         
         if(assunto.length < 50 || assunto.length > 2000){
-            fs.unlink('public/posts/' + imagem, (err) => {
+            fs.unlink('public/' + imagem, (err) => {
                 if(err) throw err;
             });      
             console.log('Apagado com sucesso');
@@ -96,7 +96,7 @@ const criarPostagemPOST = async (req, res) => {
         
         const sql = await conQuery('INSERT INTO postagens VALUES (DEFAULT, ?, ?, ?, ?, ?, DEFAULT)', [imagem, titulo, assunto, tags, req.session.user.id])
         if(!sql){
-            fs.unlink('public/posts/' + imagem, (err) =>{
+            fs.unlink('public/' + imagem, (err) =>{
                 if(err) throw err;
                 console.log('Apagado com sucesso');
             });

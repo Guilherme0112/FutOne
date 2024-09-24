@@ -35,6 +35,9 @@ const uploadPost = multer({ storage: storagePost });
 router.get('/criar', PostsController.criarPostagemGET);
 router.post('/criar', uploadPost.single('foto'), PostsController.criarPostagemPOST);
 
+router.get('/editar/:id', EditarPostagemController.editarPostagemGET);
+router.post('/editar', EditarPostagemController.editarPostagemPOST);
+
 // Deletar postagem
 router.post('/deletar', EditarPostagemController.deletarPostagem)
 

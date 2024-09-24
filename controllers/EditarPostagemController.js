@@ -31,8 +31,11 @@ const deletarPostagem = async (req, res) => {
         for(var tabela of tabelas){
             var sqlDel = await conQuery("DELETE FROM " + tabela + " WHERE idPost = ?", [postId]);
         }
-        const delFoto = fs.unlinkSync('public/' + verifyPost[0].foto);
-        
+        fs.unlink('public/' + verifyPost[0].foto, (err)=> {
+            if(err) {
+                console.log(err);
+            }
+        })        
         if(!sqlDel){
             return res.json({status: "Erro ao deletar postagem. Tente novamente mais tarde"})
         }
@@ -50,4 +53,25 @@ const deletarPostagem = async (req, res) => {
     }
 }   
 
-module.exports = { deletarPostagem };
+const editarPostagemGET = async (req, res) => {
+    if(!req.session.user || !req.params.id){
+        return res.redirect('/');
+    }
+
+    const postId = req.params.id;
+    const userId = req.session.user.id;
+
+    const sqlUser = await conQuery("SELECT * FROM users WHERE id = ?", [userId]);
+    const sqlPost = await conQuery("SELECT * FROM postagens WHERE id = ? AND idUsuario = ?", [postId, userId]);
+    if(!sqlPost){
+        return redirect('/perfil');
+    }
+
+    return res.render('editarPost', {sqlPost, sqlUser});
+
+}
+const editarPostagemPOST = async (req, res) => {
+
+}
+
+module.exports = { deletarPostagem, editarPostagemGET, editarPostagemPOST };

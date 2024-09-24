@@ -27,8 +27,7 @@ const editarPerfilPOST = async (req, res) => {
             return res.redirect('/');
         }
 
-        // console.log(req.body)
-        // console.log(req.file)
+        // console.log(req.body);
         
         const userSession = req.session.user;
         const nome = req.body.nome;
@@ -91,6 +90,12 @@ const editarPerfilPOST = async (req, res) => {
 
         return res.json({status: 200})
     } catch (error) {
+        if(req.file){
+            fs.unlink('public/uploads/perfil/' + req.file.filename, (err) => {
+                if(err) throw err;
+            })
+        }
+        console.log(error);
         return res.json({status: "Erro ao carregar imagem. Tente novamente mais tarde"})
     }
 }

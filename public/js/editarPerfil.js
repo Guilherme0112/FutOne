@@ -5,12 +5,10 @@ document.addEventListener('DOMContentLoaded', function(){
     const dialogNao = document.querySelector('#nao');
 
     // Requisição para deletar conta
-
     delConta.addEventListener('click', function(){
             dialog.showModal();
 
             // Se o usuário confirmar que desejar apagar a conta
-
             dialogSim.addEventListener('click', function(){
                 var confirmPass = document.getElementById('senha').value;
 
@@ -39,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function(){
             })
         });
 
-                // Deletar conta com permissões de criador
+    // Deletar conta com permissões de criador
     const delContaCriador = document.querySelector('#delContaCriador');
     if(delContaCriador){
         delContaCriador.addEventListener('click', function(event){
@@ -81,14 +79,24 @@ document.addEventListener('DOMContentLoaded', function(){
 
     document.querySelector('#form').addEventListener('submit', function(event) {
         event.preventDefault();
-        fetch('/perfil/editar/you')
+
+        var form = document.querySelector('#form');
+        var formData = new FormData(form);
+        
+        fetch('/perfil/editar/you', {
+            method: "POST",
+            body: formData
+        })
         .then(response => response.json())
         .then(resposta => {
             if(resposta.status != 200){
                 document.querySelector('#erro').textContent = resposta.status;
                 return false;
             }
-            window.location = "/perfil"
+            window.location = "/perfil";
+        })
+        .catch(erro => {
+            document.querySelector('#erro').textContent = "Ocorreu um erro. Tente novamente mais tarde";
         })
     });
 

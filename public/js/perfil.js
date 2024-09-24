@@ -3,6 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const dialogConfirm = document.querySelector('#yes');
     const dialogNao = document.querySelector('#nao');
     const buttonsDelete = document.querySelectorAll('#delBtn');
+    const buttonsEdit = document.querySelectorAll('#editBtn');
+
+    // Redirecionar para editar postagem com js
+    buttonsEdit.forEach(buttonEdit => {
+        buttonEdit.addEventListener('click', function(){
+            const divPai = buttonEdit.parentElement;
+            const dataId = divPai.getAttribute('data-id');
+
+            window.location = "/post/editar/" + dataId; 
+        })
+    })
 
     buttonsDelete.forEach(buttonDelete => {
         buttonDelete.addEventListener('click', function(event){

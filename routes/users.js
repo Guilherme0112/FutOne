@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 const multer = require('multer');
 const router = express.Router();
+const crypto = require('crypto');
 
 // Controllers
 const PerfilController = require('../controllers/PerfilController');
