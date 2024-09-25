@@ -68,14 +68,14 @@
     </dialog>
     <dialog id="editar">
         <button id="close">x</button>
-        <form action="/post/editar" id="form" enctype="multipart/form-data">
+        <form action="/post/editar" method="post" id="form2" enctype="multipart/form-data">
             <label for="titulo">Título:</label>
             <input type="text" name="titulo" id="titulo" required>
             <label for="assunto">Assunto:</label>
-            <textarea name="assunto" id="assunto"></textarea>
+            <textarea name="assunto" id="assunto" required></textarea>
             <label for="foto" class="fotoLabel">Trocar imagem</label>
-            <input type="file" name="foto" id="foto" accept="image/png, image/jpg, image/jpeg" required>
-            <p id="erro"></p>
+            <input type="file" name="foto" id="foto" accept="image/png, image/jpg, image/jpeg">
+            <p id="erro" class="erro-dialog"></p>
             <button>Enviar</button>
         </form>
         <hr>

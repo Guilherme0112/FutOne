@@ -15,11 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const divPaiEdit = buttonEdit.parentElement;
 
             const img = divPaiEdit.querySelector('.img-not-perfil').src;
-            const titulo = divPaiEdit.querySelector('.box-desc-perfil').textContent;
+            var titulo = divPaiEdit.querySelector('.box-desc-perfil').textContent;
             const assunto = divPaiEdit.querySelector('#box-assunto').value;
+            const postId = divPaiEdit.getAttribute('data-id');
             
             // Coloca os valores nos campos de edição
             // Inputs
+            titulo = titulo.replace(/\s{3,}/g, ' ');
             document.querySelector('#titulo').value = titulo;
             document.querySelector('#assunto').value = assunto;
 
@@ -30,6 +32,37 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Abre a dialog com os dados da postagem 
             dialogEditar.showModal();
+
+            // Requisição para atualizar postagem
+            var form2 = document.querySelector('#form2');
+            form2.addEventListener('submit', function(event){
+                event.preventDefault();
+
+                // Dados do formulário
+                var formData = new FormData(form2);
+                formData.append('id', postId);
+
+                // Enviando requisição
+                fetch('/post/editar',{
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(resposta => { 
+                    if(resposta.status != 200){
+
+                        document.querySelector('.erro-dialog').textContent = resposta.status;
+                    } else {
+
+                        dialogEditar.close();
+                        location.reload();
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            })
         })
 
         // Fechar dialog

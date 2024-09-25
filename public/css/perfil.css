@@ -201,6 +201,9 @@ dialog *{
 
     padding: 10px 0;
 }
+.erro-dialog{
+    color: rgb(222, 42, 42);
+}
 
 /* Preview */
 .preview .imgPreview{
@@ -214,6 +217,7 @@ dialog *{
     font-size: 33px;
     padding: 0 20px;
     text-align: start !important;
+    word-break: break-all;
 }
 .preview .p-preview{
     word-break: break-all;

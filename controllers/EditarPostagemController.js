@@ -5,6 +5,7 @@ const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
 const fs = require('fs');
 const { table } = require('console');
+const { verify } = require('crypto');
 
 const deletarPostagem = async (req, res) => {
 
@@ -54,23 +55,67 @@ const deletarPostagem = async (req, res) => {
 }   
 
 const editarPostagemPOST = async (req, res) => {
-    if(!req.session.user){
-        return res.redirect('/');
-    }
-    const userId = req.session.user.id;
+    try{
+        if(!req.session.user || !req.body){
+            return res.redirect('/');
+        }
 
-    // Verifique se existe o id da postagem
-    if(req.body.id){
+        const userId = req.session.user.id;
+        // Recebe os dados do formulário e atualiza a postagem
+        const titulo = req.body.titulo;
+        const assunto = req.body.assunto;
         const postId = req.body.id;
 
-        const post = await conQuery("SELECT * FROM postagens WHERE id = ? AND idUsuario = ?", [postId, userId]);
-        if(!post){
-            return res.json({status: "Ocorreu um erro ao acessar a postagem. Tente novamente mais tarde"});
+        // Recepção da imagem
+        var imagem = "";
+        if(req.file){
+            imagem = req.file.filename;
         }
-        return res.json({post})
-    }
 
-    // Recebe os dados do formulário e atualiza a postagem
+        // Validação
+
+        const postVerify = await conQuery("SELECT * FROM postagens WHERE id = ? AND idUsuario = ?", [postId, userId]);
+        if(!postVerify){
+            return res.json({status: "Erro ao editar postagem. Tente novamente mais tarde"})
+        }
+
+        if(titulo.length < 3 || titulo.length > 100){
+            if(imagem){
+                fs.unlink('public/' + imagem, (err) => {
+                    if(err) {
+                        console.log(err)
+                    };
+                }); 
+            }     
+            console.log('Apagado com sucesso');
+            return res.json({status: "O título deve ter entre 3 e 100 caracteres"});
+        }
+        
+        if(assunto.length < 50 || assunto.length > 2000){
+            if(imagem){
+                fs.unlink('public/' + imagem, (err) => {
+                    if(err) {
+                        console.log(err)
+                    };
+                });  
+            }    
+            console.log('Apagado com sucesso');
+            return res.json({status: "O assunto deve ter entre 50 e 2000 caracteres"});
+        }
+
+        // Caso passe nas validações, ele salva no banco de dados
+
+        const updateTitulo = await conQuery("UPDATE postagens SET titulo = ? WHERE id = ?", [titulo, postId]);
+        const updateAssunto = await conQuery("UPDATE postagens SET postagem = ? WHERE id = ?", [assunto, postId])
+        if(!updateAssunto || !updateTitulo){
+            return res.json({status: "Erro ao editar postagem. Tente novamente mais tarde"});
+        }
+
+        return res.json({status: 200});
+    } catch(err){
+        console.log(err);
+        return res.json({status: "Ocorreu um erro interno. Tente novamente mais tarde"})
+    }
 }
 
 module.exports = { deletarPostagem, editarPostagemPOST };

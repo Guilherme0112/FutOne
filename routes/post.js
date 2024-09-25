@@ -36,7 +36,7 @@ router.get('/criar', PostsController.criarPostagemGET);
 router.post('/criar', uploadPost.single('foto'), PostsController.criarPostagemPOST);
 
 // Editar postagem
-router.post('/editar', EditarPostagemController.editarPostagemPOST);
+router.post('/editar', uploadPost.single('foto'), EditarPostagemController.editarPostagemPOST);
 
 // Deletar postagem
 router.post('/deletar', EditarPostagemController.deletarPostagem)
