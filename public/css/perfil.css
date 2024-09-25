@@ -165,6 +165,62 @@ dialog *{
     font-size: 25px;
     margin-left: 90% !important;
 }
+
+/* Dialog editar */
+
+#editar{
+
+    overflow-y: scroll;
+    width: 800px;
+    height: 90%;
+    padding: 20px 40px;
+}
+#close{
+    background-color: transparent;
+    font-size: 20px;
+    margin-left: 95%;
+}
+#editar label{
+    width: 100%;
+}
+#editar input[type="text"], textarea{
+    width: 90%;
+    border-bottom: 2px solid #6f2cf5;
+    background-color: transparent;
+}
+#foto{
+    display: none;
+}
+.fotoLabel{
+    width: 100px !important;
+    height: 70px;
+    background-color: #6f2cf5;
+    color: #212529;
+    border-radius: 10px;
+    cursor: pointer;
+
+    padding: 10px 0;
+}
+
+/* Preview */
+.preview .imgPreview{
+    width: 90%;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+}
+.preview .h1-preview{
+    font-size: 33px;
+    padding: 0 20px;
+    text-align: start !important;
+}
+.preview .p-preview{
+    word-break: break-all;
+    padding: 0 20px;
+    font-size: 16px;
+    text-align: start !important;
+}   
 @media (max-width: 600px){
     main{
         padding: 10px;

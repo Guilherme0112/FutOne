@@ -4,27 +4,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const dialogNao = document.querySelector('#nao');
     const buttonsDelete = document.querySelectorAll('#delBtn');
     const buttonsEdit = document.querySelectorAll('#editBtn');
+    const dialogEditar = document.querySelector('#editar');
+    const dialogEditarClose = document.querySelector('#close');
 
     // Redirecionar para editar postagem com js
     buttonsEdit.forEach(buttonEdit => {
-        buttonEdit.addEventListener('click', function(){
-            const divPai = buttonEdit.parentElement;
-            const dataId = divPai.getAttribute('data-id');
+        buttonEdit.addEventListener('click', function(){   
 
-            window.location = "/post/editar/" + dataId; 
+            // Pega as informações da postagem onde o botão foi clicado
+            const divPaiEdit = buttonEdit.parentElement;
+
+            const img = divPaiEdit.querySelector('.img-not-perfil').src;
+            const titulo = divPaiEdit.querySelector('.box-desc-perfil').textContent;
+            const assunto = divPaiEdit.querySelector('#box-assunto').value;
+            
+            // Coloca os valores nos campos de edição
+            // Inputs
+            document.querySelector('#titulo').value = titulo;
+            document.querySelector('#assunto').value = assunto;
+
+            // Preview
+            document.querySelector('#imgPreview').src = img;
+            document.querySelector('#h1-preview').textContent = titulo;
+            document.querySelector('#p-preview').textContent = assunto;
+            
+            // Abre a dialog com os dados da postagem 
+            dialogEditar.showModal();
+        })
+
+        // Fechar dialog
+        dialogEditarClose.addEventListener('click', function(){
+            dialogEditar.close();
         })
     })
 
+    // Botão para deletar postagem
     buttonsDelete.forEach(buttonDelete => {
+
+        // Abre modal e pergunta se o usuário quer apagar o post
         buttonDelete.addEventListener('click', function(event){
             dialog.showModal();
             dialogConfirm.addEventListener('click', function() {
 
-                const divPai = buttonDelete.parentElement;
-                const dataId = divPai.getAttribute('data-id');
+                // Pega o id do post
+                const divPaiDel = buttonDelete.parentElement;
+                const dataId = divPaiDel.getAttribute('data-id');
     
-                // console.log(dataId);
-    
+                // Faz a requisição para deletar a postagem
                 fetch('/post/deletar', {
                     method: 'POST',
                     headers: {
@@ -34,12 +60,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         id: dataId
                     })
                 })
+
+                // Resposta do servidor
                 .then(response => response.json())
                 .then(resposta => {
                     if(resposta.status === 200){         
-                        divPai.style.animation = "delete 2s ease-in-out";
+                        divPaiDel.style.animation = "delete 2s ease-in-out";
                         setTimeout(() => {
-                            divPai.remove();
+                            divPaiDel.remove();
                         }, 2000);
                        
                     } else {
@@ -51,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 dialog.close();
             })
+
+            // Fecha a dialog caso clique no X da dialog
             dialogNao.addEventListener('click', function() {
                 dialog.close();
             })

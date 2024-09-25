@@ -53,25 +53,24 @@ const deletarPostagem = async (req, res) => {
     }
 }   
 
-const editarPostagemGET = async (req, res) => {
-    if(!req.session.user || !req.params.id){
+const editarPostagemPOST = async (req, res) => {
+    if(!req.session.user){
         return res.redirect('/');
     }
-
-    const postId = req.params.id;
     const userId = req.session.user.id;
 
-    const sqlUser = await conQuery("SELECT * FROM users WHERE id = ?", [userId]);
-    const sqlPost = await conQuery("SELECT * FROM postagens WHERE id = ? AND idUsuario = ?", [postId, userId]);
-    if(!sqlPost){
-        return redirect('/perfil');
+    // Verifique se existe o id da postagem
+    if(req.body.id){
+        const postId = req.body.id;
+
+        const post = await conQuery("SELECT * FROM postagens WHERE id = ? AND idUsuario = ?", [postId, userId]);
+        if(!post){
+            return res.json({status: "Ocorreu um erro ao acessar a postagem. Tente novamente mais tarde"});
+        }
+        return res.json({post})
     }
 
-    return res.render('editarPost', {sqlPost, sqlUser});
-
-}
-const editarPostagemPOST = async (req, res) => {
-
+    // Recebe os dados do formulário e atualiza a postagem
 }
 
-module.exports = { deletarPostagem, editarPostagemGET, editarPostagemPOST };
+module.exports = { deletarPostagem, editarPostagemPOST };

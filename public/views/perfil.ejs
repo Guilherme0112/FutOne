@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/perfil.css">
     <script src="../js/perfil.js"></script>
+    <script src="../js/criar.js"></script>
     <title>
         <%= perfil[0].nome %>
     </title>
@@ -54,6 +55,7 @@
                         <a href="/post/<%= post.id %>" class="box-desc-perfil">
                             <%= post.titulo %>
                         </a>
+                        <input type="hidden" id="box-assunto" value="<%= post.postagem %>">
                     </section>
                 <% }) %>
             <% } %> 
@@ -63,6 +65,26 @@
         <button id="nao">x</button>
         <p>Você realmente deseja apagar esta postagem? Esta ação é irreversível, então se você confirmar você perderá todos os dados a respeito desta postagem.</p>
         <button id="yes">Confirmar</button>
+    </dialog>
+    <dialog id="editar">
+        <button id="close">x</button>
+        <form action="/post/editar" id="form" enctype="multipart/form-data">
+            <label for="titulo">Título:</label>
+            <input type="text" name="titulo" id="titulo" required>
+            <label for="assunto">Assunto:</label>
+            <textarea name="assunto" id="assunto"></textarea>
+            <label for="foto" class="fotoLabel">Trocar imagem</label>
+            <input type="file" name="foto" id="foto" accept="image/png, image/jpg, image/jpeg" required>
+            <p id="erro"></p>
+            <button>Enviar</button>
+        </form>
+        <hr>
+        <h1>Preview</h1>
+        <section class="preview">
+            <img src="" id="imgPreview" class="imgPreview">
+            <h1 class="h1-preview" id="h1-preview"></h1>
+            <p class="p-preview" id="p-preview"></p>
+        </section>
     </dialog>
 </body>
 </html>
