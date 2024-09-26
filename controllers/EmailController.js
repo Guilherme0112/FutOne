@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 // Página de verificação de e-mail
-
 const verifyEmailGET = async(req, res) => {
     const token = req.params.token;
 
@@ -16,9 +15,10 @@ const verifyEmailGET = async(req, res) => {
         return res.redirect('/register');
     }
     
-    res.render('verifyEmail', { token, erro: '' });
+    return res.render('verifyEmail', { token, erro: '' });
 }
 
+// Verifica se o codigo que o usuario digitou está correto
 const verifyEmailPOST = async(req, res) => {
     // console.log(req.body);
     const token = req.body.token;
@@ -47,10 +47,8 @@ const verifyEmailPOST = async(req, res) => {
 
     res.redirect(`/verifyEmail/${token}`);
 }
-const EmailWelcome = async(req, res) => {
 
-}
-
+// Função de envio de e-mails
 async function emailVerify(email, code) {
     const nodemailer = require('nodemailer');
     require('dotenv').config();

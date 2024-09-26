@@ -66,10 +66,29 @@ const editarPostagemPOST = async (req, res) => {
         const assunto = req.body.assunto;
         const postId = req.body.id;
 
-        // Recepção da imagem
+        // Verifica se a postagem existe
+        const verifyPost = await conQuery("SELECT * FROM postagens WHERE id = ? AND idUsuario = ?", [postId, userId]);
+        if(!verifyPost){
+            return res.json({status: "Estamos com alguns problemas... Tente novamente mais tarde"})
+        }
+
+        // Recebe a imagem, atualiza no banco de dados e apaga a antiga imagem
         var imagem = "";
         if(req.file){
-            imagem = req.file.filename;
+            imagem = 'uploads/posts/' + req.file.filename;
+
+            // Verifica o tipo de imagem
+            if(req.file.mimetype != 'image/png' && req.file.mimetype != 'image/jpg' && req.file.mimetype != 'image/jpeg' ){
+                console.log('Apagado com sucesso');
+                fs.unlinkSync('public/' + imagem);
+                return res.json({status: "Somente PNG, JPEG e JPG são aceitos"});
+            }
+    
+            const updateImg = await conQuery("UPDATE postagens SET foto = ? WHERE id = ?", [imagem, postId]);
+            if(!updateImg){
+                return res.json({status: "Erro ao atualizar imagem. Tente novamente mais tarde"})
+            }
+            fs.unlinkSync('public/' + verifyPost[0].foto);
         }
 
         // Validação
