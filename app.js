@@ -32,37 +32,33 @@ const indexRota = require('./routes/main');
 const authRota = require('./routes/auth');
 const postRota = require('./routes/post');
 const usersRota = require('./routes/users');
+const adminRota = require('./routes/admin');
 
 // Início
-
 app.use('/', indexRota);
 
 // Autenticação
-
 app.use('/', authRota);
 
 // Postagens
-
 app.use('/post', postRota);
 
 // Perfil
-
 app.use('/perfil', usersRota);
 
+// Adiministração
+app.use('/admin', adminRota);
 // Em alta
-
 app.get('/alta', function(req, res) {
     res.render('alta');
 })
 
 // Fallback
-
 app.get('*', (req, res) => {
     return res.render('404')
 })
 
 // Porta do servidor
-
 app.listen(8080, () => {
     console.log('Executando')
 });

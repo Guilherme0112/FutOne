@@ -1,0 +1,100 @@
+.search{
+    width: 90%;
+    height: 100px;
+    background-color: #212529;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    position: absolute;
+    top: 100px;
+    border-radius: 10px;
+}
+label{
+    color: #6f2cf5;
+}
+input[type="text"]{
+    text-align: center;
+    width: 200px;
+    border-bottom: 2px solid #6f2cf5;
+    background-color: transparent; 
+    color: #6f2cf5;
+    margin: 0 10px;
+}
+.search button{
+    width: 150px;
+    height: 40px;
+    background-color: #6f2cf5;
+    color: #212529;
+    border-radius: 10px;
+    cursor: pointer;
+}
+/* modelo de caixa */
+
+.box-user{
+    width: 400px;
+    height: 100px;
+    background-color: #212529;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    margin: 10px;
+}
+.img-user{
+    width: 90px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+
+    object-fit: cover;
+    object-position: center;
+}
+.name-user{
+
+    color: #6f2cf5;
+    font-size: 16px;
+}
+#del-user{
+    width: 30px;
+    height: 30px;
+    background: url('../../images/trash.png');
+    cursor: pointer;
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+/* Modal */
+
+.modal{
+    position: fixed;
+    background-color: #212529;
+    border-radius: 10px;
+    padding: 5px !important;
+    width: 600px;
+    border: 2px solid #6f2cf5;
+    z-index: 998;
+
+}
+.modal * {
+    color: #6f2cf5;
+}
+.modal button {
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #6f2cf5;
+    color: #212529;
+    cursor: pointer;
+}
+
+textarea{
+    width: 200px;
+    border-bottom: 2px solid #6f2cf5;
+    background-color: transparent; 
+    color: #6f2cf5;
+    margin: 0 10px;
+}

@@ -106,21 +106,21 @@ document.addEventListener("DOMContentLoaded", function () {
                         idComment: idComentario
                     })
                 })
-                    .then(response => response.json())
-                    .then(resposta => {
+                .then(response => response.json())
+                .then(resposta => {
 
-                        // console.log(resposta.status)
-                        if (resposta.status == 200) {
-                            comentario.remove()
-                            document.getElementById('load').style.display = "none";
-                            return false;
-                        }
-                        alert("Você não tem autorização");
-                    })
-                    .catch(error => {
+                    // console.log(resposta.status)
+                    if (resposta.status == 200) {
+                        comentario.remove()
+                        document.getElementById('load').style.display = "none";
+                        return false;
+                    }
+                    alert("Você não tem autorização");
+                })
+                .catch(error => {
 
-                        console.log("Erro ao apagar comentário: ", error)
-                    });
+                    console.log("Erro ao apagar comentário: ", error)
+                });
             }
         }
     });

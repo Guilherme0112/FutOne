@@ -1,0 +1,29 @@
+main{
+    align-items: start;
+}
+.box-ban{
+    width: 400px;
+    border-radius: 10px;
+    background-color: #212529;
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+.box-ban a {
+    width: 100%;
+    text-decoration: none;
+    background-color: #6f2cf5;
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    color: #212529;
+    margin: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

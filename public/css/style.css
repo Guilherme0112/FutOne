@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=SUSE:wght@100..800&display=swap');
 *{
     font-family: Noto Sans;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     outline: none;
     border: none;
 }

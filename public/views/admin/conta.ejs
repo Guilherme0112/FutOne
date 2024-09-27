@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../css/admin/conta.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/admin/conta.js"></script>
+    <title>Banir Conta Criador</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img width="50" src="../../images/icon.png" alt="Logo">
+        </a>
+    </header>
+    <dialog class="modal">
+        <p>Você deseja banir este perfil? Você deletará todos os dados dele do site. Ficará armazenado qual adiminstrador baniu esta conta.</p>
+        <textarea id="causa"></textarea>
+        <button id="yes">Cofirmo</button>
+    </dialog>
+    <main>
+        <section class="search">
+            <label for="">Id:</label>
+            <input type="text" id="id-conta">
+            <button id="search">Procurar</button>
+            <p class="erro"></p>
+        </section>
+        <section id="res">
+            
+        </section>
+    </main>
+</body>
+</html>
