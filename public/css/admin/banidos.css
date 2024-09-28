@@ -3,6 +3,11 @@
     height: 100px;
     border-radius: 10px;
     background-color: #212529;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 .banidos{
     width: 100%;
@@ -12,4 +17,24 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+}
+.box-banidos input{
+    width: 200px;
+    height: 30px;
+    background-color: #212529;
+    border-bottom: 2px solid #6f2cf5;
+    color: #6f2cf5;
+}
+.box-banidos button{
+    width: 100px;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 30px;
+    background-color: #6f2cf5;
+    color: #212529;
+    margin: 0 10px;
+}
+
+.name-user{
+    margin: 0;
 }

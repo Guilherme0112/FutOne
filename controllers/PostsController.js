@@ -6,8 +6,7 @@ const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
 const fs = require('fs');
 
-    // Página das postagens
-
+// Página das postagens
 const postagemPage = async (req, res) => {
 
     try{
@@ -38,7 +37,9 @@ const postagemPage = async (req, res) => {
         }
         
         return res.render('post', { post, perfil, comentarios, user, like, dislike});
+
     } catch(err){
+
         console.log(err);
         return res.redirect('/');
     }
@@ -48,11 +49,8 @@ const postagemPage = async (req, res) => {
     // GET
 
 const criarPostagemGET = async (req, res) => {
-    if(!req.session.user){
-        return res.redirect('/');
-    }
+    
     // Verifica se o usuario é criador
-
     const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [req.session.user.id]);
     if(criador.length > 0){
         return res.render('criar', {erro: ''});

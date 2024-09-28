@@ -3,10 +3,7 @@ const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
 
 const adminPage = async (req, res) => {
-    if(!req.session.user){
-        return res.redirect('/');
-    }
-
+    
     const userId = req.session.user.id;
 
     return res.render('admin/admin');
@@ -21,6 +18,7 @@ const deletarContaCriadorAdmin = async (req, res) => {
 // Exibe a conta na tela para o admin deletar
 const showConta = async(req, res) => {
     try{
+        
         const userId = req.body.id;
             
         const verifyUser = await conQuery("SELECT id, nome, email, foto FROM users WHERE id = ?", [userId]);
@@ -28,9 +26,11 @@ const showConta = async(req, res) => {
             return res.json({status: "Erro ao buscar usuário. Tente novamente mais tarde"});
         }
 
-        return res.json({verifyUser})
+        return res.json({verifyUser});
+
     } catch (err) {
-        return res.json({status: 500})
+
+        return res.json({status: 500});
     }
 
 }
@@ -38,9 +38,8 @@ const showConta = async(req, res) => {
 // Deleta a conta de criador
 const deletarContaAdmin = async (req, res) => {
     try{
-        if(!req.session.user){
-            return res.redirect('/');
-        }
+
+    
         const userId = req.body.id;
         const motivo = req.body.motivo;
         const adminId = req.session.user.id;
@@ -65,8 +64,10 @@ const deletarContaAdmin = async (req, res) => {
         const conta = await conQuery("DELETE FROM users WHERE id = ? LIMIT 1", [userId]);
         const posts = await conQuery("DELETE FROM postagens WHERE idUsuario = ?", [userId]);
 
-        return res.json({status: 200})
+        return res.json({status: 200});
+
     } catch(err){
+
         return res.json({status: "Ocorreu algum erro " + err})
     }
 }
@@ -78,7 +79,20 @@ const banidosGET = async (req, res) => {
 }
 
 const banidosPOST = async (req, res) => {
-    return res.json({status: 200})
+
+    // Recebe o e-mail e verifica se está banido
+    const email = req.body.email;
+
+    const verifyEmail = await conQuery("SELECT * FROM banidos WHERE email = ?", [email]);
+    if(!verifyEmail || verifyEmail.length == 0){
+        return res.json({status: "Não existe este email na lista de banidos"});
+    }
+
+
+    return res.json({
+        status: 200,
+        verifyEmail
+    })
 }
 
 module.exports = { adminPage, deletarContaCriadorAdmin, deletarContaAdmin, showConta, banidosGET, banidosPOST };

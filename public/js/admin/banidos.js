@@ -15,7 +15,24 @@ document.addEventListener('DOMContentLoaded', function(){
         })
         .then(response => response.json())
         .then(resposta => {
-            console.log(resposta)
+            const divPaiBox = document.querySelector('.banidos');
+
+            const divPai = document.createElement('div');
+            divPai.classList.add('box-user');
+            divPai.dataset.id = resposta.verifyEmail[0].id;
+            
+            const name = document.createElement('p');
+            name.textContent = resposta.verifyEmail[0].email;
+            name.classList.add('name-user')
+            
+            const btn = document.createElement('button');
+            btn.id = "del-user";
+            btn.title = "Desbanir";
+
+            divPaiBox.appendChild(divPai);
+            divPai.appendChild(name);
+            divPai.appendChild(btn);
+
         })
         .catch(err => {
             console.log(err)

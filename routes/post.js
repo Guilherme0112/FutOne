@@ -9,6 +9,9 @@ const router = express.Router();
 const PostsController = require('../controllers/PostsController');
 const EditarPostagemController = require('../controllers/EditarPostagemController');
 
+// Middleware
+const isAuth = require('../middleware/authMiddleware');
+
 // Tratamento de imagem
 const storagePost = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -32,14 +35,14 @@ const storagePost = multer.diskStorage({
 const uploadPost = multer({ storage: storagePost });
 
 // Criar postagem
-router.get('/criar', PostsController.criarPostagemGET);
+router.get('/criar', isAuth.isAuth, PostsController.criarPostagemGET);
 router.post('/criar', uploadPost.single('foto'), PostsController.criarPostagemPOST);
 
 // Editar postagem
 router.post('/editar', uploadPost.single('foto'), EditarPostagemController.editarPostagemPOST);
 
 // Deletar postagem
-router.post('/deletar', EditarPostagemController.deletarPostagem)
+router.post('/deletar', isAuth.isAuth, EditarPostagemController.deletarPostagem)
 
 // Página de Postagem
 router.get('/:id', PostsController.postagemPage);

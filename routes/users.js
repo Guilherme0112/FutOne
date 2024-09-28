@@ -8,7 +8,10 @@ const crypto = require('crypto');
 const PerfilController = require('../controllers/PerfilController');
 const EditarPerfilController = require('../controllers/EditarPerfilController');
 
-router.get('/', PerfilController.perfil);
+// Middleware
+const isAuth = require('../middleware/authMiddleware');
+
+router.get('/', isAuth.isAuth, PerfilController.perfil);
 
 // Receber o arquivo de imagem e salvar na pasta
 
@@ -33,13 +36,14 @@ const storagePerfil = multer.diskStorage({
 });
 const uploadPerfil = multer({ storage: storagePerfil });
 
-router.get('/editar', EditarPerfilController.editarPerfilGET);
-router.get('/editar/you', EditarPerfilController.editarPerfilPOST);
-router.post('/editar/you', uploadPerfil.single('img'), EditarPerfilController.editarPerfilPOST);
-router.post('/deletarConta', EditarPerfilController.delConta);
-router.post('/deletarContaCriador', EditarPerfilController.delContaCriador);
+router.get('/editar', isAuth.isAuth, EditarPerfilController.editarPerfilGET);
+router.get('/editar/you', isAuth.isAuth, EditarPerfilController.editarPerfilPOST);
+router.post('/editar/you', isAuth.isAuth, uploadPerfil.single('img'), EditarPerfilController.editarPerfilPOST);
 
-router.get('/criar', PerfilController.criadorGET);
-router.post('/criar', PerfilController.criadorPOST);
+router.post('/deletarConta', isAuth.isAuth, EditarPerfilController.delConta);
+router.post('/deletarContaCriador', isAuth.isAuth, EditarPerfilController.delContaCriador);
+
+router.get('/criar', isAuth.isAuth, PerfilController.criadorGET);
+router.post('/criar', isAuth.isAuth, PerfilController.criadorPOST);
 
 module.exports = router;

@@ -8,16 +8,11 @@ const { table } = require('console');
 const { verify } = require('crypto');
 
 const deletarPostagem = async (req, res) => {
-
-    // Verificações
-    if(!req.session.user){
-        return res.redirect('/');
-    }
-
-    if(!req.body){
-        return res.json({status: 404});
-    }
     try{
+    
+        if(!req.body){
+            return res.json({status: 404});
+        }
         const userId = req.session.user.id;
         const postId = req.body.id;
 

@@ -25,6 +25,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
 
+
 // Rotas
 const router = express.Router();
 
