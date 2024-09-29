@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21/09/2024 às 17:38
+-- Tempo de geração: 29/09/2024 às 21:46
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `criado` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `autenticacao`
 --
 
@@ -31,6 +43,20 @@ CREATE TABLE `autenticacao` (
   `id` int(11) NOT NULL,
   `token` varchar(10000) NOT NULL,
   `codigo` varchar(6) NOT NULL,
+  `criado` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `banidos`
+--
+
+CREATE TABLE `banidos` (
+  `id` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `motivo` text NOT NULL,
+  `idAdmin` int(11) NOT NULL,
   `criado` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -139,16 +165,28 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nome`, `foto`, `email`, `senha`, `bio`, `criado`) VALUES
-(54, 'Guilherme', 'uploads/perfil/61b839d2ae39397e4e7be5797eccff28.jpg', 'guimendesmen124@gmail.com', '$2a$10$FvVzK3SnOYZg4EK78pJua.XKMo6tqiJkMaQWYrSnV6M8N.ayRu/Fa', '.', '2024-09-20 01:28:04');
+(59, 'fgsfsdf', 'uploads/perfil/ce666300d1265fa183e886792b832ad3.jpg', 'guimendesmen124@gmail.com', '$2a$10$nRgef1H.m/tiCuESDK.VM.K9.FO5nA6sbgvCuI.fuy5PAflnWEufq', '', '2024-09-29 17:37:19');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
+-- Índices de tabela `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `autenticacao`
 --
 ALTER TABLE `autenticacao`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `banidos`
+--
+ALTER TABLE `banidos`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -198,10 +236,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT de tabela `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de tabela `autenticacao`
 --
 ALTER TABLE `autenticacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT de tabela `banidos`
+--
+ALTER TABLE `banidos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `comentarios`
@@ -213,7 +263,7 @@ ALTER TABLE `comentarios`
 -- AUTO_INCREMENT de tabela `criador`
 --
 ALTER TABLE `criador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de tabela `dislikes`
@@ -225,13 +275,13 @@ ALTER TABLE `dislikes`
 -- AUTO_INCREMENT de tabela `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT de tabela `postagens`
 --
 ALTER TABLE `postagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de tabela `seguidores`
@@ -243,7 +293,7 @@ ALTER TABLE `seguidores`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

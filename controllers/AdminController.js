@@ -1,10 +1,12 @@
 var con = require('../database/db_connection');
 const { promisify } = require('util');
 const conQuery = promisify(con.query).bind(con);
+const fs = require('fs');
+
+const EmailController = require('./EmailController');
+
 
 const adminPage = async (req, res) => {
-    
-    const userId = req.session.user.id;
 
     return res.render('admin/admin');
 }
@@ -41,7 +43,7 @@ const deletarContaAdmin = async (req, res) => {
 
     
         const userId = req.body.id;
-        const motivo = req.body.motivo;
+        const motivo = req.body.causa;
         const adminId = req.session.user.id;
 
         const verifyUser = await conQuery("SELECT * FROM users WHERE id = ?", [userId]);
@@ -49,8 +51,10 @@ const deletarContaAdmin = async (req, res) => {
             return res.json({status: "Erro ao deletar usuário. Tente novamente mais tarde"});
         }
 
+        console.log(verifyUser[0].foto)
+
         // Insere na lista de banidos
-        const listaDeBanidos = await conQuery("INSERT INTO banidos VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [verifyUser[0].email], motivo, adminId);
+        const listaDeBanidos = await conQuery("INSERT INTO banidos VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [verifyUser[0].email, motivo, adminId]);
 
         // Id do usuário e tabelas onde serão apagados os campos
         const tabelas = ['likes', 'dislikes', 'comentarios', 'criador'];
@@ -64,18 +68,25 @@ const deletarContaAdmin = async (req, res) => {
         const conta = await conQuery("DELETE FROM users WHERE id = ? LIMIT 1", [userId]);
         const posts = await conQuery("DELETE FROM postagens WHERE idUsuario = ?", [userId]);
 
+        if(verifyUser[0].foto != 'images/user.jpg')
+
+        fs.unlinkSync('public/' + verifyUser[0].foto);
+
+        EmailController.deletaContaEmail(verifyUser[0].email, motivo);
+
         return res.json({status: 200});
 
     } catch(err){
-
+        console.log(err)
         return res.json({status: "Ocorreu algum erro " + err})
     }
 }
 
 // Banidos
-
 const banidosGET = async (req, res) => {
-    return res.render('admin/banidos')
+    const sql = await conQuery("SELECT * FROM banidos");
+    
+    return res.render('admin/banidos', { sql })
 }
 
 const banidosPOST = async (req, res) => {
@@ -83,16 +94,86 @@ const banidosPOST = async (req, res) => {
     // Recebe o e-mail e verifica se está banido
     const email = req.body.email;
 
-    const verifyEmail = await conQuery("SELECT * FROM banidos WHERE email = ?", [email]);
-    if(!verifyEmail || verifyEmail.length == 0){
-        return res.json({status: "Não existe este email na lista de banidos"});
+    // Tira da lista de banidos
+    const sql = await conQuery("DELETE FROM banidos WHERE email = ?", [email]);
+    if(!sql){
+        return res.json({status: "Erro ao deletar. Tente novamente mais tarde"});
     }
 
+    return res.json({ status: 200 })
+};
+
+const delPostagem = async(req, res) => {
+    return res.render('admin/delPostagem')
+}
+const delPostagemPOST = async(req, res) => {
+
+    // Busca a postagem e mostra ao admin
+    try{
+        if(req.body.postId){
+
+            const postId = req.body.postId;
+            const sql = await conQuery("SELECT * FROM postagens WHERE id = ?", [postId]);
+            if(!sql || sql.length == 0){
+                return res.json({status: "Não existe registros com esse id"});
+            }
+
+            return res.json({
+                status: 200,
+                sql
+            });
+        }
+    } catch(err) {
+        console.log(err);
+        return res.json({status: "Erro ao buscar dados"})
+    }
+
+    // Deleta a postagem
+    try{
+        if(req.body.delPost){
+            const idPost = req.body.delPost;
+            const motivo = req.body.motivo;
+
+            const verifyPost = await conQuery("SELECT * FROM postagens WHERE id = ?", [idPost]);
+            if(!verifyPost || verifyPost.length == 0){
+                return res.json({status: "Erro ao buscar postagem"})
+            }
+
+            // Autor da postagem
+            const emailPost = await conQuery("SELECT users.email FROM postagens JOIN users WHERE postagens.id = ?", [idPost])
+
+            // Deleta o registro e a foto da postagem
+            const delPost = await conQuery("DELETE FROM postagens WHERE id = ?", [idPost]);
+            fs.unlinkSync('public/' + verifyPost[0].foto);
+            if(!delPost || delPost.length == 0){
+                return res.json({status: "Erro ao deletar postagem"});
+                
+            }
+
+            // Envia um e-mail notificando que a postagem foi deletada
+            EmailController.deletaPostEmail(emailPost[0].email, motivo);
+
+            return res.json({status: 200})
+        }
+    } catch (err) {
+        console.log(err)
+        return res.json({status: "Erro apagar postagem"})
+    }
+}
+
+const showBanidos = async(req, res) => {
+
+    const email = req.body.email;
+
+    const sqlSearch = await conQuery("SELECT email, motivo, criado FROM banidos WHERE email = ?", [email]);
+    if(!sqlSearch || sqlSearch.length == 0){
+        return res.json({status: "Este e-mail não está banido"})
+    }
 
     return res.json({
         status: 200,
-        verifyEmail
+        sqlSearch
     })
-}
+}   
 
-module.exports = { adminPage, deletarContaCriadorAdmin, deletarContaAdmin, showConta, banidosGET, banidosPOST };
+module.exports = { adminPage, deletarContaCriadorAdmin, deletarContaAdmin, showConta, banidosGET, banidosPOST, delPostagem, delPostagemPOST, showBanidos };

@@ -13,12 +13,17 @@ const isAuth = require('../middleware/authMiddleware');
 router.get('/', isAdmin.isAdmin, isAuth.isAuth, adminController.adminPage);
 
 // Deletar conta
-router.get('/deletar/conta', isAdmin.isAdmin, isAuth.isAuth, adminController.deletarContaCriadorAdmin);
-router.post('/deletar/dConta', isAdmin.isAdmin, isAuth.isAuth, adminController.deletarContaAdmin);
+router.get('/conta/deletar', isAdmin.isAdmin, isAuth.isAuth, adminController.deletarContaCriadorAdmin);
+router.post('/conta/deletar', isAdmin.isAdmin, isAuth.isAuth, adminController.deletarContaAdmin);
 router.post('/deletar/show', isAdmin.isAdmin, isAuth.isAuth, adminController.showConta);
 
 // Banidos
 router.get('/banidos', isAdmin.isAdmin, isAuth.isAuth, adminController.banidosGET);
 router.post('/banidos', isAdmin.isAdmin, isAuth.isAuth, adminController.banidosPOST);
+router.post('/show/banidos', isAdmin.isAdmin, isAuth.isAuth, adminController.showBanidos);
+
+// Deletar postagem
+router.get('/postagem/deletar', isAdmin.isAdmin, isAuth.isAuth, adminController.delPostagem);
+router.post('/postagem/deletar', isAdmin.isAdmin, isAuth.isAuth, adminController.delPostagemPOST);
 
 module.exports = router;

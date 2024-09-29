@@ -18,6 +18,9 @@
         <a href="/" class="img-logo">
             <img width="50" src="/images/icon.png" alt="Logo">
         </a>
+        <% if(isAdmin) {%>
+            <a href='/admin/'>Administração</a>
+        <% } %>
         <% if (criador.length === 0){ %>
             <a href='/perfil/criar'>Seja Criador</a>
         <% } else { %>

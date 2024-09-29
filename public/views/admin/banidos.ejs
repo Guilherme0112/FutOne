@@ -21,10 +21,23 @@
     </header>
     <main>
        <div class="box-banidos">
-            <input type="email" id="email" placeholder="Digite o e-mail">
+            <input type="email" id="email" placeholder="E-mail do banido">
             <button id="send">Procurar</button>
+            <p class="erro"></p>
        </div>
-       <div class="banidos"></div>
+       <div class="banidos" id="banidos">
+        <% if(sql){ %>
+            <% sql.forEach(banido => { %>
+                <div class="box-desbanido" data-email="<%= banido.email %>">
+                    <label for="">Email:</label>
+                    <p class="email"><%= banido.email %></p>
+                    <label for="">Motivo</label>
+                    <p class="motivo"><%= banido.motivo %></p>
+                    <button id="desban">Desbanir</button>
+                </div>
+            <% }) %>
+        <% } %>
+       </div>
     </main>
 </body>
 </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../css/admin/conta.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/admin/banidos.css">
+    <link rel="stylesheet" href="../../css/admin/delPostagem.css">
+    <script src="../../js/admin/delPostagem.js"></script>
+    <title>Banir Postagens</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img width="50" src="../../images/icon.png" alt="Logo">
+        </a>
+    </header>
+    <main>
+        <div class="box-banidos">
+            <input type="number" id="post" placeholder="Id da Postagem">
+            <button id="send">Procurar</button>
+            <p class="erro"></p>
+       </div>
+       <div class="banidos">
+
+       </div>
+       <dialog align="center">
+            <p>Ao confirmar, você deletará a postagem do usuário, ele receberá um e-mail informando o motivo de terem deletado sua postagem</p>
+            <input type="text" placeholder="Motivo" id="motivo" required>
+            <button id="yes">Deletar</button>
+            <img width="50" src="../../images/load.gif" id="load">
+       </dialog> 
+    </main>
+</body>
+</html>

@@ -70,13 +70,15 @@ input[type="text"]{
 /* Modal */
 
 .modal{
-    position: fixed;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     background-color: #212529;
     border-radius: 10px;
-    padding: 5px !important;
-    width: 600px;
+    padding: 10px !important;
     border: 2px solid #6f2cf5;
-    z-index: 998;
 
 }
 .modal * {
@@ -92,7 +94,7 @@ input[type="text"]{
 }
 
 textarea{
-    width: 200px;
+    width: 90%;
     border-bottom: 2px solid #6f2cf5;
     background-color: transparent; 
     color: #6f2cf5;

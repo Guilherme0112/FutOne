@@ -10,38 +10,52 @@ require('dotenv').config();
 // Página de perfil
 
 const perfil = async(req, res) => {
+    try{
+        // Verifica se o usuario está autenticado
 
-    // Verifica se o usuario está autenticado
+        var user = req.session.user;
 
-    var user = req.session.user;
+        const perfil = await conQuery("SELECT * FROM users WHERE id = ?", [user.id]);
 
-    const perfil = await conQuery("SELECT * FROM users WHERE id = ?", [user.id]);
+        // Verifica se é criador de conteúdo para exibir a opção de criar conteúdo
+        const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [user.id])
+        
+        // Retorna q quantidade de seguidores
+        const seguidores = await conQuery("SELECT * FROM seguidores WHERE idSeguindo = ?", [user.id]);
+        
+        // Retorna a quantidade de postagens
+        const posts = await conQuery("SELECT * FROM postagens WHERE idUsuario = ?", [user.id]);
+        
+        // Retorna se é admin
+        const isAdmin = await conQuery("SELECT * FROM admin WHERE idUser = ?", [user.id]);
 
-    // Verifica se é criador de conteúdo para exibir a opção de criar conteúdo
-    const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [user.id])
+        return res.render('perfil', { user, criador, seguidores: seguidores.length, posts, perfil, isAdmin});
     
-    // Retorna q quantidade de seguidores
-    const seguidores = await conQuery("SELECT * FROM seguidores WHERE idSeguindo = ?", [user.id]);
+    } catch(err) {
     
-    // Retorna a quantidade de postagens
-    const posts = await conQuery("SELECT * FROM postagens WHERE idUsuario = ?", [user.id]);
-    
-    return res.render('perfil', { user, criador, seguidores: seguidores.length, posts, perfil});
-                        
+        console.log(err);
+        return res.redirect('/');
+    }
+        
 }
 
 // Criar Perfil de criador
 // GET
 
 const criadorGET = async (req, res) => {
+    try{
 
-    // Verifica se o usuário já tem conta de criador e redireciona conforme o necessário
-    const userId = req.session.user.id;
-    const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [userId]);
-    if(criador.length != 0){
+        // Verifica se o usuário já tem conta de criador e redireciona conforme o necessário
+        const userId = req.session.user.id;
+        const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [userId]);
+        if(criador.length != 0){
+            return res.redirect('/');
+        } 
+        return res.render('criarPerfil', {erro: ''});
+    } catch(err) {
+        console.log(err)
         return res.redirect('/');
-    } 
-    return res.render('criarPerfil', {erro: ''});
+    }
 }
 
 // POST

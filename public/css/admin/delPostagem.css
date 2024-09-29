@@ -1,0 +1,59 @@
+.box-admin-post{
+    width: 400px;
+    border-radius: 10px;
+    background-color: #212529;
+    color: #6f2cf5;
+    padding: 10px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.img{
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+}
+.link{
+    text-decoration: none;
+    color: #6f2cf5;
+    width: 100%;
+}
+.link:hover{
+    text-decoration: underline;
+}
+.button{
+    width: 40px;
+    height: 40px;
+    background-image: url('../../images/trash.png');
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* Dialog */
+
+dialog{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #212529;
+    border: 2px solid #6f2cf5;
+    border-radius: 10px;
+    color: #6f2cf5;
+    padding: 10px;
+
+}
+dialog button{
+    width: 90%;
+    background-color: #6f2cf5;
+    color: #212529;
+    cursor: pointer;
+    height: 40px;
+    border-radius: 10px;
+    margin: 10px 0;
+}

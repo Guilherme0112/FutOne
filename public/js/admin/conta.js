@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function(){
     btn.addEventListener('click', function(){
         var userId = document.querySelector('#id-conta').value;
 
-        fetch('show', {
+        fetch('/admin/deletar/show', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 var motivo = document.querySelector('#causa').value;
                 
-                fetch('dConta', {
+                fetch('/admin/conta/deletar', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     if(resposta.status == 200){
                         divPai.remove();
                     }
+                    console.log(resposta);
                     document.querySelector('.modal').close();
                 })
                 .catch(err => {

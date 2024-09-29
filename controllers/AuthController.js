@@ -96,6 +96,13 @@ const registerPOST = async (req, res) => {
 
         // console.log(req.body)
 
+        // Verifica se  o e-mail está banido
+        const isBan = await conQuery('SELECT * FROM banidos WHERE email = ?', [email]);
+        if (isBan.length > 0) {
+            return res.render('register', { erro: 'Este e-mail está banido' });
+        }
+
+        // Validação
         if (nome.length < 2 || nome.length > 50) {
             return res.render('register', { erro: 'O nome deve ter entre 3 e 50 caracteres' });
         }
@@ -141,10 +148,10 @@ const registerPOST = async (req, res) => {
             return res.render('register', {erro: "Erro ao mandar o código para seu e-mail"})
         }
 
-        res.redirect(`/verifyEmail/${token}`);
+        return res.redirect(`/verifyEmail/${token}`);
 
     } else {
-        res.render('register', { erro: '' });
+        return res.render('register', { erro: '' });
     }
 }
 

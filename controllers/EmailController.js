@@ -79,10 +79,95 @@ async function emailVerify(email, code) {
         return true;
         
     } catch (error) {
+        
         console.error('Erro ao enviar email:', error);
         return false;
     }
   }
 
+//   Notificação sobre deleção de postagem
 
-module.exports = { verifyEmailGET, verifyEmailPOST, emailVerify };
+async function deletaPostEmail(email, motivo) {
+    const nodemailer = require('nodemailer');
+    require('dotenv').config();
+  
+    try {
+
+      // Cria um transportador SMTP
+
+        const transporter = await nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.MAIL_PASS
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to: email,
+            subject: 'Sobre sua postagem',
+            html: 
+            `<h1>Deleção de postagem</h1><br>
+            <p>Recebemos algumas denuncias a partir da sua postagem e decidimos deletá-la</p>
+            <h2>Motivo Informado pelo Administrador:</h2>
+            <p>${motivo}</p>
+            `
+        };
+
+        // Envio assíncrono do email
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email enviado:', info.response);
+        return true;
+        
+    } catch (error) {
+
+        console.error('Erro ao enviar email:', error);
+        return false;
+    }
+  }
+
+// Banir Conta
+async function deletaContaEmail(email, motivo) {
+    const nodemailer = require('nodemailer');
+    require('dotenv').config();
+  
+    try {
+
+      // Cria um transportador SMTP
+
+        const transporter = await nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.MAIL_PASS
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to: email,
+            subject: 'Sobre sua conta',
+            html: 
+            `<h1>Deleção de conta</h1><br>
+            <p>Recebemos denúncias sobre sua conta, verificamos ela e decidimos bani-la</p>
+            <h2>Motivo Informado pelo Administrador:</h2>
+            <p>${motivo}</p>
+            `
+        };
+
+        // Envio assíncrono do email
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email enviado:', info.response);
+        return true;
+        
+    } catch (error) {
+
+        console.error('Erro ao enviar email:', error);
+        return false;
+    }
+  }
+
+module.exports = { verifyEmailGET, verifyEmailPOST, emailVerify, deletaPostEmail, deletaContaEmail };
