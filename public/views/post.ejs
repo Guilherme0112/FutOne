@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/post.css">
     <script src="../js/post.js"></script>
     <script src="../js/comentarios_e_like.js"></script>
+    <script src="../js/denuncia.js"></script>
     <script src="https://kit.fontawesome.com/2c6c1c555e.js" crossorigin="anonymous"></script>
     <title>
         <%= post[0].titulo %>
@@ -44,7 +45,7 @@
             <% if(user){ %>
                 <hr>
                 <div class="box-like">
-                    <% if(like.length> 0) { %>
+                    <% if(like.length > 0) { %>
                         <i id="like" title="Like" class="fa-solid fa-thumbs-up btn-react"></i>
                     <% } else { %>
                         <i id="like" title="Like" class="fa-regular fa-thumbs-up btn-react"></i>
@@ -100,6 +101,17 @@
             <% } %>
         </div>
     </main>
+    <dialog id="modal-denuncia" align="center">
+        <button id="fechar">x</button>
+        <p>Motivo:</p>
+        <select id="motivo">
+            <option value="0">Conteúdo Inapropriado</option>
+            <option value="1">Spam</option>
+            <option value="2">Contém palavras agressivas</option>
+            <option value="3">Fora do contexto</option>
+        </select>
+        <button id="send">Enviar</button>
+        <p class="erro"></p>
+    </dialog>
 </body>
-
 </html>

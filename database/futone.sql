@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29/09/2024 às 21:46
+-- Tempo de geração: 30/09/2024 às 04:52
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -32,6 +32,13 @@ CREATE TABLE `admin` (
   `idUser` int(11) NOT NULL,
   `criado` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `admin`
+--
+
+INSERT INTO `admin` (`id`, `idUser`, `criado`) VALUES
+(2, 59, '2024-09-29 23:44:57');
 
 -- --------------------------------------------------------
 
@@ -89,6 +96,28 @@ CREATE TABLE `criador` (
   `criado` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `criador`
+--
+
+INSERT INTO `criador` (`id`, `cpf`, `nascimento`, `sexo`, `idUser`, `criado`) VALUES
+(19, '70600412148', '2005-12-01', 'M', 59, '2024-09-29 23:40:15');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `denuncias`
+--
+
+CREATE TABLE `denuncias` (
+  `id` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `denuncia` varchar(400) NOT NULL,
+  `idPost` int(11) NOT NULL,
+  `visto` enum('Y','N') NOT NULL DEFAULT 'N',
+  `criado` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -131,18 +160,12 @@ CREATE TABLE `postagens` (
   `criado` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Estrutura para tabela `seguidores`
+-- Despejando dados para a tabela `postagens`
 --
 
-CREATE TABLE `seguidores` (
-  `id` int(11) NOT NULL,
-  `idSeguidor` int(11) NOT NULL,
-  `idSeguindo` int(11) NOT NULL,
-  `quando` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `postagens` (`id`, `foto`, `titulo`, `postagem`, `tags`, `idUsuario`, `criado`) VALUES
+(38, 'uploads/posts/c59d22df39b1101d6d0b6bf5f6c48d30.jpg', 'GTA San Andreas: The Definitive Edition - Uma Análise Sincera', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAa', '', 59, '2024-09-29 23:40:41');
 
 -- --------------------------------------------------------
 
@@ -202,6 +225,12 @@ ALTER TABLE `criador`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `denuncias`
+--
+ALTER TABLE `denuncias`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `dislikes`
 --
 ALTER TABLE `dislikes`
@@ -220,12 +249,6 @@ ALTER TABLE `postagens`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `seguidores`
---
-ALTER TABLE `seguidores`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Índices de tabela `users`
 --
 ALTER TABLE `users`
@@ -239,7 +262,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `autenticacao`
@@ -263,7 +286,13 @@ ALTER TABLE `comentarios`
 -- AUTO_INCREMENT de tabela `criador`
 --
 ALTER TABLE `criador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT de tabela `denuncias`
+--
+ALTER TABLE `denuncias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `dislikes`
@@ -281,13 +310,7 @@ ALTER TABLE `likes`
 -- AUTO_INCREMENT de tabela `postagens`
 --
 ALTER TABLE `postagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
-
---
--- AUTO_INCREMENT de tabela `seguidores`
---
-ALTER TABLE `seguidores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de tabela `users`

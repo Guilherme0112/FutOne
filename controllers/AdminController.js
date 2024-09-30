@@ -176,4 +176,29 @@ const showBanidos = async(req, res) => {
     })
 }   
 
-module.exports = { adminPage, deletarContaCriadorAdmin, deletarContaAdmin, showConta, banidosGET, banidosPOST, delPostagem, delPostagemPOST, showBanidos };
+// Denuncias 
+const denuncias = async(req, res) => {
+    const sql = await conQuery("SELECT * FROM denuncias WHERE visto = 'N'"); 
+
+    return res.render('admin/denuncias', { sql });
+}
+
+const denunciasPOST = async(req, res) => {
+
+    const postId = req.body.postId;
+    const userId = req.body.userId;
+
+    const verifyDenuncia = await conQuery("SELECT * FROM denuncias WHERE idPost = ? AND idUser = ?", [postId, userId]);
+    if(!verifyDenuncia || verifyDenuncia.length == 0){
+        return res.json({status: "Erro ao buscar denúncia. Tente novamente mais tarde"})
+    }   
+
+    const sql = await conQuery("UPDATE denuncias SET visto = 'Y' WHERE idPost = ? AND idUser = ?", [postId, userId]);
+    if(!sql){
+        return res.json({status: "Erro ao marcar como lida. Tente novamente mais tarde"})
+    }
+
+    return res.json({status: 200})
+}
+
+module.exports = { adminPage, deletarContaCriadorAdmin, deletarContaAdmin, showConta, banidosGET, banidosPOST, delPostagem, delPostagemPOST, showBanidos, denuncias, denunciasPOST };

@@ -149,3 +149,41 @@ hr{
     background-color: #6f2cf5;
     opacity: 1;
 }
+
+/* Modal */
+
+dialog{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 10px;
+    background-color: #212529;
+    color: #6f2cf5;
+    border-radius: 10px;
+    border: 2px solid #6f2cf5;
+}
+dialog select{
+    background-color: #212529;
+    color: #6f2cf5;
+    cursor: pointer;
+}
+dialog button{
+    width: 90%;
+    height: 40px;
+    background-color: #6f2cf5;
+    color: #212529;
+    border-radius: 10px;
+    margin: 10px;
+}
+#fechar{
+    width: 40px;
+    background-color: transparent;
+    color: #6f2cf5;
+    margin: -20px 0 0 90%;
+    font-size: 25px;
+}
+.erro {
+    margin: 10px 0;
+}

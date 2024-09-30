@@ -26,4 +26,8 @@ router.post('/show/banidos', isAdmin.isAdmin, isAuth.isAuth, adminController.sho
 router.get('/postagem/deletar', isAdmin.isAdmin, isAuth.isAuth, adminController.delPostagem);
 router.post('/postagem/deletar', isAdmin.isAdmin, isAuth.isAuth, adminController.delPostagemPOST);
 
+// Denúncias
+router.get('/denuncias', isAdmin.isAdmin, isAuth.isAuth, adminController.denuncias);
+router.post('/denuncias', isAdmin.isAdmin, isAuth.isAuth, adminController.denunciasPOST);
+
 module.exports = router;

@@ -20,16 +20,13 @@ const perfil = async(req, res) => {
         // Verifica se é criador de conteúdo para exibir a opção de criar conteúdo
         const criador = await conQuery('SELECT * FROM criador WHERE idUser = ?', [user.id])
         
-        // Retorna q quantidade de seguidores
-        const seguidores = await conQuery("SELECT * FROM seguidores WHERE idSeguindo = ?", [user.id]);
-        
         // Retorna a quantidade de postagens
         const posts = await conQuery("SELECT * FROM postagens WHERE idUsuario = ?", [user.id]);
         
         // Retorna se é admin
         const isAdmin = await conQuery("SELECT * FROM admin WHERE idUser = ?", [user.id]);
 
-        return res.render('perfil', { user, criador, seguidores: seguidores.length, posts, perfil, isAdmin});
+        return res.render('perfil', { user, criador, posts, perfil, isAdmin});
     
     } catch(err) {
     

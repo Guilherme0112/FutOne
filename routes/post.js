@@ -42,7 +42,9 @@ router.post('/criar', uploadPost.single('foto'), PostsController.criarPostagemPO
 router.post('/editar', uploadPost.single('foto'), EditarPostagemController.editarPostagemPOST);
 
 // Deletar postagem
-router.post('/deletar', isAuth.isAuth, EditarPostagemController.deletarPostagem)
+router.post('/deletar', isAuth.isAuth, EditarPostagemController.deletarPostagem);
+
+router.post('/denuncia', isAuth.isAuth, PostsController.fazerDenuncia)
 
 // Página de Postagem
 router.get('/:id', PostsController.postagemPage);

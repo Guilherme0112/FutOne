@@ -1,0 +1,21 @@
+.box-denuncia{
+    padding: 10px;
+    background-color: #212529;
+    color: #6f2cf5;
+    border-radius: 10px;
+}
+.box-denuncia a {
+    color: #6f2cf5;
+}
+.box-denuncia button{
+    width: 90%;
+    height: 40px;
+    background-color: #6f2cf5;
+    color: #212529;
+    border-radius: 10px;
+    margin: 10px;
+}
+.msg{
+    color: #212529;
+    margin-top: -200px;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../css/admin/conta.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/admin/denuncias.css">
+    <script src="../../js/admin/denuncias.js"></script>
+    <title>Denúncias</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img width="50" src="../../images/icon.png" alt="Logo">
+        </a>
+        <a href="/admin">Administração</a>
+    </header>
+    <main>
+        <% if(sql.length > 0) { %>
+
+            <% sql.forEach(denuncia => { %>
+
+                <div class="box-denuncia" data-denuncia="<%= denuncia.idPost %>" data-idUser="<%= denuncia.idUser %>" align="center">
+                    <p><b>Id do denunciante:</b> <%= denuncia.idUser %></p>
+                    <p><b>Postagem:</b> <a href="/post/<%= denuncia.idPost %>">Clique aqui</a></p>
+                    <p><b>Id da postagem:</b> <%= denuncia.idPost %></p>
+                    <p><b>Motivo:</b> <%= denuncia.denuncia %></p>
+                    <button id="marcar">Marcar como visto</button>
+                    <a href="/admin/postagem/deletar">Apagar postagem</a>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="msg">Não temos denúncias no momento</p>
+        <% } %>
+    </main>
+</body>
+</html>

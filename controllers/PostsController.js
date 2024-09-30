@@ -119,5 +119,56 @@ const criarPostagemPOST = async (req, res) => {
     }
 }
 
+// Sistema de denúncia
+const fazerDenuncia = async (req, res) => {
 
-module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST};
+    try{
+        const postId = req.body.postId;
+        const userId = req.session.user.id;
+        var motivo = req.body.select;
+
+        const verifyDenuncia = await conQuery("SELECT * FROM denuncias WHERE idUser = ? AND idPost = ?", [userId, postId]);
+        if(verifyDenuncia.length > 0){
+            return res.json({status: "Você já denunciou esta postagem"})
+        }
+
+        const verifyPost = await conQuery("SELECT * FROM postagens WHERE id = ?", [postId]);
+        if(!verifyPost || verifyPost.length == 0){
+            return res.json({status: "Não foi realizar a denúncia. Tente novamente mais tarde"})
+        }
+
+        // Verifica o motivo da denúncia
+        switch (motivo) {
+            case '0':
+                motivo = "Conteudo Inapropriado";
+                break;
+            case '1':
+                motivo = "Spam";
+                break;
+            case '2':
+                motivo = "Contém palavras agressivas";
+                break;
+            case '3':
+                motivo = "Fora do contexo";
+                break;
+            default:
+                return res.json({status: "Valor Inválido"})
+                break;
+        }
+
+
+        const sql = await conQuery("INSERT INTO denuncias VALUES (DEFAULT, ?, ?, ?, DEFAULT, DEFAULT)", [userId, motivo, postId]);
+        if(!sql || sql.length == 0){
+            return res.json({status: "Não foi possível fazer a denúncia. Tente novamente mais tarde"});
+        }
+
+        return res.json({status: 200});
+
+    } catch (err) {
+
+        console.log(err)
+        return res.json({status: "Erro ao processar denúncia. Tente novamente mais tarde"})
+    }
+}
+
+module.exports = { postagemPage, criarPostagemGET, criarPostagemPOST, fazerDenuncia };
