@@ -14,7 +14,6 @@ router.post('/comentarioDel', ComentariosController.deleteComment);
 
 // Likes
 router.post('/like', ComentariosController.like);
-router.post('/dislike', ComentariosController.deslike);
 
 // Busca de dados para rolagem infinita
 router.get('/load-data/page/:id', PostsGenerationController.generateIndex);

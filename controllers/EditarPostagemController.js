@@ -23,7 +23,7 @@ const deletarPostagem = async (req, res) => {
         }
 
         // Deleta os dados do posts nestas tabelas e deleta a foto
-        const tabelas = ["likes", "dislikes", "comentarios"];
+        const tabelas = ["likes", "comentarios"];
         for(var tabela of tabelas){
             var sqlDel = await conQuery("DELETE FROM " + tabela + " WHERE idPost = ?", [postId]);
         }

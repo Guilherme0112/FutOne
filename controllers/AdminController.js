@@ -57,7 +57,7 @@ const deletarContaAdmin = async (req, res) => {
         const listaDeBanidos = await conQuery("INSERT INTO banidos VALUES (DEFAULT, ?, ?, ?, DEFAULT)", [verifyUser[0].email, motivo, adminId]);
 
         // Id do usuário e tabelas onde serão apagados os campos
-        const tabelas = ['likes', 'dislikes', 'comentarios', 'criador'];
+        const tabelas = ['likes', 'comentarios', 'criador'];
 
         // Apagar campos
         for (var tabela of tabelas) {

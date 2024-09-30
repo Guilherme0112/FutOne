@@ -97,62 +97,10 @@ const like = async(req, res) => {
                 return res.json({status: 400})
             }
 
-            // Apaga o dislike quando existe o like
-
-            var deleteLike = await conQuery("DELETE FROM dislikes WHERE idUser = ? AND idPost = ? LIMIT 1", [req.session.user.id, idPost]);
-            if(deleteLike){
-                return res.json({status: 201});
-            }
 
             return res.json({status: 200});
         }
     }
 }
 
-// Lógica dos deslikes em postagens
-
-const deslike = async(req, res) => {
-    if(req.session.user){
-        // console.log(req.session.user.id);
-        const idPost = req.body.idPost;
-
-        // Verifica se o id do post realmente existe
-
-        var verifyPost = await conQuery("SELECT * FROM postagens WHERE id = ?", [idPost]);
-        if(!verifyPost){
-            return res.json({status: 404});
-        }
-
-        // Verifica se o usuário já deu dislike ao post para adicionar ou remover caso já tenha o dislike
-
-        var verifyLike = await conQuery("SELECT * FROM dislikes WHERE idUser = ? AND idPost = ?", [req.session.user.id, idPost]);
-
-        if(verifyLike.length > 0){
-            var deleteLike = await conQuery("DELETE FROM dislikes WHERE idUser = ? AND idPost = ? LIMIT 1", [req.session.user.id, idPost]);
-            if(deleteLike){
-                return res.json({status: 201});
-            }
-            return res.json({status: 500});
-        }
-
-        // Insere caso não tenha o dislike
-
-        if(verifyLike.length === 0){
-            var inserirLike = await conQuery("INSERT INTO dislikes VALUES (DEFAULT, ?, ?, DEFAULT)", [idPost, req.session.user.id])
-            if(!inserirLike){
-                return res.json({status: 400})
-            }
-
-            // Apaga o dislike quando existe o like
-
-            var deleteLike = await conQuery("DELETE FROM likes WHERE idUser = ? AND idPost = ? LIMIT 1", [req.session.user.id, idPost]);
-            if(deleteLike){
-                return res.json({status: 201});
-            }
-
-            return res.json({status: 200});
-        }
-    }
-}
-
-module.exports = {commentPage, deleteComment, like, deslike};
+module.exports = { commentPage, deleteComment, like };

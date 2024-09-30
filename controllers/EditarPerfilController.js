@@ -120,7 +120,7 @@ const delConta = async (req, res) => {
 
                 // Apaga os comentários, likes, deslikes do usuario
 
-                const tabelas = ['likes', 'dislikes', 'comentarios', 'criador'];
+                const tabelas = ['likes', 'comentarios', 'criador'];
 
                 for (var tabela of tabelas) {
 
@@ -181,10 +181,9 @@ const delContaCriador = async (req, res) => {
         const idPosts = await conQuery("SELECT id, foto FROM postagens WHERE idUsuario = ?", [idUser]);
 
 
-        // Apaga os likes os dislikes e por final, a postagem
+        // Apaga os likes e as postagens
         for(var idPost of idPosts){
             var delLikes = await conQuery("DELETE FROM likes WHERE idPost = ?", [idPost.id]);
-            var delDislikes = await conQuery("DELETE FROM dislikes WHERE idPost = ?", [idPost.id]);
             var delSeguidores = await conQuery("DELETE FROM seguidores WHERE idSeguidor = ?", [idUser]);
             var delComentarios = await conQuery("DELETE FROM comentarios WHERE idPost = ?", [idPost]);
             var delPost = await conQuery("DELETE FROM postagens WHERE id = ? LIMIT 1", [idPost.id]);

@@ -41,8 +41,8 @@
             </h2>
             <p class="post">
                 <%= post[0].postagem %>
+                <% if(user){ %>
             </p>
-            <% if(user){ %>
                 <hr>
                 <div class="box-like">
                     <% if(like.length > 0) { %>
@@ -50,14 +50,7 @@
                     <% } else { %>
                         <i id="like" title="Like" class="fa-regular fa-thumbs-up btn-react"></i>
                     <% } %>
-
-
-                    <% if(dislike.length> 0){ %>
-                        <i id="dislike" title="Dislike" class="fa-solid fa-thumbs-down btn-react"></i>
-                    <% } else { %>
-                        <i id="dislike" title="Dislike" class="fa-regular fa-thumbs-down btn-react"></i>
-                    <% } %>
-                        <i id="denuncia" title="Denunciar" class="fa-solid fa-circle-exclamation"></i>
+                    <i id="denuncia" title="Denunciar" class="fa-solid fa-circle-exclamation"></i>
             <% } %>
             </div>
         </div>

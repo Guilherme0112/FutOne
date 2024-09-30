@@ -13,7 +13,7 @@ const postagemPage = async (req, res) => {
         // Pega o id passado na url
         const user = req.session.user;
         const idPost = req.params.id;
-        var perfil = sessao = like = dislike = "";
+        var perfil = sessao = like = "";
         const post = await conQuery("SELECT * FROM postagens WHERE id = ? LIMIT 1", [idPost]);
 
         if(!post || post.length === 0){
@@ -28,15 +28,13 @@ const postagemPage = async (req, res) => {
         var comentarios = await conQuery("SELECT users.id, users.nome, users.foto, comentarios.* FROM comentarios JOIN users ON comentarios.idUser = users.id WHERE idPost = ? LIMIT 10", [idPost]);
         if(user){
             var like = await conQuery("SELECT * FROM likes WHERE idPost = ? AND idUser = ?", [idPost, user.id]);
-
-            var dislike = await conQuery("SELECT * FROM dislikes WHERE idPost = ? AND idUser = ?", [idPost, user.id]);
         }
         
         if (!post) {
             return res.redirect('/');
         }
         
-        return res.render('post', { post, perfil, comentarios, user, like, dislike});
+        return res.render('post', { post, perfil, comentarios, user, like });
 
     } catch(err){
 
