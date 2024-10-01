@@ -138,6 +138,9 @@ main{
 
 dialog{
     position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #212529;
     border-radius: 10px;
     padding: 5px !important;
@@ -167,7 +170,14 @@ dialog *{
 }
 
 /* Dialog editar */
-
+#form2 button{
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #6f2cf5;
+    color: #212529;
+    cursor: pointer;
+}
 #editar{
 
     overflow-y: scroll;
