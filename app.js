@@ -60,7 +60,7 @@ app.get('*', (req, res) => {
 })
 
 // Porta do servidor
-app.listen(8080, () => {
+app.listen(8000, () => {
     console.log('Executando')
 });
 

@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Mapeia a porta 3000 do container para a 3000 da máquina local
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3306:3306" # Porta para acessar o MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: "senha_root"  # Define a senha para o usuário root
+      MYSQL_DATABASE: ${DATABASE} 
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
